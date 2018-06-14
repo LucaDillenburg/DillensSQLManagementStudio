@@ -1,0 +1,7 @@
+ - Quando executar com rdAutomatic fazer uma fila de queries e non-queries (se houver um select nao selecionar o ultimo nonQuery)
+insert % into
+update
+drop % table
+alter % table
+select
+ - Programar botoes btnSave e btnOtherDtBs

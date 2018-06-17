@@ -39,6 +39,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnOtherDtBs = new System.Windows.Forms.Button();
             this.lbTitle = new System.Windows.Forms.Label();
+            this.btnBiggerFont = new System.Windows.Forms.Button();
+            this.btnSmallerFont = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,11 +157,31 @@
             this.lbTitle.TabIndex = 24;
             this.lbTitle.Text = "Dillen\'s SQL Management Studio";
             // 
+            // btnBiggerFont
+            // 
+            this.btnBiggerFont.Location = new System.Drawing.Point(724, 117);
+            this.btnBiggerFont.Name = "btnBiggerFont";
+            this.btnBiggerFont.Size = new System.Drawing.Size(29, 23);
+            this.btnBiggerFont.TabIndex = 25;
+            this.btnBiggerFont.Text = "+";
+            this.btnBiggerFont.UseVisualStyleBackColor = true;
+            // 
+            // btnSmallerFont
+            // 
+            this.btnSmallerFont.Location = new System.Drawing.Point(689, 117);
+            this.btnSmallerFont.Name = "btnSmallerFont";
+            this.btnSmallerFont.Size = new System.Drawing.Size(29, 23);
+            this.btnSmallerFont.TabIndex = 26;
+            this.btnSmallerFont.Text = "-";
+            this.btnSmallerFont.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 703);
+            this.Controls.Add(this.btnSmallerFont);
+            this.Controls.Add(this.btnBiggerFont);
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.btnOtherDtBs);
             this.Controls.Add(this.btnSave);
@@ -195,6 +217,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnOtherDtBs;
         private System.Windows.Forms.Label lbTitle;
+        private System.Windows.Forms.Button btnBiggerFont;
+        private System.Windows.Forms.Button btnSmallerFont;
     }
 }
 

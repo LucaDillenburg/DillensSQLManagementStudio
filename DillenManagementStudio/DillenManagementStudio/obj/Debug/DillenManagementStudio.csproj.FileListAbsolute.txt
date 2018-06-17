@@ -28,3 +28,13 @@ D:\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudi
 D:\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.CoreCompileInputs.cache
 D:\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
 D:\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe.config
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.pdb
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csprojResolveAssemblyReference.cache
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.Form1.resources
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.Properties.Resources.resources
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.GenerateResource.Cache
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.CoreCompileInputs.cache
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
+E:\DILLEN MANAGEMENT STUDIO\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb

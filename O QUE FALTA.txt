@@ -1,7 +1,16 @@
- - Quando executar com rdAutomatic fazer uma fila de queries e non-queries (se houver um select nao selecionar o ultimo nonQuery)
+ - Arrumar btnExecute:
+Quando executar com rdAutomatic fazer uma fila de queries e non-queries (se houver um select nao selecionar o ultimo nonQuery)
 insert % into
 update
 drop % table
 alter % table
 select
- - Programar botoes btnSave e btnOtherDtBs
+sp_help
+
+ - Programar botoes btnBiggerFont e btnSmallersFont, btnSave e btnOtherDtBs (splash)
+
+ - fazer classe MyString (get e set + metodos string)
+
+ - quando surgir algum erro (por causa da sintaxe, ver documentacao), explicar sintaxe do comando: splash + sem banco (nova conexao: con2)
+
+ - mudar cor das palavras de acordo com a palavra

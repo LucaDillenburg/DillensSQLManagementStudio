@@ -41,6 +41,7 @@
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnBiggerFont = new System.Windows.Forms.Button();
             this.btnSmallerFont = new System.Windows.Forms.Button();
+            this.btnAllTables = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,7 +102,7 @@
             this.btnChangeDtBs.Name = "btnChangeDtBs";
             this.btnChangeDtBs.Size = new System.Drawing.Size(113, 23);
             this.btnChangeDtBs.TabIndex = 15;
-            this.btnChangeDtBs.Text = "Change database";
+            this.btnChangeDtBs.Text = "Select database";
             this.btnChangeDtBs.UseVisualStyleBackColor = true;
             this.btnChangeDtBs.Click += new System.EventHandler(this.btnChangeDtBs_Click);
             // 
@@ -175,11 +176,22 @@
             this.btnSmallerFont.Text = "-";
             this.btnSmallerFont.UseVisualStyleBackColor = true;
             // 
+            // btnAllTables
+            // 
+            this.btnAllTables.Location = new System.Drawing.Point(1280, 57);
+            this.btnAllTables.Name = "btnAllTables";
+            this.btnAllTables.Size = new System.Drawing.Size(66, 23);
+            this.btnAllTables.TabIndex = 28;
+            this.btnAllTables.Text = "All tables";
+            this.btnAllTables.UseVisualStyleBackColor = true;
+            this.btnAllTables.Click += new System.EventHandler(this.btnAllTables_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 703);
+            this.Controls.Add(this.btnAllTables);
             this.Controls.Add(this.btnSmallerFont);
             this.Controls.Add(this.btnBiggerFont);
             this.Controls.Add(this.lbTitle);
@@ -219,6 +231,7 @@
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.Button btnBiggerFont;
         private System.Windows.Forms.Button btnSmallerFont;
+        private System.Windows.Forms.Button btnAllTables;
     }
 }
 

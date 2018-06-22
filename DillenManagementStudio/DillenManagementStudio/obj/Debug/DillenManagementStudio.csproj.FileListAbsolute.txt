@@ -58,7 +58,6 @@ F:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\
 F:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.CoreCompileInputs.cache
 F:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
 F:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb
-<<<<<<< HEAD
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe.config
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.pdb
@@ -79,5 +78,3 @@ C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementSt
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.pdb
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmDillenSQLManagementStudio.resources
-=======
->>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f

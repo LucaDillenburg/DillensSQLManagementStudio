@@ -30,6 +30,9 @@ namespace DillenManagementStudio
 
         //form methods
         public FrmDillenSQLManagementStudio()
+=======
+        public Form1()
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
         {
             InitializeComponent();
 
@@ -144,6 +147,10 @@ namespace DillenManagementStudio
             String allCodes = "";
             for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
                 allCodes += " " + this.rchtxtCode.Lines[i];
+=======
+            for (int i = 0; i < this.txtCode.Lines.Length; i++)
+                allCodes += " " + this.txtCode.Lines[i];
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
 
             if (rdNonQuery.Checked)
                 this.executeEachSQLCmd(allCodes, false, true);
@@ -164,6 +171,8 @@ namespace DillenManagementStudio
         {
             this.grvSelect.DataSource = this.allTablesFromDtBs();
         }
+=======
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -175,6 +184,14 @@ namespace DillenManagementStudio
             { }
         }
         
+=======
+
+        private void btnAllTables_Click(object sender, EventArgs e)
+        {
+            this.grvSelect.DataSource = this.allTablesFromDtBs();
+        }
+
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
 
         //class MySqlCommand extends SqlCommand
         private void executeAutomaticSqlCommands(String allCodes)
@@ -208,6 +225,19 @@ namespace DillenManagementStudio
                     if (!worked)
                         cmdNumbersNotWorked.Enqueue(cmdN);
                 }
+=======
+
+            Queue<int> cmdNumbersNotWorked = new Queue<int>();
+            while (codes.Count > 0)
+            {
+                int cmdN = nSQLCommands.Dequeue();
+                //execute SQL commands
+                bool worked = this.executeEachSQLCmd(codes.Dequeue(), cmdN >= 4, !queryExists && codes.Count == 0);
+                //returns true if it worked and false if it didn't work
+
+                if (!worked)
+                    cmdNumbersNotWorked.Enqueue(cmdN);
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
             }
         }
 
@@ -255,6 +285,16 @@ namespace DillenManagementStudio
                     int cmdNumeber = -1;
                     int lastIndexOfAll = -1;
                     int notUsing = IndexOfSupreme(code, nonQueryCommands, 0, ref cmdNumeber, ref lastIndexOfAll);
+=======
+                    string[] nonQueryCommands = new string[4];
+                    nonQueryCommands[0] = "insert%into"; //0
+                    nonQueryCommands[1] = "drop%table";  //1
+                    nonQueryCommands[2] = "alter%table"; //2
+                    nonQueryCommands[3] = "update";      //3
+
+                    int cmdNumeber = -1;
+                    int lastIndexOfAll = IndexOfSupreme(code, nonQueryCommands, 0, ref cmdNumeber, false);
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
 
                     int whereFirstLetter = -1;
                                 //lastIndexOfAll is the first space
@@ -325,6 +365,18 @@ namespace DillenManagementStudio
             Queue<string> codes = new Queue<string>();
             //Enqueue(Object) Add an object in the Queue       
             
+=======
+            //Enqueue(Object) Add an object in the Queue
+
+            string[] commands = new string[6];
+            commands[0] = "insert%into"; //0
+            commands[1] = "drop%table";  //1
+            commands[2] = "alter%table"; //2
+            commands[3] = "update";      //3
+            commands[4] = "select";      //4
+            commands[5] = "sp_help";     //5
+
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
             int startIndex = 0;
             int iCommandBegins = 0;
             int prevCmdNumber = -1; //not any number
@@ -334,6 +386,11 @@ namespace DillenManagementStudio
 
                 int lastIndexOfWords = -1; //not any number
                 int index = IndexOfSupreme(code, commands, startIndex, ref cmdNumber, ref lastIndexOfWords);
+=======
+                int cmdNumber = -1; //any number
+                
+                int index = IndexOfSupreme(code, commands, startIndex, ref cmdNumber, true);
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
 
                 if (index < 0)
                 {
@@ -344,6 +401,21 @@ namespace DillenManagementStudio
 
                     //if i==0, prevCmdNumber is already -1
                     nSQLCommands.Enqueue(prevCmdNumber);
+=======
+                    {
+                        codes.Enqueue(code);
+                        nSQLCommands.Enqueue(-1);
+                    }else
+                    {
+                        if (i == 1)
+                            codes.Enqueue(code);
+                        else
+                            codes.Enqueue(code.Substring(startIndex - 1));
+
+                        nSQLCommands.Enqueue(prevCmdNumber);
+                    }
+                    
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
                     break;
                 }
                 
@@ -383,9 +455,20 @@ namespace DillenManagementStudio
                 {
                     iCommandBegins = startIndex;
                     cmdNumber = -1;
+=======
+                    if(i == 1)
+                        codes.Enqueue(code.Substring(0, index));
+                    else
+                           // -1 because it's adding 1 some lines below
+                        codes.Enqueue(code.Substring(startIndex-1, index - startIndex));
+
+                    nSQLCommands.Enqueue(prevCmdNumber);
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
                 }
                 else
                     iCommandBegins = index;
+
+                startIndex = index+1;
 
                 prevCmdNumber = cmdNumber;
             }
@@ -447,6 +530,28 @@ namespace DillenManagementStudio
             iArrayNumber = -1;
 
             for (int i = 0; i< ministrs.Count; i++)
+=======
+        private DataTable allTablesFromDtBs()
+        {
+            return this.con.GetSchema("Tables");
+        }
+
+        //class MyString extends String
+        private int IndexOfSupreme(string str, string[] ministrs, int startIndex, ref int iArrayNumber, bool getFirstLetter)
+        {
+            //bool getFirstLetter: 
+            //if it's true, it will return the index of the first letter of the string that was been search
+                //example: " hi, how are you? ".IndexOfSupreme("how%are", true) => 5
+                //          012345678901234567
+            //if it's false, it will return the index of the last letter of the string
+                //example: " hi, how are you? ".IndexOfSupreme("how%are", true) => 12
+                //          012345678901234567
+
+            int ret = str.Length;
+            iArrayNumber = -1;
+
+            for (int i = 0; i< ministrs.Length; i++)
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
             {
                 int currentIndex;
                 int currentLastIndex = -1;
@@ -460,11 +565,20 @@ namespace DillenManagementStudio
                 }
                 else
                     currentIndex = indexOfWithNWhiteSpaces(str, ministrs[i].Substring(0, indexPerc), ministrs[i].Substring(indexPerc+1), startIndex, ref currentLastIndex);
+=======
+                    if (currentIndex >= 0 && !getFirstLetter)
+                        currentIndex += ministrs[i].Length;
+                }
+                else
+                    currentIndex = indexOfWithNWhiteSpaces(str, ministrs[i].Substring(0, indexPerc), ministrs[i].Substring(indexPerc+1), startIndex, getFirstLetter);
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
                 
                 if (currentIndex >= 0 && currentIndex < ret)
                 {
                     ret = currentIndex;
                     lastLetter = currentLastIndex;
+=======
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
                     iArrayNumber = i;
                 }
             }
@@ -496,6 +610,29 @@ namespace DillenManagementStudio
         
         private int indexOfWithNWhiteSpaces(string str, string ministr1, string ministr2, int startIndex, ref int lastLetter)
         {
+=======
+        {
+            int ret = str.IndexOf(ministr, startIndex, StringComparison.CurrentCultureIgnoreCase);
+            
+            int currentIndex = startIndex-1;
+            int qtdSingQuotMarks = 0;
+            while(true)
+            {
+                currentIndex = str.IndexOf("'", currentIndex+1);
+                if (currentIndex >= 0 && currentIndex < ret)
+                    qtdSingQuotMarks++;
+                else
+                    break;
+            }
+
+            if (qtdSingQuotMarks%2 != 0)
+                return -1;
+            return ret;
+        }
+        
+        private int indexOfWithNWhiteSpaces(string str, string ministr1, string ministr2, int startIndex, bool getFirstLetter)
+        {
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
             //str.indexOf(ministr1%ministr2);
 
             int indexOf1 = indexOfEvenSingQuotMarks(str, ministr1, startIndex);
@@ -515,6 +652,11 @@ namespace DillenManagementStudio
             lastLetter = indexOf2 + ministr2.Length;
             return indexOf1;
             
+=======
+            if(getFirstLetter)
+                return indexOf1;
+            return indexOf2 + ministr2.Length;
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
         }
         
         //not using
@@ -560,10 +702,12 @@ namespace DillenManagementStudio
         }
 
         
+=======
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
     }
 }
 
 //classes:
 // 1. MyString (not static, extends String + metodos)
 // 2. SqlCommands (not static, extends SqlCommands)
-    //todos os metodos com inicial minuscula
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f

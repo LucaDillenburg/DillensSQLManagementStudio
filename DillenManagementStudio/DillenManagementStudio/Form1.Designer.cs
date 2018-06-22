@@ -190,7 +190,11 @@
             this.btnAllTables.UseVisualStyleBackColor = true;
             this.btnAllTables.Click += new System.EventHandler(this.btnAllTables_Click);
             // 
+<<<<<<< HEAD
             // FrmDillenSQLManagementStudio
+=======
+            // Form1
+>>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

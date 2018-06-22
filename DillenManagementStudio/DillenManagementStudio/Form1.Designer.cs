@@ -1,6 +1,6 @@
 ﻿namespace DillenManagementStudio
 {
-    partial class Form1
+    partial class FrmDillenSQLManagementStudio
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -30,7 +30,7 @@
         {
             this.grvSelect = new System.Windows.Forms.DataGridView();
             this.btnExecute = new System.Windows.Forms.Button();
-            this.txtCode = new System.Windows.Forms.RichTextBox();
+            this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             this.rdSelect = new System.Windows.Forms.RadioButton();
             this.rdNonQuery = new System.Windows.Forms.RadioButton();
             this.btnChangeDtBs = new System.Windows.Forms.Button();
@@ -41,6 +41,7 @@
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnBiggerFont = new System.Windows.Forms.Button();
             this.btnSmallerFont = new System.Windows.Forms.Button();
+            this.btnAllTables = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,14 +65,16 @@
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
-            // txtCode
+            // rchtxtCode
             // 
-            this.txtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCode.Location = new System.Drawing.Point(12, 140);
-            this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(749, 465);
-            this.txtCode.TabIndex = 18;
-            this.txtCode.Text = "Write down your SQL code in here...";
+            this.rchtxtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchtxtCode.Location = new System.Drawing.Point(12, 113);
+            this.rchtxtCode.Name = "rchtxtCode";
+            this.rchtxtCode.Size = new System.Drawing.Size(749, 491);
+            this.rchtxtCode.TabIndex = 18;
+            this.rchtxtCode.Text = "Write down your SQL code in here...";
+            this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
+            this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             // 
             // rdSelect
             // 
@@ -81,6 +84,7 @@
             this.rdSelect.Name = "rdSelect";
             this.rdSelect.Size = new System.Drawing.Size(78, 24);
             this.rdSelect.TabIndex = 17;
+            this.rdSelect.TabStop = true;
             this.rdSelect.Text = "Select";
             this.rdSelect.UseVisualStyleBackColor = true;
             // 
@@ -92,16 +96,17 @@
             this.rdNonQuery.Name = "rdNonQuery";
             this.rdNonQuery.Size = new System.Drawing.Size(106, 24);
             this.rdNonQuery.TabIndex = 16;
+            this.rdNonQuery.TabStop = true;
             this.rdNonQuery.Text = "NonQuery";
             this.rdNonQuery.UseVisualStyleBackColor = true;
             // 
             // btnChangeDtBs
             // 
-            this.btnChangeDtBs.Location = new System.Drawing.Point(476, 93);
+            this.btnChangeDtBs.Location = new System.Drawing.Point(280, 83);
             this.btnChangeDtBs.Name = "btnChangeDtBs";
             this.btnChangeDtBs.Size = new System.Drawing.Size(113, 23);
             this.btnChangeDtBs.TabIndex = 15;
-            this.btnChangeDtBs.Text = "Change database";
+            this.btnChangeDtBs.Text = "Select database";
             this.btnChangeDtBs.UseVisualStyleBackColor = true;
             this.btnChangeDtBs.Click += new System.EventHandler(this.btnChangeDtBs_Click);
             // 
@@ -111,9 +116,9 @@
             this.cbxChsDtBs.Items.AddRange(new object[] {
             "My - BD17188",
             "Prática Prof. - BDPRII17188"});
-            this.cbxChsDtBs.Location = new System.Drawing.Point(12, 93);
+            this.cbxChsDtBs.Location = new System.Drawing.Point(12, 85);
             this.cbxChsDtBs.Name = "cbxChsDtBs";
-            this.cbxChsDtBs.Size = new System.Drawing.Size(443, 21);
+            this.cbxChsDtBs.Size = new System.Drawing.Size(247, 21);
             this.cbxChsDtBs.TabIndex = 14;
             // 
             // rdAutomatic
@@ -140,7 +145,7 @@
             // 
             // btnOtherDtBs
             // 
-            this.btnOtherDtBs.Location = new System.Drawing.Point(669, 93);
+            this.btnOtherDtBs.Location = new System.Drawing.Point(416, 83);
             this.btnOtherDtBs.Name = "btnOtherDtBs";
             this.btnOtherDtBs.Size = new System.Drawing.Size(75, 23);
             this.btnOtherDtBs.TabIndex = 23;
@@ -151,7 +156,7 @@
             // 
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Modern No. 20", 36F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitle.Location = new System.Drawing.Point(338, 9);
+            this.lbTitle.Location = new System.Drawing.Point(322, 9);
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(703, 50);
             this.lbTitle.TabIndex = 24;
@@ -159,7 +164,7 @@
             // 
             // btnBiggerFont
             // 
-            this.btnBiggerFont.Location = new System.Drawing.Point(724, 117);
+            this.btnBiggerFont.Location = new System.Drawing.Point(724, 85);
             this.btnBiggerFont.Name = "btnBiggerFont";
             this.btnBiggerFont.Size = new System.Drawing.Size(29, 23);
             this.btnBiggerFont.TabIndex = 25;
@@ -168,18 +173,29 @@
             // 
             // btnSmallerFont
             // 
-            this.btnSmallerFont.Location = new System.Drawing.Point(689, 117);
+            this.btnSmallerFont.Location = new System.Drawing.Point(689, 85);
             this.btnSmallerFont.Name = "btnSmallerFont";
             this.btnSmallerFont.Size = new System.Drawing.Size(29, 23);
             this.btnSmallerFont.TabIndex = 26;
             this.btnSmallerFont.Text = "-";
             this.btnSmallerFont.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // btnAllTables
+            // 
+            this.btnAllTables.Location = new System.Drawing.Point(1280, 57);
+            this.btnAllTables.Name = "btnAllTables";
+            this.btnAllTables.Size = new System.Drawing.Size(66, 23);
+            this.btnAllTables.TabIndex = 28;
+            this.btnAllTables.Text = "All tables";
+            this.btnAllTables.UseVisualStyleBackColor = true;
+            this.btnAllTables.Click += new System.EventHandler(this.btnAllTables_Click);
+            // 
+            // FrmDillenSQLManagementStudio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 703);
+            this.Controls.Add(this.btnAllTables);
             this.Controls.Add(this.btnSmallerFont);
             this.Controls.Add(this.btnBiggerFont);
             this.Controls.Add(this.lbTitle);
@@ -188,12 +204,12 @@
             this.Controls.Add(this.rdAutomatic);
             this.Controls.Add(this.grvSelect);
             this.Controls.Add(this.btnExecute);
-            this.Controls.Add(this.txtCode);
+            this.Controls.Add(this.rchtxtCode);
             this.Controls.Add(this.rdSelect);
             this.Controls.Add(this.rdNonQuery);
             this.Controls.Add(this.btnChangeDtBs);
             this.Controls.Add(this.cbxChsDtBs);
-            this.Name = "Form1";
+            this.Name = "FrmDillenSQLManagementStudio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dillenburg\'s Product";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -208,7 +224,7 @@
 
         private System.Windows.Forms.DataGridView grvSelect;
         private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.RichTextBox txtCode;
+        private System.Windows.Forms.RichTextBox rchtxtCode;
         private System.Windows.Forms.RadioButton rdSelect;
         private System.Windows.Forms.RadioButton rdNonQuery;
         private System.Windows.Forms.Button btnChangeDtBs;
@@ -219,6 +235,7 @@
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.Button btnBiggerFont;
         private System.Windows.Forms.Button btnSmallerFont;
+        private System.Windows.Forms.Button btnAllTables;
     }
 }
 

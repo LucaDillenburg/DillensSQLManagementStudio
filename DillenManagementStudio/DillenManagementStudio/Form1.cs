@@ -12,21 +12,75 @@ using System.Data.SqlClient;
 
 namespace DillenManagementStudio
 {
-    public partial class Form1 : Form
+    public partial class FrmDillenSQLManagementStudio : Form
     {
+        protected const bool testandoSemInternet = true;
+
+        //to separe commands
+        protected List<string> commands = new List<string>();
+        
+        protected int iCommandExec;
+        protected int iFirstProc;
+        protected int firstQuery;
+
+        //conection
         protected string connStr;
         protected SqlConnection con;
+                
 
-        public Form1()
+        //form methods
+        public FrmDillenSQLManagementStudio()
         {
             InitializeComponent();
+
+            //GET ALL PROCEDURES AND FUNCIONS
+            int nProcFunc = 0;
+//fazer
+        
+            //INICIALIZAR COMMANDS
+            //NON-QUERIES
+            this.commands.Add("insert%into ");
+            this.commands.Add("drop%table ");
+            this.commands.Add("alter%table ");
+            this.commands.Add("delete%from ");
+            this.commands.Add("update ");
+            this.commands.Add("create%table ");
+            this.commands.Add("create%rule ");
+            this.commands.Add("drop%proc ");
+            this.commands.Add("drop%procedure ");
+            this.commands.Add("drop%function ");
+            this.commands.Add("drop%trigger ");
+            //PROCEDURES, FUNCTIONS, TRIGGER
+            this.iFirstProc = this.commands.Count;
+            this.commands.Add("create%proc ");
+            this.commands.Add("create%procedure ");
+            this.commands.Add("alter%proc ");
+            this.commands.Add("alter%procedure ");
+            this.commands.Add("create%function ");
+            this.commands.Add("alter%function ");
+            this.commands.Add("create%trigger ");
+            //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
+            this.commands.Add("exec ");
+            iCommandExec = this.commands.Count - 1;
+            //QUERIES
+            this.firstQuery = this.commands.Count;
+            this.commands.Add("sp_bindrule ");
+            this.commands.Add("sp_unbindrule ");
+            this.commands.Add("select ");
+            this.commands.Add("sp_help ");
+            //for (int i = 0; i < nProcFunc; i++)
+            //    this.commands.Add(procedures[i]);
+//fazer
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.cbxChsDtBs.SelectedIndex = 0;
 
-            btnChangeDtBs.PerformClick();
+            if(!testandoSemInternet)
+                btnChangeDtBs.PerformClick();
+
+            this.rchtxtCode.Focus();
         }
 
         private void btnChangeDtBs_Click(object sender, EventArgs e)
@@ -60,49 +114,110 @@ namespace DillenManagementStudio
             MessageBox.Show("Database connected!");
         }
 
-        private void btnExecute_Click(object sender, EventArgs e)
+        private void rchtxtCode_TextChanged(object sender, EventArgs e)
         {
-            //put txtCode.Items in a String (with spaces between each line)
-            String code = "";
-            for (int i = 0; i < this.txtCode.Lines.Length; i++)
-                code += " " + this.txtCode.Lines[i];
+            //put different colors in the numbers and commands
+        }
 
-            if (rdNonQuery.Checked)
-                this.executeSQL(code, false, true);
-            else
-            if (rdSelect.Checked)
-                this.executeSQL(code, true, false);
-            else
+        private void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            //put spaces when the user presses tab
+            if (e.KeyCode == Keys.Tab)
             {
-                //separate the whole code in commands in a QUEUE
-                Queue<int> codeIsQuery = new Queue<int>();
-                Queue<string> codes = this.transformCodeInCommands(code, ref codeIsQuery);
-                //Dequeue()	Remove and retorns the first object of the Queue
+                MessageBox.Show("Working on it!");
+                //if nothing is selected and shift is not pressed
+                //put 3 spaces in from of the 
 
-                MessageBox.Show("depois");
+                //if something is selected
+                //if shift isn't pressed
+                //put 3 spaces in the beginning of each selected lines
+                //else
+                //remove maximum 3 of possible spaces in from of the selected lines
 
-                bool queryExists = false;
-                Queue<int> clIsQuery = new Queue<int>(codeIsQuery);
-                while (clIsQuery.Count > 0)
-                {
-                    if(codeIsQuery.Dequeue() >= 4)
-                    {
-                        queryExists = true;
-                        break;
-                    }
-                }
-
-                while (codes.Count > 0)
-                    //execute SQL commands
-                    this.executeSQL(codes.Dequeue(), codeIsQuery.Dequeue() >= 4, !queryExists && codes.Count==0);
+                //show the key was already managed
             }
         }
 
-        private void executeSQL(string code, bool queryExecution, bool executeQueryFromNonQuery)
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            //put txtCode.Items in a String (with spaces between each line)
+            String allCodes = "";
+            for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
+                allCodes += " " + this.rchtxtCode.Lines[i];
+
+            if (rdNonQuery.Checked)
+                this.executeEachSQLCmd(allCodes, false, true);
+            else
+            if (rdSelect.Checked)
+                this.executeEachSQLCmd(allCodes, true, false);
+            else
+            {
+                this.executeAutomaticSqlCommands(allCodes);
+
+                //dequeue every repeated number
+
+                //ask if the user wants to know how's the syntax of the command
+            }
+        }
+        
+        private void btnAllTables_Click(object sender, EventArgs e)
+        {
+            this.grvSelect.DataSource = this.allTablesFromDtBs();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                this.con.Close();
+            }
+            catch (Exception err)
+            { }
+        }
+        
+
+        //class MySqlCommand extends SqlCommand
+        private void executeAutomaticSqlCommands(String allCodes)
+        {
+            //separate the whole code in commands in a QUEUE
+            Queue<int> nSQLCommands = new Queue<int>();
+            Queue<string> codes = this.transformCodeInCommands(allCodes, ref nSQLCommands);
+            //Dequeue()	Remove and retorns the first object of the Queue
+
+            bool queryExists = false;
+            Queue<int> clIsQuery = new Queue<int>(nSQLCommands);
+            while (clIsQuery.Count > 0)
+            {
+                if(clIsQuery.Dequeue() >= 4)
+                {
+                    queryExists = true;
+                    break;
+                }
+            }
+
+            if(!testandoSemInternet)
+            {
+                Queue<int> cmdNumbersNotWorked = new Queue<int>();
+                while (codes.Count > 0)
+                {
+                    int cmdN = nSQLCommands.Dequeue();
+                    //execute SQL commands
+                    bool worked = this.executeEachSQLCmd(codes.Dequeue(), cmdN >= 4, !queryExists && codes.Count == 0);
+                    //returns true if it worked and false if it didn't work
+
+                    if (!worked)
+                        cmdNumbersNotWorked.Enqueue(cmdN);
+                }
+            }
+        }
+
+        private bool executeEachSQLCmd(string code, bool queryExecution, bool executeQueryFromNonQuery)
         {
             //execute query or nonQuery depending on the radioButtons
             //if it's a query, show it in the DataGridView 
             //else try to show select of that whole table that was changed
+
+            //returns true if it worked and false if it didn't work
 
             if (!queryExecution && !String.IsNullOrWhiteSpace(code))
             {
@@ -116,43 +231,44 @@ namespace DillenManagementStudio
                     if (iResult <= 0)
                     {
                         MessageBox.Show("Non Query error! No exception raised...");
-                        return;
+                        return false;
                     }
                     else
+                    if(this.rdNonQuery.Checked)
                         MessageBox.Show("Non Query completed!");
                 }
                 catch (Exception err)
                 {
                     MessageBox.Show("Non Query error: " + err);
-                    return;
+                    return false;
                 }
 
-                //transform code in the code to see all the top 50 of a table
-                int lastIndexOfInsert = code.LastIndexOf("Insert", StringComparison.CurrentCultureIgnoreCase); //not case sensitive
-                int lastIndexOfUpdate = code.LastIndexOf("Update", StringComparison.CurrentCultureIgnoreCase); //not case sensitive
+                if (executeQueryFromNonQuery)
+                {
+                    //do a select based on 
+                    List<string> nonQueryCommands = new List<string>();
+                    nonQueryCommands[0] = "insert%into"; //0
+                    nonQueryCommands[1] = "alter%table"; //2
+                    nonQueryCommands[2] = "create%table";        //3
+                    nonQueryCommands[3] = "update";      //3
 
-                //Select from UPDATED table or INSERTED table
-                int lastIndexOfAll;
+                    int cmdNumeber = -1;
+                    int lastIndexOfAll = -1;
+                    int notUsing = IndexOfSupreme(code, nonQueryCommands, 0, ref cmdNumeber, ref lastIndexOfAll);
 
-                if (lastIndexOfInsert > lastIndexOfUpdate)
-                    lastIndexOfAll = code.IndexOf("into", lastIndexOfInsert, StringComparison.CurrentCultureIgnoreCase) + 4;
-                else
-                    lastIndexOfAll = lastIndexOfUpdate + 6;
+                    int whereFirstLetter = -1;
+                                //lastIndexOfAll is the first space
+                    for (int i = lastIndexOfAll+1; i<code.Length; i++)
+                        if (code[i] != ' ')
+                        {
+                            whereFirstLetter = i;
+                            break;
+                        }
 
-                if (lastIndexOfAll < 0)
-                    return;
-
-                int whereFirstLetter = -1;
-                for (int i = lastIndexOfAll; ; i++)
-                    if (code[i] != ' ')
-                    {
-                        whereFirstLetter = i;
-                        break;
-                    }
-
-                int length = code.IndexOf(" ", whereFirstLetter) - whereFirstLetter;
-                String tableName = code.Substring(whereFirstLetter, length);
-                code = "Select top(100)* from " + tableName;
+                    int length = code.IndexOf(" ", whereFirstLetter) - whereFirstLetter;
+                    String tableName = code.Substring(whereFirstLetter, length);
+                    code = "Select top(100)* from " + tableName;
+                }
             }
 
             //just execute it if it has something in the code and if it is a query execution or if it doesn't have any query in the whole code
@@ -173,14 +289,14 @@ namespace DillenManagementStudio
                     {
                         DataTable tab = new DataTable();
                         this.grvSelect.DataSource = tab;
-                        MessageBox.Show("Non Query error! No exception raised...");
-                        return;
+                        MessageBox.Show("Query error! No exception raised...");
+                        return false;
                     }
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show("Non Query error: " + err);
-                    return;
+                    MessageBox.Show("Query error: " + err);
+                    return false;
                 }
 
                 //change number of rows and columns of the DataGridView
@@ -188,7 +304,7 @@ namespace DillenManagementStudio
                 DataTable table = new DataTable();
 
                 for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
-                    table.Columns.Add(ds.Tables[0].Columns[i].ColumnName + " (" + ds.Tables[0].Columns[i].DataType.ToString() + ")", typeof(string));
+                    table.Columns.Add(ds.Tables[0].Columns[i].ColumnName + " (" + ds.Tables[0].Columns[i].DataType.ToString() + ")", ds.Tables[0].Columns[i].DataType==typeof(bool)?typeof(string): ds.Tables[0].Columns[i].DataType);
 
                 for (int ir = 0; ir < ds.Tables[0].Rows.Count; ir++)
                     table.Rows.Add(ds.Tables[0].Rows[ir].ItemArray);
@@ -199,44 +315,77 @@ namespace DillenManagementStudio
                 if (rdSelect.Checked)
                     MessageBox.Show("Selection completed!");
             }
+
+            return true;
         }
 
-        private Queue<string> transformCodeInCommands(string code, ref Queue<int> codeIsQuery)
+        private Queue<string> transformCodeInCommands(string code, ref Queue<int> nSQLCommands)
         {
             //separate the whole code in commands in a QUEUE
             Queue<string> codes = new Queue<string>();
-            //Enqueue(Object) Add an object in the Queue
-
-            string[] commands = new string[6];
-            commands[0] = "insert%into"; //0
-            commands[1] = "drop%table";  //1
-            commands[2] = "alter%table"; //2
-            commands[3] = "update";      //3
-            commands[4] = "select";      //4
-            commands[5] = "sp_help";     //5
+            //Enqueue(Object) Add an object in the Queue       
             
             int startIndex = 0;
-            int prevCmdNumber = -1; //any number
+            int iCommandBegins = 0;
+            int prevCmdNumber = -1; //not any number
             for(int i = 0; ; i++)
             {
-                int cmdNumber = -1; //any number
-                
-                int index = IndexOfSupreme(code, commands, startIndex, ref cmdNumber);
-                MessageBox.Show(index+"");
+                int cmdNumber = -1; //not any number
+
+                int lastIndexOfWords = -1; //not any number
+                int index = IndexOfSupreme(code, commands, startIndex, ref cmdNumber, ref lastIndexOfWords);
 
                 if (index < 0)
                 {
-                    codes.Enqueue(code.Substring(startIndex));
-                    codeIsQuery.Enqueue(prevCmdNumber);
+                    if (i == 0)
+                        codes.Enqueue(code);
+                    else
+                        codes.Enqueue(code.Substring(iCommandBegins));
+
+                    //if i==0, prevCmdNumber is already -1
+                    nSQLCommands.Enqueue(prevCmdNumber);
                     break;
                 }
-
-                if(i > 0)
+                
+                string oneCommand = code.Substring(iCommandBegins, index - iCommandBegins);
+                if(!String.IsNullOrWhiteSpace(oneCommand))
                 {
-                    codes.Enqueue(code.Substring(startIndex, index));
-                    codeIsQuery.Enqueue(prevCmdNumber);
-                    startIndex = index;
+                    codes.Enqueue(oneCommand);
+                    nSQLCommands.Enqueue(prevCmdNumber);
                 }
+
+                if (cmdNumber >= iFirstProc && cmdNumber < iCommandExec)
+                {
+                    //colocar startIndex apos ultimo end
+                    // ou depois do primeiro command
+                    int lastIndexOfCmd = -1; //not any number
+                    int indexAnyCommand = IndexOfSupreme(code, commands, lastIndexOfWords + 1, ref cmdNumber, ref lastIndexOfCmd);
+                    int indexBegin = code.IndexOf("begin", lastIndexOfWords, StringComparison.CurrentCultureIgnoreCase);
+
+                    if (indexBegin < 0 || indexAnyCommand < indexBegin)
+                    {
+                        //the procedure, function or trigger has just one command
+                        startIndex = lastIndexOfCmd + 1;
+                    } else
+                        startIndex = this.lastIndexProc(code, indexBegin) + 1;
+                } else
+                    startIndex = lastIndexOfWords + 1;
+
+                //if it's the first command, pick since the beginning of the string
+                if (i == 0)
+                {
+                    iCommandBegins = 0;
+                    if (cmdNumber == iCommandExec)
+                        code = code.Substring(0, index) + code.Substring(index + this.commands[iCommandExec].Length);
+                }
+                else
+                if (cmdNumber == iCommandExec)
+                {
+                    iCommandBegins = startIndex;
+                    cmdNumber = -1;
+                }
+                else
+                    iCommandBegins = index;
 
                 prevCmdNumber = cmdNumber;
             }
@@ -244,65 +393,157 @@ namespace DillenManagementStudio
             return codes;
         }
 
-        private int IndexOfSupreme(string code, string[] commands, int startIndex, ref int cmdNumber)
+        private int lastIndexProc(string code, int indexBegin)
         {
-            int ret = code.Length;
-            cmdNumber = -1;
+            //the procedure, function or trigger has more than one command
+            int lastIndexBeginEnd = indexBegin+5; //index after first begin
+            int qtdBegin = 1; //the first begin was already counted
 
-            for (int i = 0; i<commands.Length; i++)
+            while (true)
+            {
+                int indexEnd = code.IndexOf("end", lastIndexBeginEnd, StringComparison.CurrentCultureIgnoreCase);
+                indexBegin = code.IndexOf("begin", lastIndexBeginEnd, StringComparison.CurrentCultureIgnoreCase);
+
+                //error: the user forgot some "end"s
+                if (indexEnd < 0 && indexBegin < 0)
+                    break;
+
+                //indexBegin cannot be -1 (inexistent)
+                if (indexBegin >= 0 && indexBegin < indexEnd)
+                {
+                    qtdBegin++;
+                    lastIndexBeginEnd = indexBegin + 4; //after the "begin"
+                }
+                else
+                {
+                    qtdBegin--;
+                    lastIndexBeginEnd = indexEnd + 3; //after the "end"
+
+                    if (qtdBegin == 0)
+                        break;
+                }
+            }
+
+            return lastIndexBeginEnd;
+        }
+
+        private DataTable allTablesFromDtBs()
+        {
+            return this.con.GetSchema("Tables");
+        }
+
+
+        //class MyString extends String
+        private int IndexOfSupreme(string str, List<String> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
+        {
+            //function will return the index of the first letter of the string that was been search
+                //example: " hi, how are you? ".IndexOfSupreme("how%are") => 5
+                //          012345678901234567
+            //lastLetter: it will return the index of the last letter of the string
+                //example: " hi, how are you? ".IndexOfSupreme("how%are", lastLetter) => lastLetter = 12
+                //          012345678901234567
+            
+            int ret = str.Length;
+            iArrayNumber = -1;
+
+            for (int i = 0; i< ministrs.Count; i++)
             {
                 int currentIndex;
+                int currentLastIndex = -1;
 
-                int indexPerc = commands[i].IndexOf("%");
+                int indexPerc = ministrs[i].IndexOf("%");
                 if (indexPerc < 0)
-                    currentIndex = code.IndexOf(commands[i], startIndex);
+                {
+                    currentIndex = indexOfEvenSingQuotMarks(str, ministrs[i], startIndex);
+                    if (currentIndex >= 0)
+                        currentLastIndex = currentIndex + ministrs[i].Length;
+                }
                 else
-                    currentIndex = indexOfWithNWhiteSpaces(code, commands[i].Substring(0, indexPerc), commands[i].Substring(indexPerc+1), startIndex);
+                    currentIndex = indexOfWithNWhiteSpaces(str, ministrs[i].Substring(0, indexPerc), ministrs[i].Substring(indexPerc+1), startIndex, ref currentLastIndex);
                 
                 if (currentIndex >= 0 && currentIndex < ret)
                 {
                     ret = currentIndex;
-                    cmdNumber = i;
+                    lastLetter = currentLastIndex;
+                    iArrayNumber = i;
                 }
             }
 
-            if (ret == code.Length)
+            if (ret == str.Length)
                 return -1;
             return ret;
         }
 
-        //str.indexOf(ministr1%ministr2);
-        private int indexOfWithNWhiteSpaces(string str, string ministr1, string ministr2, int startIndex)
+        private int indexOfEvenSingQuotMarks(string str, string ministr, int startIndex)
         {
-            int indexOf1 = str.IndexOf(ministr1, startIndex, StringComparison.CurrentCultureIgnoreCase);
+            int ret = str.IndexOf(ministr, startIndex, StringComparison.CurrentCultureIgnoreCase);
+            
+            int currentIndex = startIndex-1;
+            int qtdSingQuotMarks = 0;
+            while(true)
+            {
+                currentIndex = str.IndexOf("'", currentIndex+1);
+                if (currentIndex >= 0 && currentIndex < ret)
+                    qtdSingQuotMarks++;
+                else
+                    break;
+            }
+
+            if (qtdSingQuotMarks%2 != 0)
+                return -1;
+            return ret;
+        }
+        
+        private int indexOfWithNWhiteSpaces(string str, string ministr1, string ministr2, int startIndex, ref int lastLetter)
+        {
+            //str.indexOf(ministr1%ministr2);
+
+            int indexOf1 = indexOfEvenSingQuotMarks(str, ministr1, startIndex);
             
             if (indexOf1 < 0)
                 return indexOf1;
 
-            int indexOf2 = str.IndexOf(ministr2, indexOf1+ministr1.Length+2, StringComparison.CurrentCultureIgnoreCase);
+            int indexOf2 = str.IndexOf(ministr2, indexOf1 + ministr1.Length + 1, StringComparison.CurrentCultureIgnoreCase);
 
             if(indexOf2 < 0)
                 return indexOf2;
 
-            for (int i = indexOf1; i < indexOf2; i++)
+            for (int i = indexOf1 + ministr1.Length; i < indexOf2; i++)
                 if (str[i] != ' ')
                     return -1;
 
+            lastLetter = indexOf2 + ministr2.Length;
             return indexOf1;
+            
+        }
+        
+        //not using
+        private int indexOfStringArray(string str, string[] strArray, int startIndex)
+        {
+            int ret = -1;
+
+            foreach(string searchStr in strArray)
+            {
+                int indexStr = str.IndexOf(searchStr, startIndex, StringComparison.CurrentCultureIgnoreCase);
+                if (indexStr < ret)
+                    ret = indexStr;
+            }
+
+            return ret;
         }
 
         private int indexOfStringArrayWithNWhiteSpaces(string str, string[] ministr1, string[] ministr2, int startIndex)
         {
             int ret = -1;
 
-            for(int i = 0; i<ministr1.Length; i++)
+            for (int i = 0; i < ministr1.Length; i++)
             {
                 int indexOf1 = str.IndexOf(ministr1[i], startIndex, StringComparison.CurrentCultureIgnoreCase);
 
                 if (indexOf1 >= 0)
                 {
                     int indexOf2 = str.IndexOf(ministr2[i], indexOf1 + ministr1.Length + 2, StringComparison.CurrentCultureIgnoreCase);
-                    
+
                     for (int iAux = indexOf1; iAux < indexOf2; iAux++)
                         if (str[iAux] != ' ')
                         {
@@ -312,29 +553,17 @@ namespace DillenManagementStudio
 
                     if (indexOf2 >= 0 && indexOf1 < ret)
                         ret = indexOf1;
-                }                
+                }
             }
 
             return ret;
         }
 
-        private int indexOfStringArray(string str, string[] strArray, int startIndex)
-        {
-            int ret = -1;
-
-            foreach(string searchStr in strArray)
-            {
-                int indexStr = str.IndexOf(searchStr, startIndex);
-                if (indexStr < ret)
-                    ret = indexStr;
-            }
-
-            return ret;
-        }
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.con.Close();
-        }
+        
     }
 }
+
+//classes:
+// 1. MyString (not static, extends String + metodos)
+// 2. SqlCommands (not static, extends SqlCommands)
+    //todos os metodos com inicial minuscula

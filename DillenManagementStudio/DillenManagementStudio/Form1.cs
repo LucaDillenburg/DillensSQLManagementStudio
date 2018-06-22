@@ -29,6 +29,7 @@ namespace DillenManagementStudio
                 
 
         //form methods
+<<<<<<< HEAD
         public FrmDillenSQLManagementStudio()
 =======
         public Form1()
@@ -145,6 +146,7 @@ namespace DillenManagementStudio
         {
             //put txtCode.Items in a String (with spaces between each line)
             String allCodes = "";
+<<<<<<< HEAD
             for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
                 allCodes += " " + this.rchtxtCode.Lines[i];
 =======
@@ -166,6 +168,7 @@ namespace DillenManagementStudio
                 //ask if the user wants to know how's the syntax of the command
             }
         }
+<<<<<<< HEAD
         
         private void btnAllTables_Click(object sender, EventArgs e)
         {
@@ -183,6 +186,7 @@ namespace DillenManagementStudio
             catch (Exception err)
             { }
         }
+<<<<<<< HEAD
         
 =======
 
@@ -211,6 +215,7 @@ namespace DillenManagementStudio
                     break;
                 }
             }
+<<<<<<< HEAD
 
             if(!testandoSemInternet)
             {
@@ -276,6 +281,7 @@ namespace DillenManagementStudio
                 if (executeQueryFromNonQuery)
                 {
                     //do a select based on 
+<<<<<<< HEAD
                     List<string> nonQueryCommands = new List<string>();
                     nonQueryCommands[0] = "insert%into"; //0
                     nonQueryCommands[1] = "alter%table"; //2
@@ -363,6 +369,7 @@ namespace DillenManagementStudio
         {
             //separate the whole code in commands in a QUEUE
             Queue<string> codes = new Queue<string>();
+<<<<<<< HEAD
             //Enqueue(Object) Add an object in the Queue       
             
 =======
@@ -382,6 +389,7 @@ namespace DillenManagementStudio
             int prevCmdNumber = -1; //not any number
             for(int i = 0; ; i++)
             {
+<<<<<<< HEAD
                 int cmdNumber = -1; //not any number
 
                 int lastIndexOfWords = -1; //not any number
@@ -395,6 +403,7 @@ namespace DillenManagementStudio
                 if (index < 0)
                 {
                     if (i == 0)
+<<<<<<< HEAD
                         codes.Enqueue(code);
                     else
                         codes.Enqueue(code.Substring(iCommandBegins));
@@ -453,6 +462,7 @@ namespace DillenManagementStudio
                 else
                 if (cmdNumber == iCommandExec)
                 {
+<<<<<<< HEAD
                     iCommandBegins = startIndex;
                     cmdNumber = -1;
 =======
@@ -476,6 +486,7 @@ namespace DillenManagementStudio
             return codes;
         }
 
+<<<<<<< HEAD
         private int lastIndexProc(string code, int indexBegin)
         {
             //the procedure, function or trigger has more than one command
@@ -560,6 +571,7 @@ namespace DillenManagementStudio
                 if (indexPerc < 0)
                 {
                     currentIndex = indexOfEvenSingQuotMarks(str, ministrs[i], startIndex);
+<<<<<<< HEAD
                     if (currentIndex >= 0)
                         currentLastIndex = currentIndex + ministrs[i].Length;
                 }
@@ -576,6 +588,7 @@ namespace DillenManagementStudio
                 if (currentIndex >= 0 && currentIndex < ret)
                 {
                     ret = currentIndex;
+<<<<<<< HEAD
                     lastLetter = currentLastIndex;
 =======
 >>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
@@ -589,6 +602,7 @@ namespace DillenManagementStudio
         }
 
         private int indexOfEvenSingQuotMarks(string str, string ministr, int startIndex)
+<<<<<<< HEAD
         {
             int ret = str.IndexOf(ministr, startIndex, StringComparison.CurrentCultureIgnoreCase);
             
@@ -649,6 +663,7 @@ namespace DillenManagementStudio
                 if (str[i] != ' ')
                     return -1;
 
+<<<<<<< HEAD
             lastLetter = indexOf2 + ministr2.Length;
             return indexOf1;
             
@@ -701,6 +716,7 @@ namespace DillenManagementStudio
             return ret;
         }
 
+<<<<<<< HEAD
         
 =======
 >>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f
@@ -709,5 +725,9 @@ namespace DillenManagementStudio
 
 //classes:
 // 1. MyString (not static, extends String + metodos)
+<<<<<<< HEAD
+// 2. SqlCommands (not static, extends SqlCommands)
+    //todos os metodos com inicial minuscula
+=======
 // 2. SqlCommands (not static, extends SqlCommands)
 >>>>>>> 4708feee2444a4c8704395b6251ee5d0ef7aa52f

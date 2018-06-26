@@ -17,24 +17,45 @@ namespace DillenManagementStudio
         protected List<string> commands;
         protected List<string> reservedWords;
 
-        //text color
-        protected bool erasedQuotationMark = false;
+        //richTextBox color
+        protected List<char> specialChars = new List<char>();
+        protected int iSingQuot;
+
+        //richTextBox color
+        protected bool ctrlZorY = false;
+        protected string lastText = "";
         protected bool erased = false;
+        protected bool erasedQuotationMark = false;
 
         //form methods
         public FrmDillenSQLManagementStudio()
         {
             InitializeComponent();
 
-            this.reservedWords = mySqlCon.ReservedWords;
+            //reserved words
+            reservedWords = mySqlCon.ReservedWords;
+
+            //special chars
+            specialChars.Add(' ');
+            iSingQuot = specialChars.Count;
+            specialChars.Add('\'');
+            specialChars.Add('.');
+            specialChars.Add(';');
+            specialChars.Add(',');
+            specialChars.Add('*');
         }
 
         protected void Form1_Load(object sender, EventArgs e)
         {
             this.cbxChsDtBs.SelectedIndex = 0;
 
+            //set SQL buttons
             this.EnableWichDependsCon(false);
+
+            //set RichTextBox
             this.rchtxtCode.Focus();
+            this.rchtxtCode.SelectionStart = 0;
+            this.rchtxtCode.SelectionLength = this.rchtxtCode.Text.Length;
         }
 
         protected void EnableWichDependsCon(bool enable)
@@ -45,6 +66,11 @@ namespace DillenManagementStudio
             this.rdNonQuery.Enabled = enable;
             this.rdSelect.Enabled = enable;
             this.btnAllProcFunc.Enabled = enable;
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -98,8 +124,11 @@ namespace DillenManagementStudio
         //text procedures
         protected void rchtxtCode_TextChanged(object sender, EventArgs e)
         {
+            //to control the addition of text
+            this.lastText = this.rchtxtCode.Text;
+
             //if there's nothing written in the richTextBox, there's nothing to do
-            if (this.rchtxtCode.Lines.Length == 0)
+            if (this.rchtxtCode.Lines.Length == 0 || this.ctrlZorY)
                 return;
 
             //put different colors in the numbers and commands
@@ -114,8 +143,6 @@ namespace DillenManagementStudio
 
             if (this.erasedQuotationMark)
             {
-                //VERIFICAR
-
                 int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
 
                 //count number of ' before the current '
@@ -124,10 +151,10 @@ namespace DillenManagementStudio
                 int startIndex;
                 if (even)
                 {
-                    startIndex = line.LastIndexOf(" ", indexSingQuot);
+                    startIndex = line.LastIndexOf(specialChars, indexSingQuot);
                     if (startIndex < 0)
                         startIndex = 0;
-                }else
+                } else
                     startIndex = indexSingQuot;
 
                 int endString = 0;
@@ -147,79 +174,149 @@ namespace DillenManagementStudio
                     even = !even;
                     startIndex = endString;
                 }
-            }else
+            } else
             {
-                bool isNewSingQuot = false;
-                try { isNewSingQuot = !erased && line[this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1] == '\''; } catch(Exception err) { }
-
-                if (isNewSingQuot)
+                for (int i = 0; i < 2; i++)
                 {
-                    //VERIFICAR
-                    int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
-
-                    //count number of ' before the current '
-                    bool even = line.countAppearances('\'', 0, indexSingQuot) % 2 == 0;
-
-                    int endString = 0;
-                    while (endString < line.Length)
-                    {
-                        endString = line.IndexOf('\'', indexSingQuot + 1);
-                        if (endString < 0)
-                            endString = line.Length;
-
-                        if (!even)
-                            this.putAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
-                        else
-                            this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot, endString);
-
-                        even = !even;
-                        indexSingQuot = endString + 1;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 2; i++)
+                    if (i == 0) //word to the left
+                        this.putWordRealColor(line, qtdCharsOtherLines);
+                    else //word to the right
                     {
                         int firstWordLetter;
-                        if (i == 0)
-                            firstWordLetter = line.Substring(0, this.rchtxtCode.SelectionStart - qtdCharsOtherLines).TrimEnd().LastIndexOf(" ") + 1;
-                        else
+                        try
                         {
-                            try
+                            char c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
+                            int equalsNumber = c.EqualsList(specialChars);
+
+                            if (equalsNumber >= 0 && !this.erased) //if user had writter any special char
                             {
-                                //if he had just written a space
-                                if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1] == ' ')
+                                if (equalsNumber == iSingQuot) //single quotation mark
+                                {
+                                    int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
+
+                                    //count number of ' before the current '
+                                    bool even = line.countAppearances('\'', 0, indexSingQuot) % 2 == 0;
+                                    //even: put everything in red
+                                    //odd: put real word color
+
+                                    int endString = 0;
+                                    while (endString < line.Length)
+                                    {
+                                        endString = line.IndexOf('\'', indexSingQuot + 1);
+                                        if (endString < 0)
+                                            endString = line.Length;
+
+                                        if (even)
+                                            this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot, endString);
+                                        else
+                                            this.putAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
+
+                                        even = !even;
+                                        indexSingQuot = endString + 1;
+                                    }
+                                } else //any other special char
+                                {
                                     firstWordLetter = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
-                                else
-                                    break;
-                            }
-                            catch (Exception err)
-                            {
-                                break;
+                                    bool isString = false;
+                                    this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
+
+                                    if (!isString)
+                                        this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, this.rchtxtCode.SelectionStart - qtdCharsOtherLines);
+                                    else
+                                        this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, this.rchtxtCode.SelectionStart - qtdCharsOtherLines);
+                                }
                             }
                         }
-
-                        this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines);
+                        catch (Exception err)
+                        {
+                            break;
+                        }
                     }
                 }
             }
         }
 
+        protected void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            this.erasedQuotationMark = false;
+            this.erased = false;
+            this.ctrlZorY = false;
+
+            //put spaces when the user presses tab
+            if (e.KeyCode == Keys.Tab)
+            {
+
+                //AcceptsTab
+
+                //MessageBox.Show("Working on it!");
+                //if nothing is selected and shift is not pressed
+                //put 3 spaces in from of the 
+
+                //if something is selected
+                //if shift isn't pressed
+                //put 3 spaces in the beginning of each selected lines
+                //else
+                //remove maximum 3 of possible spaces in from of the selected lines
+
+                //show the key was already managed
+            }
+            else
+            if (e.KeyCode == Keys.Enter)
+            {
+                //if the user wrote "begin" and then just spaces, when he presses [Enter] 
+                //and the cursor is in front of the "begin":
+                //  begin
+                //    [cursor]
+                //  end
+            }
+            else
+            if (e.KeyCode == Keys.Back)
+            {
+                this.erased = true;
+
+                try
+                {
+                    //if user was erasing an Single Quote
+                    if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1] == '\'')
+                        this.erasedQuotationMark = true;
+                }
+                catch (Exception err)
+                { }
+            }
+            else
+            if (e.KeyCode == Keys.Z)
+            {
+                if (ModifierKeys.HasFlag(Keys.Control))
+                    this.ctrlZ = true;
+            }
+            else
+            if (e.KeyCode == Keys.Y)
+            {
+                if (ModifierKeys.HasFlag(Keys.Control))
+                    this.ctrlZ = true;
+            }
+        }
+
+        
+        //put word(s) real color
         protected void putAllWordsRealColorFromIndex(string line, int startIndex, int endString, int qtdCharsOtherLines)
         {
-            //VERIFICAR
             int proxIndex = line.Length;
             while (true)
             {
-                int lastChar = line.IndexOf(" ", startIndex);
-
-                if (lastChar < endString)
-                    break;
+                int lastChar = line.IndexOf(specialChars, startIndex, endString);
+                if (lastChar < 0)
+                {
+                    if (endString >= line.Length)
+                        lastChar = line.Length;
+                    else
+                        break;
+                }
 
                 this.putWordRealColor(line, startIndex, lastChar, qtdCharsOtherLines);
 
                 if (proxIndex == line.Length)
-                    startIndex = line.IndexOf(" ", startIndex, endString);
+                    startIndex = line.IndexOf(specialChars, startIndex, endString);
                 else
                     startIndex = proxIndex;
 
@@ -227,29 +324,59 @@ namespace DillenManagementStudio
                     break;
                 startIndex++;
 
-                proxIndex = line.IndexOf(" ", startIndex, endString);
+                proxIndex = line.IndexOf(specialChars, startIndex, endString);
                 if (proxIndex > endString)
                     break;
             }
         }
 
+        protected void putWordRealColor(string line, int qtdCharsOtherLines)
+        {
+            bool isString = false;
+            this.putWordRealColor(line, qtdCharsOtherLines, ref isString);
+        }
+
+        protected void putWordRealColor(string line, int qtdCharsOtherLines, ref bool isString)
+        {
+            int end = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 2;
+            int firstLetter;
+            if (end >= 0)
+                firstLetter = line.LastIndexOf(specialChars, end) + 1;
+            else
+                firstLetter = 0;
+            this.putWordRealColor(line, firstLetter, qtdCharsOtherLines, ref isString);
+        }
+
         protected void putWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines)
         {
-            int lastChar = line.IndexOf(" ", firstWordLetter);
-            this.putWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines);
+            bool isString = false;
+            this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
+        }
+        
+        protected void putWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines, ref bool isString)
+        {
+            int lastChar = line.IndexOf(specialChars, firstWordLetter);
+            if (lastChar < 0)
+                lastChar = line.Length;
+            this.putWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
         }
 
         protected void putWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines)
         {
-            if (lastChar < 0)
-                lastChar = line.Length;
-
+            bool isString = false;
+            this.putWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
+        }
+        
+        protected void putWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines, ref bool isString)
+        {
             int lengthFromSpace = (lastChar - firstWordLetter) + 1;
             string newWord = line.Substring(firstWordLetter, lengthFromSpace - 1);
 
             //the new word won't change anything if it's between quotations marks
             int count = line.countAppearances('\'', 0, lastChar);
-            if (count % 2 == 0)
+            isString = count % 2 != 0;
+
+            if (!isString)
             {
                 //if it's numeric put the number in red
                 if (int.TryParse(newWord, out int res))
@@ -278,6 +405,8 @@ namespace DillenManagementStudio
                 this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
         }
 
+
+        //auxiliary
         protected int IndexOfLine(int index, ref int qtdCharsOtherLines)
         {
             int indexOfLine = 0;
@@ -295,51 +424,6 @@ namespace DillenManagementStudio
                     qtdCharsOtherLines += lengthLine + 1;
                     indexOfLine++;
                 }
-            }
-        }
-
-        protected void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            this.erasedQuotationMark = false;
-            this.erased = false;
-
-            //put spaces when the user presses tab
-            if (e.KeyCode == Keys.Tab)
-            {
-
-                //AcceptsTab
-
-                //MessageBox.Show("Working on it!");
-                //if nothing is selected and shift is not pressed
-                //put 3 spaces in from of the 
-
-                //if something is selected
-                //if shift isn't pressed
-                //put 3 spaces in the beginning of each selected lines
-                //else
-                //remove maximum 3 of possible spaces in from of the selected lines
-
-                //show the key was already managed
-            }else
-            if(e.KeyCode == Keys.Enter)
-            {
-                //if the user wrote "begin" and then just spaces, when he presses [Enter] 
-                //and the cursor is in front of the "begin":
-                //  begin
-                //    [cursor]
-                //  end
-            }else
-            if(e.KeyCode == Keys.Back)
-            {
-                this.erased = true;
-
-                try
-                {
-                    //if user was erasing an Single Quote
-                    if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1] == '\'')
-                        this.erasedQuotationMark = true;
-                }catch(Exception err)
-                { }                
             }
         }
 
@@ -439,18 +523,10 @@ namespace DillenManagementStudio
         }
 
 
-
-
-
         //testss
         private void FrmDillenSQLManagementStudio_Click(object sender, EventArgs e)
         {
             //
-        }
-
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDillenSQLManagementStudio));
             this.grvSelect = new System.Windows.Forms.DataGridView();
             this.btnExecute = new System.Windows.Forms.Button();
-            this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             this.rdSelect = new System.Windows.Forms.RadioButton();
             this.rdNonQuery = new System.Windows.Forms.RadioButton();
             this.btnChangeDtBs = new System.Windows.Forms.Button();
@@ -57,6 +56,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,15 +75,6 @@
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
-            // 
-            // rchtxtCode
-            // 
-            this.rchtxtCode.AcceptsTab = true;
-            resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
-            this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.rchtxtCode.Name = "rchtxtCode";
-            this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
-            this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             // 
             // rdSelect
             // 
@@ -252,6 +243,15 @@
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
+            // rchtxtCode
+            // 
+            this.rchtxtCode.AcceptsTab = true;
+            resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
+            this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.rchtxtCode.Name = "rchtxtCode";
+            this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
+            this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
+            // 
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
@@ -295,7 +295,6 @@
 
         private System.Windows.Forms.DataGridView grvSelect;
         private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.RichTextBox rchtxtCode;
         private System.Windows.Forms.RadioButton rdSelect;
         private System.Windows.Forms.RadioButton rdNonQuery;
         private System.Windows.Forms.Button btnChangeDtBs;
@@ -321,6 +320,7 @@
         private System.Windows.Forms.ToolStripMenuItem allCommandsSintaxToolStripMenuItem;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnMinimize;
+        private System.Windows.Forms.RichTextBox rchtxtCode;
     }
 }
 

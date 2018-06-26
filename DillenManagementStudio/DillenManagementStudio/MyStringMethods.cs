@@ -10,6 +10,7 @@ namespace DillenManagementStudio
     //to use it: "str.method(other parameters)" or "method(str, other parameters)"
     public static class MyStringMethods
     {
+        ///MY STRING'S METHODS
         //method will returns the index of the first ministr in the str (case insensitive and multiple spaces)
         //iArrayNumber: which position of the ministr list
         //lastLetter: the last letter of the ministr
@@ -153,7 +154,53 @@ namespace DillenManagementStudio
             return ret;
         }
 
+
+        ///indexOf and LastIndexOf List<char>
+        // method returns de first indexOf of the list of char
+        //
+        public static int IndexOf(this string str, List<char> chars, int startIndex)
+        {
+            return str.IndexOf(chars, startIndex, str.Length);
+        }
+
+        public static int IndexOf(this string str, List<char> chars, int startIndex, int endIndex)
+        {
+            int ret = str.Length;
+
+            for (int i = 0; i < chars.Count; i++)
+            {
+                int currentIndex = str.IndexOf(chars[i], startIndex, endIndex - startIndex);
+
+                if (currentIndex >= 0 && currentIndex < ret)
+                    ret = currentIndex;
+            }
+
+            if (ret == str.Length)
+                return -1;
+            return ret;
+        }
+
+        // method returns de lastIndexOf of the list of char
+        //
+        public static int LastIndexOf(this string str, List<char> chars, int endIndex)
+        {
+            int ret = -1;
+
+            for (int i = 0; i < chars.Count; i++)
+            {
+                int currentIndex = str.LastIndexOf(chars[i], endIndex);
+
+                if (currentIndex > ret)
+                    ret = currentIndex;
+            }
+            
+            return ret;
+        }
+
+
+        ///methods COUNT APPEARANCES
         //method returns the number of appearances of some char from an index to another
+        //
         public static int countAppearances(this string str, char c, int startIndex, int endIndex)
         {
             int index = startIndex;
@@ -169,15 +216,30 @@ namespace DillenManagementStudio
         }
 
         //method returns the number of appearances of some char from an index
+        //
         public static int countAppearances(this string str, char c, int startIndex)
         {
             return str.countAppearances(c, startIndex, str.Length);
         }
 
         //method returns the number of appearances of some char
+        //
         public static int countAppearances(this string str, char c)
         {
             return str.countAppearances(c, 0);
+        }
+
+
+        ///CHAR EXTENSIONS
+        public static int EqualsList(this char c, List<char> list)
+        {
+            for(int i = 0; i < list.Count; i++)
+            {
+                if (c == list[i])
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

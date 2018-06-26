@@ -42,6 +42,8 @@
             this.btnBiggerFont = new System.Windows.Forms.Button();
             this.btnSmallerFont = new System.Windows.Forms.Button();
             this.btnAllTables = new System.Windows.Forms.Button();
+            this.btnAllProcFunc = new System.Windows.Forms.Button();
+            this.lbExecutionResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // btnExecute
             // 
             this.btnExecute.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExecute.Location = new System.Drawing.Point(294, 635);
+            this.btnExecute.Location = new System.Drawing.Point(293, 647);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(161, 48);
             this.btnExecute.TabIndex = 19;
@@ -67,11 +69,13 @@
             // 
             // rchtxtCode
             // 
+            this.rchtxtCode.AcceptsTab = true;
             this.rchtxtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtCode.Location = new System.Drawing.Point(12, 113);
             this.rchtxtCode.Name = "rchtxtCode";
             this.rchtxtCode.Size = new System.Drawing.Size(749, 491);
-            this.rchtxtCode.TabIndex = 18;
+            this.rchtxtCode.TabIndex = 0;
             this.rchtxtCode.Text = "Write down your SQL code in here...";
             this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
             this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
@@ -80,7 +84,7 @@
             // 
             this.rdSelect.AutoSize = true;
             this.rdSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdSelect.Location = new System.Drawing.Point(91, 642);
+            this.rdSelect.Location = new System.Drawing.Point(90, 654);
             this.rdSelect.Name = "rdSelect";
             this.rdSelect.Size = new System.Drawing.Size(78, 24);
             this.rdSelect.TabIndex = 17;
@@ -92,7 +96,7 @@
             // 
             this.rdNonQuery.AutoSize = true;
             this.rdNonQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdNonQuery.Location = new System.Drawing.Point(91, 621);
+            this.rdNonQuery.Location = new System.Drawing.Point(90, 633);
             this.rdNonQuery.Name = "rdNonQuery";
             this.rdNonQuery.Size = new System.Drawing.Size(106, 24);
             this.rdNonQuery.TabIndex = 16;
@@ -126,7 +130,7 @@
             this.rdAutomatic.AutoSize = true;
             this.rdAutomatic.Checked = true;
             this.rdAutomatic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdAutomatic.Location = new System.Drawing.Point(91, 663);
+            this.rdAutomatic.Location = new System.Drawing.Point(90, 675);
             this.rdAutomatic.Name = "rdAutomatic";
             this.rdAutomatic.Size = new System.Drawing.Size(108, 24);
             this.rdAutomatic.TabIndex = 21;
@@ -136,7 +140,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(565, 653);
+            this.btnSave.Location = new System.Drawing.Point(564, 665);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(86, 30);
             this.btnSave.TabIndex = 22;
@@ -190,11 +194,34 @@
             this.btnAllTables.UseVisualStyleBackColor = true;
             this.btnAllTables.Click += new System.EventHandler(this.btnAllTables_Click);
             // 
+            // btnAllProcFunc
+            // 
+            this.btnAllProcFunc.Location = new System.Drawing.Point(1095, 57);
+            this.btnAllProcFunc.Name = "btnAllProcFunc";
+            this.btnAllProcFunc.Size = new System.Drawing.Size(165, 23);
+            this.btnAllProcFunc.TabIndex = 29;
+            this.btnAllProcFunc.Text = "All Procedures and Functions";
+            this.btnAllProcFunc.UseVisualStyleBackColor = true;
+            // 
+            // lbExecutionResult
+            // 
+            this.lbExecutionResult.AutoSize = true;
+            this.lbExecutionResult.Font = new System.Drawing.Font("Modern No. 20", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbExecutionResult.ForeColor = System.Drawing.Color.Red;
+            this.lbExecutionResult.Location = new System.Drawing.Point(32, 607);
+            this.lbExecutionResult.Name = "lbExecutionResult";
+            this.lbExecutionResult.Size = new System.Drawing.Size(201, 18);
+            this.lbExecutionResult.TabIndex = 30;
+            this.lbExecutionResult.Text = "Not Successfull Execution";
+            this.lbExecutionResult.Visible = false;
+            // 
             // FrmDillenSQLManagementStudio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 703);
+            this.Controls.Add(this.lbExecutionResult);
+            this.Controls.Add(this.btnAllProcFunc);
             this.Controls.Add(this.btnAllTables);
             this.Controls.Add(this.btnSmallerFont);
             this.Controls.Add(this.btnBiggerFont);
@@ -214,6 +241,7 @@
             this.Text = "Dillenburg\'s Product";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Click += new System.EventHandler(this.FrmDillenSQLManagementStudio_Click);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -236,6 +264,8 @@
         private System.Windows.Forms.Button btnBiggerFont;
         private System.Windows.Forms.Button btnSmallerFont;
         private System.Windows.Forms.Button btnAllTables;
+        private System.Windows.Forms.Button btnAllProcFunc;
+        private System.Windows.Forms.Label lbExecutionResult;
     }
 }
 

@@ -81,3 +81,16 @@ C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementSt
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\en-US\DillenManagementStudio.resources.dll
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmDillenSQLManagementStudio.en-US.resources
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\en-US\DillenManagementStudio.resources.dll
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe.config
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.exe
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\bin\Debug\DillenManagementStudio.pdb
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\bin\Debug\en-US\DillenManagementStudio.resources.dll
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csprojResolveAssemblyReference.cache
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmDillenSQLManagementStudio.resources
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.Properties.Resources.resources
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmDillenSQLManagementStudio.en-US.resources
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.GenerateResource.Cache
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.csproj.CoreCompileInputs.cache
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\en-US\DillenManagementStudio.resources.dll
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio - Copia\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb

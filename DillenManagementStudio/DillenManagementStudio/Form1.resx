@@ -505,13 +505,13 @@
     <value>786, 84</value>
   </data>
   <data name="lbExecutionResult.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 18</value>
+    <value>162, 18</value>
   </data>
   <data name="lbExecutionResult.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
   <data name="lbExecutionResult.Text" xml:space="preserve">
-    <value>Not Successfull Execution</value>
+    <value>Succesfully executed!</value>
   </data>
   <data name="lbExecutionResult.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -531,18 +531,6 @@
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 19</value>
-  </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="allCommandsSintaxToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 19</value>
-  </data>
-  <data name="allCommandsSintaxToolStripMenuItem.Text" xml:space="preserve">
-    <value>All commands sintax</value>
-  </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -566,6 +554,12 @@
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>18</value>
+  </data>
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 19</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 22</value>
@@ -602,6 +596,12 @@
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="allCommandsSintaxToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 19</value>
+  </data>
+  <data name="allCommandsSintaxToolStripMenuItem.Text" xml:space="preserve">
+    <value>All commands sintax</value>
   </data>
   <data name="btnClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -713,6 +713,9 @@
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>37</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>

@@ -1,0 +1,32 @@
+ 1. nao esta retornando a query se tem algum non-query depois
+ 2. //verificar
+
+
+   ___ TEXT COLOR ___
+1. 
+//antes
+'joaozinho'[espaco]
+
+//depois
+'joaozinho'
+
+
+
+2. 
+//antes
+create function heysa()
+returns table
+as
+ return select nome from aluno
+
+//depois
+create function heysa()
+returns s
+as
+ return select nome from aluno
+
+
+
+se esta selecionado mais de um caracter e aperta qualquer tecla que nao seja [Delete] e [Backspace], ele da pau
+
+01234567890123456789012345678901234567890

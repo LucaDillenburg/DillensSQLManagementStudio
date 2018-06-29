@@ -82,6 +82,7 @@
             this.rdSelect.Name = "rdSelect";
             this.rdSelect.TabStop = true;
             this.rdSelect.UseVisualStyleBackColor = true;
+            this.rdSelect.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
             // 
             // rdNonQuery
             // 
@@ -89,6 +90,7 @@
             this.rdNonQuery.Name = "rdNonQuery";
             this.rdNonQuery.TabStop = true;
             this.rdNonQuery.UseVisualStyleBackColor = true;
+            this.rdNonQuery.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
             // 
             // btnChangeDtBs
             // 
@@ -113,6 +115,7 @@
             this.rdAutomatic.Name = "rdAutomatic";
             this.rdAutomatic.TabStop = true;
             this.rdAutomatic.UseVisualStyleBackColor = true;
+            this.rdAutomatic.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
             // 
             // btnOtherDtBs
             // 
@@ -151,11 +154,12 @@
             resources.ApplyResources(this.btnAllProcFunc, "btnAllProcFunc");
             this.btnAllProcFunc.Name = "btnAllProcFunc";
             this.btnAllProcFunc.UseVisualStyleBackColor = true;
+            this.btnAllProcFunc.Click += new System.EventHandler(this.btnAllProcFunc_Click);
             // 
             // lbExecutionResult
             // 
             resources.ApplyResources(this.lbExecutionResult, "lbExecutionResult");
-            this.lbExecutionResult.ForeColor = System.Drawing.Color.Red;
+            this.lbExecutionResult.ForeColor = System.Drawing.Color.Green;
             this.lbExecutionResult.Name = "lbExecutionResult";
             // 
             // menuStrip

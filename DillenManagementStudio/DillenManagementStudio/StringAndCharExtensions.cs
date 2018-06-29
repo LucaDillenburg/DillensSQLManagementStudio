@@ -8,10 +8,10 @@ namespace DillenManagementStudio
 {
     //this class and methods are enabled for every string (because it's static and because of the parameter "this string str")
     //to use it: "str.method(other parameters)" or "method(str, other parameters)"
-    public static class MyStringMethods
+    public static class StringAndCharExtensions
     {
         ///MY STRING'S METHODS
-        //method will returns the index of the first ministr in the str (case insensitive and multiple spaces)
+        //method returns the index of the first ministr in the str (case insensitive and multiple spaces)
         //iArrayNumber: which position of the ministr list
         //lastLetter: the last letter of the ministr
         //to show multiple spaces in a string put "%"
@@ -122,7 +122,7 @@ namespace DillenManagementStudio
             return ret;
         }
 
-        //method will returns the index of the first ministr in the str (case insensitive)
+        //method returns the index of the first ministr in the str (case insensitive)
         //iArrayNumber: which position of the ministr list
         //lastLetter: the last letter of the ministr
         public static int IndexOfFirstMinistrListCI(this string str, List<String> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
@@ -154,15 +154,44 @@ namespace DillenManagementStudio
             return ret;
         }
 
+        // method returns the index of the first letter different in he strings
+        //
+        public static int IndexDiferent(this string str, string otherStr)
+        {
+            string str1; //smaller
+            string str2; //larger
+            if(otherStr.Length < str.Length)
+            {
+                str1 = otherStr;
+                str2 = str;
+            }else
+            {
+                str1 = str;
+                str2 = otherStr;
+            }
+
+            for (int i = 0; i < str1.Length; i++)
+                if (str1[i] != str2[i])
+                    return i;
+
+            if (str.Length == otherStr.Length)
+                //nothing different
+                return -1;
+            else
+                return str1.Length;
+        }
+
 
         ///indexOf and LastIndexOf List<char>
-        // method returns de first indexOf of the list of char
+        // method returns de first indexOf of the list of char from a startIndex
         //
         public static int IndexOf(this string str, List<char> chars, int startIndex)
         {
             return str.IndexOf(chars, startIndex, str.Length);
         }
 
+        // method returns de first indexOf of the list of char from a startIndex to an endIndex
+        //
         public static int IndexOf(this string str, List<char> chars, int startIndex, int endIndex)
         {
             int ret = str.Length;
@@ -201,7 +230,7 @@ namespace DillenManagementStudio
         ///methods COUNT APPEARANCES
         //method returns the number of appearances of some char from an index to another
         //
-        public static int countAppearances(this string str, char c, int startIndex, int endIndex)
+        public static int CountAppearances(this string str, char c, int startIndex, int endIndex)
         {
             int index = startIndex;
             int ret = -1;
@@ -217,16 +246,51 @@ namespace DillenManagementStudio
 
         //method returns the number of appearances of some char from an index
         //
-        public static int countAppearances(this string str, char c, int startIndex)
+        public static int CountAppearances(this string str, char c, int startIndex)
         {
-            return str.countAppearances(c, startIndex, str.Length);
+            return str.CountAppearances(c, startIndex, str.Length);
         }
 
         //method returns the number of appearances of some char
         //
-        public static int countAppearances(this string str, char c)
+        public static int CountAppearances(this string str, char c)
         {
-            return str.countAppearances(c, 0);
+            return str.CountAppearances(c, 0);
+        }
+
+
+        ///First Word after a string
+        // method returns the first word after an string
+        //
+        public static string FirstWord(this string str, string ministr)
+        {
+            int index = str.IndexOf(ministr);
+            if (index < 0)
+                throw new Exception("The searchen string doesn't exist in this string!");
+            return str.FirstWord(index + ministr.Length);
+        }
+
+        // method returns the first word after an index
+        //
+        public static string FirstWord(this string str, int index)
+        {
+            if (index < 0 || index >= str.Length)
+                throw new Exception("Invalid index!");
+
+            try
+            {
+                while (str[index] == ' ')
+                    index++;
+            }catch(Exception e)
+            {
+                throw new Exception("There's no more words after this index!");
+            }
+
+            List<char> lis = new List<char>();
+            lis.Add(' ');
+            lis.Add('(');
+
+            return str.Substring(index, str.IndexOf(lis, index) - index);
         }
 
 

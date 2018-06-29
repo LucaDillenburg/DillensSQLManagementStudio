@@ -23,19 +23,26 @@ namespace DillenManagementStudio
         protected int iCommandExec;
         protected int iFirstQuery;
         protected int iFirstRealProc;
-        //others indexes
+        protected int iFirstRealFunc;
+        //to do a select based on a non-query
         protected int iDropTable;
         protected int iCreateTrigger;
         protected int iAlterTrigger;
+        //to add or remove procedures and functions from this.commands
+        protected int iCreateProc;
+        protected int iCreateProcedure;
+        protected int iCreateFunc;
+        protected int iDropProc;
+        protected int iDropProcedure;
+        protected int iDropFunc;
+        //other
+        protected int iSpHelp;
         //nonQuery to select
         protected List<string> nonQueryToSelect = new List<string>();
 
         //reserved words
         protected List<string> reservedWords = new List<string>();
-
-        //tables
-        protected List<string> tables = new List<string>();
-
+        
         public MySqlConnection()
         {
             //Non Query To Select
@@ -141,7 +148,8 @@ namespace DillenManagementStudio
         {
             get
             {
-                return new List<string>(this.tables);
+                //fazer?
+                return new List<string>();
             }
         }
 
@@ -160,7 +168,6 @@ namespace DillenManagementStudio
             this.con.Open();
 
             this.PutAllCommands();
-            this.PutAllTables();
         }
 
         protected void PutAllCommands()
@@ -177,17 +184,23 @@ namespace DillenManagementStudio
             this.commands.Add("update ");
             this.commands.Add("create table ");
             this.commands.Add("create rule ");
+            this.iDropProc = this.commands.Count;
             this.commands.Add("drop proc ");
+            this.iDropProcedure = this.commands.Count;
             this.commands.Add("drop procedure ");
+            this.iDropFunc = this.commands.Count;
             this.commands.Add("drop function ");
             this.commands.Add("drop trigger ");
-            
+
             //PROCEDURES, FUNCTIONS, TRIGGER
             this.iFirstProcFuncTrigger = this.commands.Count; //i BASIC
+            this.iCreateProc = this.commands.Count;
             this.commands.Add("create proc ");
+            this.iCreateProcedure = this.commands.Count;
             this.commands.Add("create procedure ");
             this.commands.Add("alter proc ");
             this.commands.Add("alter procedure ");
+            this.iCreateFunc = this.commands.Count;
             this.commands.Add("create function ");
             this.commands.Add("alter function ");
             this.iCreateTrigger = this.commands.Count; //i
@@ -204,32 +217,85 @@ namespace DillenManagementStudio
             this.commands.Add("sp_bindrule ");
             this.commands.Add("sp_unbindrule ");
             this.commands.Add("select ");
+            this.iSpHelp = this.commands.Count;
             this.commands.Add("sp_help ");
 
             //REAL PROCEDURES AND FUNCTIONS
             //get all procedures and functions
-            int nProcFunc = 0;
-//fazer
             this.iFirstRealProc = this.commands.Count; //i BASIC
-            //for (int i = 0; i < nProcFunc; i++)
-            //    this.commands.Add(procedures[i]);
-//fazer
+
+            if(this.con != null)
+            {
+                for(int ipf = 0; ipf < 2; ipf++)
+                {
+                    string code;
+                    if (ipf == 0)
+                        code = "SELECT NAME from SYS.PROCEDURES";
+                    else
+                    {
+                        code = "SELECT name FROM sys.sql_modules m " +
+                            "INNER JOIN sys.objects o ON m.object_id = o.object_id " +
+                            "WHERE type_desc like '%function%'";
+
+                        //code = "SELECT name AS function_name,SCHEMA_NAME(schema_id) AS schema_name, type_desc" +
+                        //    "FROM sys.objects WHERE type_desc LIKE '%FUNCTION%'";
+                        this.iFirstRealFunc = this.commands.Count; //i BASIC
+                    }
+                    
+                    SqlCommand cmdQ = new SqlCommand(code, this.con);
+
+                    SqlDataAdapter adapt = new SqlDataAdapter(cmdQ);
+
+                    DataSet ds = new DataSet();
+                    adapt.Fill(ds);
+
+                    try
+                    {
+                        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                        {
+                            string nameProc = ds.Tables[0].Rows[i].ItemArray[0].ToString();
+                            this.commands.Add(nameProc);
+                        }
+                    }
+                    catch(Exception e) { }
+                }
+            }
         }
 
-        protected void PutAllTables()
+        public void restartCommands()
         {
-            //fazer
-            //this.tables
+            this.PutAllCommands();
         }
+        
 
-
-        //sql execute
+        //sql execute user commands
         public DataTable ExecuteAutomaticSqlCommands(string allCodes, ref Queue<Error> cmdErrors)
         {
-            //replace multiple spaces with a single space
+            //replace multiple spaces with a single space where it's not an string
             RegexOptions options = RegexOptions.None;
             Regex regex = new Regex("[ ]{2,}", options);
-            allCodes = regex.Replace(allCodes, " ").Trim();
+
+            string auxAllCodes = "";
+            bool isString = false;
+            int startIndex = 0;
+            
+            while (startIndex < allCodes.Length)
+            {
+                int endIndex = allCodes.IndexOf('\'', startIndex + 1);
+                if (endIndex < 0)
+                    endIndex = allCodes.Length;
+
+                string aux = allCodes.Substring(startIndex, endIndex - startIndex);
+                if (isString)
+                    auxAllCodes += aux;
+                else
+                    auxAllCodes += regex.Replace(aux, " ").ToLower();
+
+                startIndex = endIndex;
+                isString = !isString;
+            }
+
+            allCodes = auxAllCodes.Trim();
 
             //separate the whole code in a commands QUEUE
             Queue<int> nSQLCommands = new Queue<int>();
@@ -256,12 +322,13 @@ namespace DillenManagementStudio
                 DataTable auxDtTable = null; //not any value
                 string excep = null;
                 string currCode = codes.Dequeue();
+
+                bool executeQuery = (nQuery == iCode //if it's the last select
+                      || (nQuery < 0 && nNonQuerySelect == iCode)); //if it's the last non-query select and there's no queries
+
                 bool worked = this.ExecuteOneSQLCmd(currCode, 
-                    (cmdN >= this.iFirstQuery && cmdN < this.iFirstRealProc), //isQuery
-                    //executeQuery 
-                    (nQuery == iCode //if it's the last select
-                      || (nQuery < 0 && nNonQuerySelect == iCode)), 
-                    //if it's the last non-query select and there's no queries
+                    (cmdN >= this.iFirstQuery && cmdN < this.iFirstRealProc),
+                    executeQuery,
                     cmdN, ref auxDtTable, ref excep);
                 //returns true if it worked and false if it didn't work
 
@@ -272,7 +339,11 @@ namespace DillenManagementStudio
                 }
                 else
                 {
-                    if(auxDtTable != null)
+                    //if procedure or function was dropped or created, respectively add and remove from this.commands (change iFirstRealFunc if necessary)
+                    if (cmdN == iCreateProc || cmdN == iCreateProcedure || cmdN == iCreateFunc || cmdN == iDropProc || cmdN == iDropProcedure || cmdN == iDropFunc)
+                        this.addOrRemoveProfFunc(currCode, cmdN);
+
+                    if (executeQuery)
                         ultimateDataTable = auxDtTable;
                 }
             }
@@ -402,6 +473,8 @@ namespace DillenManagementStudio
             return false;
         }
 
+        
+        //transform allCodes in a commands Queue
         protected Queue<string> transformCodeInCommands(string code, ref Queue<int> nSQLCommands, ref int nQuery, ref int nNonQuerySelect)
         {
             //separate the whole code in commands in a QUEUE
@@ -421,6 +494,10 @@ namespace DillenManagementStudio
                     index = -1;
                 else
                     index = code.IndexOfFirstMinistrListCI(commands, startIndex, ref cmdNumber, ref lastIndexOfWords);
+
+                //verificar
+                if(codes.Count > 0 && cmdNumber >= this.iFirstRealFunc && prevCmdNumber == this.iSpHelp)
+                    index = code.IndexOfFirstMinistrListCI(commands, index + 1, ref cmdNumber, ref lastIndexOfWords);
 
                 if (index < 0)
                 {
@@ -532,6 +609,79 @@ namespace DillenManagementStudio
         }
 
 
+        //add or remove procedure or function from this.commands (change iFirstRealFunc if necessary)
+        private void addOrRemoveProfFunc(string currCode, int cmdN)
+        {
+            bool create;
+            bool isProc;
+            string cmd;
+            if (cmdN == iCreateProc)
+            {
+                cmd = "create proc";
+                isProc = true;
+                create = true;
+            }
+            else
+            if (cmdN == iCreateProcedure)
+            {
+                cmd = "create procedure";
+                isProc = true;
+                create = true;
+            }
+            else
+            if (cmdN == iCreateFunc)
+            {
+                cmd = "create function";
+                isProc = false;
+                create = true;
+            }
+            else
+            if (cmdN == iDropProc)
+            {
+                cmd = "drop proc";
+                isProc = true;
+                create = false;
+            }
+            else
+            if (cmdN == iDropProcedure)
+            {
+                cmd = "drop procedure";
+                isProc = true;
+                create = false;
+            }
+            else
+            if (cmdN == iDropFunc)
+            {
+                cmd = "drop function";
+                isProc = false;
+                create = false;
+            }
+            else
+                throw new Exception("Invalid command!");
+
+            string procOrFuncName = currCode.FirstWord(cmd);
+
+            //if user created a proc or function
+            if(create)
+            {
+                if (isProc)
+                {
+                    this.commands.Insert(this.iFirstRealProc, procOrFuncName);
+                    this.iFirstRealFunc++;
+                }
+                else
+                    this.commands.Add(procOrFuncName);
+            }else
+            //if user droped a proc or function
+            {
+                this.commands.Remove(procOrFuncName);
+
+                if (isProc)
+                    this.iFirstRealFunc--;
+            }
+        }
+
+
         //test conection
         protected bool IsConected()
         {
@@ -548,13 +698,42 @@ namespace DillenManagementStudio
         }
 
 
-        //others
+        //some sql commands disponbles
         public DataTable AllTables()
         {
             if (this.con == null)
                 throw new Exception("No conection!");
 
             return this.con.GetSchema("Tables");
+        }
+
+        public DataTable AllProcFunc()
+        {
+            DataTable ret = new DataTable();
+
+            for (int i = this.iFirstRealProc; i < this.commands.Count; i++)
+            {
+                SqlCommand cmdQ = new SqlCommand("sp_help " + this.commands[i], this.con);
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmdQ);
+
+                DataSet ds = new DataSet();
+                adapt.Fill(ds);
+                
+                if(i == this.iFirstRealProc)
+                {
+                    //change number of rows and columns of the DataGridView
+                    //put the names of the columns                 
+                    for (int ic = 0; ic < ds.Tables[0].Columns.Count; ic++)
+                        ret.Columns.Add(ds.Tables[0].Columns[ic].ColumnName + " (" + ds.Tables[0].Columns[ic].DataType.ToString() + ")", 
+                            ds.Tables[0].Columns[ic].DataType == typeof(bool) ? typeof(string) : ds.Tables[0].Columns[ic].DataType);
+                }
+
+                for (int ir = 0; ir < ds.Tables[0].Rows.Count; ir++)
+                    ret.Rows.Add(ds.Tables[0].Rows[ir].ItemArray);
+            }
+
+            return ret;
         }
 
 
@@ -593,7 +772,6 @@ namespace DillenManagementStudio
                 ret = ret * 7 + this.connStr.GetHashCode();
 
             ret = ret * 7 + this.commands.GetHashCode();
-            ret = ret * 7 + this.tables.GetHashCode();
             return ret;
         }
 
@@ -609,7 +787,7 @@ namespace DillenManagementStudio
 
             MySqlConnection mySqlCon = (MySqlConnection)obj;
             return (((this.connStr == null && mySqlCon.connStr == null) || this.connStr.Equals(mySqlCon.connStr))
-                && this.commands.Equals(mySqlCon.commands) && this.tables.Equals(mySqlCon.tables));
+                && this.commands.Equals(mySqlCon.commands));
             //every variable is condense in here because the "iCommands" are based on the List<string> commands
             //and "con" is based on "connStr"
         }

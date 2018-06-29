@@ -12,6 +12,7 @@ namespace DillenManagementStudio
         //conection
         protected string connStr;
         protected MySqlConnection mySqlCon = new MySqlConnection();
+        protected bool connected = false;
 
         //commands
         protected List<string> commands;
@@ -21,12 +22,16 @@ namespace DillenManagementStudio
         protected List<char> specialChars = new List<char>();
         protected int iSingQuot;
 
-        //richTextBox color
+        //richTextBox change
         protected bool ctrlZorY = false;
-        protected string lastText = "";
+        protected int lastQtdSingQuot = 0;
         protected bool erased = false;
-        protected bool erasedQuotationMark = false;
 
+        //richTextBox color
+        protected string lastText = "";
+        protected string[] lastLines = new string[0];
+        //protected List<int> 
+        
         //form methods
         public FrmDillenSQLManagementStudio()
         {
@@ -66,6 +71,7 @@ namespace DillenManagementStudio
             this.rdNonQuery.Enabled = enable;
             this.rdSelect.Enabled = enable;
             this.btnAllProcFunc.Enabled = enable;
+            this.connected = enable;
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,58 +130,127 @@ namespace DillenManagementStudio
         //text procedures
         protected void rchtxtCode_TextChanged(object sender, EventArgs e)
         {
-            //to control the addition of text
-            this.lastText = this.rchtxtCode.Text;
-
             //if there's nothing written in the richTextBox, there's nothing to do
             if (this.rchtxtCode.Lines.Length == 0 || this.ctrlZorY)
+            {
+                //to control the addition of text
+                this.lastLines = this.rchtxtCode.Lines;
+                this.lastText = this.rchtxtCode.Text;
+                this.lastQtdSingQuot = 0;
                 return;
+            }
 
-            //put different colors in the numbers and commands
+            ///put red in strings, green in numbers, blue in reserved words and almost black in the rest
+
             int qtdCharsOtherLines = 0;
-            int indexLine = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref qtdCharsOtherLines);
+            int qtdNewChars = this.rchtxtCode.Text.Length - this.lastText.Length;
+            //if something was pasted (more than one char)
+            if(qtdNewChars > 1)
+            {
+                int indexDif = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index added
+                int firstLine = this.IndexOfLine(indexDif, ref qtdCharsOtherLines);
+                int notUsing = -1;
+                int lastLine = this.IndexOfLine(indexDif + qtdNewChars, ref notUsing);
 
+                for(int i = firstLine; i <= lastLine; i++)
+                {
+                    string currLine = this.rchtxtCode.Lines[i];
+
+                    int indexBegin;
+                    int currCoutApp;
+                    if(i==0)
+                    {
+                        indexBegin = indexDif;
+                        currCoutApp = currLine.CountAppearances('\'', 0, indexDif);
+                    }else
+                    {
+                        indexBegin = 0;
+                        currCoutApp = 0;
+                    }
+                    
+                    this.putWordRealColorAlsoString(currLine, indexBegin, currCoutApp, qtdCharsOtherLines);
+                    qtdCharsOtherLines += currLine.Length + 1;
+                }
+
+                this.lastLines = this.rchtxtCode.Lines;
+                this.lastText = this.rchtxtCode.Text;
+
+                return;
+            }
+            
+            int indexLine = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref qtdCharsOtherLines);
             string line = this.rchtxtCode.Lines[indexLine];
 
-            //if the line has just whites spaces, there's nothing to do
-            if (String.IsNullOrWhiteSpace(line))
-                return;
+            int countApp = -1;
+            bool erasedSingQuot = false;
+            if (qtdNewChars < -1) //erased more than one char
+            {
+                //see if user deleted one or more single quotation marks
+                /*int indexStartDeleting = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index deleted
 
-            if (this.erasedQuotationMark)
+                int qtdCharsOtherStartL = -1;
+                int lineStartedDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting, ref qtdCharsOtherStartL);
+                int qtdCharsOtherEndhL = -1;
+                int lineFinishDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting - qtdNewChars, ref qtdCharsOtherEndhL);*/
+
+                int indexStartDeleting = this.rchtxtCode.SelectionStart;
+                int qtdCharsOtherStartL = qtdCharsOtherLines;
+                int lineStartedDeleting = indexLine;
+
+                int qtdCharsOtherEndL = -1;
+                int lineFinishDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting - qtdNewChars, ref qtdCharsOtherEndL);
+
+                if(lineStartedDeleting == lineFinishDeleting)
+                {
+                    int qtdSingQuotInDeleted = this.lastText.CountAppearances('\'', indexStartDeleting, indexStartDeleting - qtdNewChars);
+                    erasedSingQuot = (qtdSingQuotInDeleted % 2 != 0) && (indexStartDeleting - qtdNewChars < this.lastLines[lineStartedDeleting].Length);
+                    //if the deleted chars had even number of single quotation marks, there's nothing to change
+                }else
+                {
+                    int countL1 = this.lastLines[lineStartedDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdCharsOtherStartL);
+                    bool evenL1 = countL1%2==0;
+                    int countL2 = this.lastLines[lineFinishDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdNewChars - qtdCharsOtherEndL);
+                    bool evenL2 = countL2 % 2 == 0;
+
+                    if (evenL1 != evenL2)
+                    {
+                        erasedSingQuot = true;
+                        countApp = countL1;
+                    }
+                }
+
+                if(!erasedSingQuot)
+                {
+                    this.lastLines = this.rchtxtCode.Lines;
+                    this.lastText = this.rchtxtCode.Text;
+                    return;
+                }
+            }
+            
+            if ((qtdNewChars == -1 && this.lastText[this.rchtxtCode.SelectionStart] == '\'') //if just a single quot was erased
+                || erasedSingQuot) //if one or more single quot were erased in just one line and need change
             {
                 int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
 
-                //count number of ' before the current '
-                bool even = line.countAppearances('\'', 0, indexSingQuot) % 2 == 0;
+                if (countApp < 0)
+                    //count number of ' before the current '
+                    countApp = line.CountAppearances('\'', 0, indexSingQuot);
 
-                int startIndex;
-                if (even)
-                {
-                    startIndex = line.LastIndexOf(specialChars, indexSingQuot);
-                    if (startIndex < 0)
-                        startIndex = 0;
-                } else
-                    startIndex = indexSingQuot;
+                this.putWordRealColorAlsoString(line, indexSingQuot, countApp, qtdCharsOtherLines);
 
-                int endString = 0;
-                while (endString < line.Length)
-                {
-                    endString = line.IndexOf('\'', startIndex + 1);
-                    if (endString < 0)
-                        endString = line.Length;
-                    else
-                        endString += (even ? 0 : 1);
-
-                    if (even)
-                        this.putAllWordsRealColorFromIndex(line, startIndex, endString, qtdCharsOtherLines);
-                    else
-                        this.rchtxtCode.ChangeTextColor(Color.Red, startIndex, endString);
-
-                    even = !even;
-                    startIndex = endString;
-                }
-            } else
+                this.lastLines = this.rchtxtCode.Lines;
+                this.lastText = this.rchtxtCode.Text;
+            }
+            else
             {
+                //if the line has just whites spaces, there's nothing to do
+                if (String.IsNullOrWhiteSpace(line))
+                {
+                    this.lastText = this.rchtxtCode.Text;
+                    this.lastLines = this.rchtxtCode.Lines;
+                    return;
+                }
+
                 for (int i = 0; i < 2; i++)
                 {
                     if (i == 0) //word to the left
@@ -188,14 +263,14 @@ namespace DillenManagementStudio
                             char c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
                             int equalsNumber = c.EqualsList(specialChars);
 
-                            if (equalsNumber >= 0 && !this.erased) //if user had writter any special char
+                            if (equalsNumber >= 0) //if user had writter any special char
                             {
-                                if (equalsNumber == iSingQuot) //single quotation mark
+                                if (equalsNumber == iSingQuot && !this.erased) //single quotation mark
                                 {
                                     int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
 
                                     //count number of ' before the current '
-                                    bool even = line.countAppearances('\'', 0, indexSingQuot) % 2 == 0;
+                                    bool even = line.CountAppearances('\'', 0, indexSingQuot) % 2 == 0;
                                     //even: put everything in red
                                     //odd: put real word color
 
@@ -207,12 +282,12 @@ namespace DillenManagementStudio
                                             endString = line.Length;
 
                                         if (even)
-                                            this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot, endString);
+                                            this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot + qtdCharsOtherLines, endString + qtdCharsOtherLines);
                                         else
                                             this.putAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
 
                                         even = !even;
-                                        indexSingQuot = endString + 1;
+                                        indexSingQuot = endString;
                                     }
                                 } else //any other special char
                                 {
@@ -221,9 +296,9 @@ namespace DillenManagementStudio
                                     this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
 
                                     if (!isString)
-                                        this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, this.rchtxtCode.SelectionStart - qtdCharsOtherLines);
+                                        this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
                                     else
-                                        this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, this.rchtxtCode.SelectionStart - qtdCharsOtherLines);
+                                        this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
                                 }
                             }
                         }
@@ -233,12 +308,14 @@ namespace DillenManagementStudio
                         }
                     }
                 }
+
+                this.lastLines = this.rchtxtCode.Lines;
+                this.lastText = this.rchtxtCode.Text;
             }
         }
 
         protected void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            this.erasedQuotationMark = false;
             this.erased = false;
             this.ctrlZorY = false;
 
@@ -270,35 +347,57 @@ namespace DillenManagementStudio
                 //  end
             }
             else
-            if (e.KeyCode == Keys.Back)
-            {
+            if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 this.erased = true;
-
-                try
-                {
-                    //if user was erasing an Single Quote
-                    if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1] == '\'')
-                        this.erasedQuotationMark = true;
-                }
-                catch (Exception err)
-                { }
-            }
             else
             if (e.KeyCode == Keys.Z)
             {
                 if (ModifierKeys.HasFlag(Keys.Control))
-                    this.ctrlZ = true;
+                    this.ctrlZorY = true;
             }
             else
             if (e.KeyCode == Keys.Y)
             {
                 if (ModifierKeys.HasFlag(Keys.Control))
-                    this.ctrlZ = true;
+                    this.ctrlZorY = true;
             }
         }
 
         
-        //put word(s) real color
+        //put words real color 
+        protected void putWordRealColorAlsoString(string line, int indexSingQuot, int countApp, int qtdCharsOtherLines)
+        {
+            bool even = countApp % 2 == 0;
+
+            int startIndex;
+            if (even)
+            {
+                startIndex = line.LastIndexOf(specialChars, indexSingQuot);
+                if (startIndex < 0)
+                    startIndex = 0;
+            }
+            else
+                startIndex = indexSingQuot;
+
+            int endString = 0;
+            while (endString < line.Length)
+            {
+                endString = line.IndexOf('\'', startIndex + 1);
+                if (endString < 0)
+                    endString = line.Length;
+                else
+                    endString += (even ? 0 : 1);
+
+                if (even)
+                    this.putAllWordsRealColorFromIndex(line, startIndex, endString, qtdCharsOtherLines);
+                else
+                    this.rchtxtCode.ChangeTextColor(Color.Red, startIndex + qtdCharsOtherLines, endString + qtdCharsOtherLines);
+
+                even = !even;
+                startIndex = endString;
+            }
+        }
+        
         protected void putAllWordsRealColorFromIndex(string line, int startIndex, int endString, int qtdCharsOtherLines)
         {
             int proxIndex = line.Length;
@@ -311,7 +410,8 @@ namespace DillenManagementStudio
                         lastChar = line.Length;
                     else
                         break;
-                }
+                }else
+                    this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, lastChar + qtdCharsOtherLines, lastChar + 1 + qtdCharsOtherLines);
 
                 this.putWordRealColor(line, startIndex, lastChar, qtdCharsOtherLines);
 
@@ -373,7 +473,7 @@ namespace DillenManagementStudio
             string newWord = line.Substring(firstWordLetter, lengthFromSpace - 1);
 
             //the new word won't change anything if it's between quotations marks
-            int count = line.countAppearances('\'', 0, lastChar);
+            int count = line.CountAppearances('\'', 0, lastChar);
             isString = count % 2 != 0;
 
             if (!isString)
@@ -409,14 +509,19 @@ namespace DillenManagementStudio
         //auxiliary
         protected int IndexOfLine(int index, ref int qtdCharsOtherLines)
         {
+            return this.IndexOfLine(this.rchtxtCode.Lines, index, ref qtdCharsOtherLines);
+        }
+
+        protected int IndexOfLine(string[] lis, int index, ref int qtdCharsOtherLines)
+        {
             int indexOfLine = 0;
             int lengthIndex = index + 1;
 
-            while(true)
+            while (true)
             {
-                int lengthLine = this.rchtxtCode.Lines[indexOfLine].Length;
+                int lengthLine = lis[indexOfLine].Length;
                 if (lengthIndex - lengthLine <= 1)
-                //there're one more position to the cursor to stay (where there's no character in ints front)
+                    //there're one more position to the cursor to stay (where there's no character in ints front)
                     return indexOfLine;
                 else
                 {
@@ -431,31 +536,62 @@ namespace DillenManagementStudio
         //sql execute procedures
         protected void btnExecute_Click(object sender, EventArgs e)
         {
-            bool notification = true;
-//fazer
+            bool allowNotification = true;
+            //fazer
 
+            Queue<int> linesNoEvenQuotMarks = new Queue<int>();
             //put txtCode.Items in a String (with spaces between each line)
             string allCodes = "";
             for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
-                allCodes += " " + this.rchtxtCode.Lines[i];
+            {
+                //if there're even
+                if (this.rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
+                    linesNoEvenQuotMarks.Enqueue(i);
+                else
+                   allCodes += " " + this.rchtxtCode.Lines[i];
+            }
 
-            if(this.rdAutomatic.Checked)
+            if (linesNoEvenQuotMarks.Count > 0)
+            {
+                string msg = "Error! Add closing single quotation marks in lines: ";
+
+                while(linesNoEvenQuotMarks.Count > 0)
+                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count==0?", ":"!");
+
+                MessageBox.Show(msg);
+            } else
+            if (this.rdAutomatic.Checked)
             {
                 Queue<Error> errors = new Queue<Error>();
                 this.grvSelect.DataSource = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors);
 
-                if(notification)
+                if (errors == null || errors.Count == 0)
                 {
-                    if (errors == null || errors.Count == 0)
+                    this.lbExecutionResult.Text = "Succesfully executed!";
+                    this.lbExecutionResult.ForeColor = Color.Green;
+
+                    if (!this.lbExecutionResult.Visible)
+                        this.lbExecutionResult.Visible = true;
+
+                    if (allowNotification)
                         MessageBox.Show("Succesfully executed!");
-                    else
+                }
+                else
+                {
+                    this.lbExecutionResult.Text = "Unsuccesfully executed!";
+                    this.lbExecutionResult.ForeColor = Color.Red;
+
+                    if (!this.lbExecutionResult.Visible)
+                        this.lbExecutionResult.Visible = true;
+
+                    if (allowNotification)
                     {
                         while (errors.Count > 0)
                         {
                             //ask if the user wants to know how's the syntax of the command
                             Error currErr = errors.Dequeue();
 
-                            if(currErr.IsConnectionException)
+                            if (currErr.IsConnectionException)
                             {
                                 MessageBox.Show(currErr.Exception, "SQL Error",
                                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -465,9 +601,9 @@ namespace DillenManagementStudio
                             else
                             {
                                 string message = "Error in code: \n\r" +
-                                              currErr.Code +
-                                              "\n\rError:" +
-                                              currErr.Exception;
+                                                currErr.Code +
+                                                "\n\rError:" +
+                                                currErr.Exception;
 
                                 if (currErr.CodCommand < 0)
                                     MessageBox.Show(message, "SQL Error",
@@ -482,6 +618,7 @@ namespace DillenManagementStudio
                                     if (result == DialogResult.Yes)
                                     {
                                         //fazer
+                                        break;
                                     }
                                 }
                             }
@@ -499,7 +636,7 @@ namespace DillenManagementStudio
 
                 this.grvSelect.DataSource = dataTable;
 
-                if(notification)
+                if(allowNotification)
                 {
                     if (!worked)
                     {
@@ -522,12 +659,27 @@ namespace DillenManagementStudio
             this.grvSelect.DataSource = this.mySqlCon.AllTables();
         }
 
+        private void btnAllProcFunc_Click(object sender, EventArgs e)
+        {
+            this.grvSelect.DataSource = this.mySqlCon.AllProcFunc();
+        }
+
+
+        //others
+        private void rdSelect_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.rdAutomatic.Checked && this.connected)
+                this.mySqlCon.restartCommands();
+        }
+
 
         //testss
         private void FrmDillenSQLManagementStudio_Click(object sender, EventArgs e)
         {
-            //
+            //SELECTION START EH SEMPRE O QUE ESTA MAIS PERTO DO COMECO
+            MessageBox.Show("SelecioctionStart: " + this.rchtxtCode.SelectionStart + "\n\rSelectionLength: " + this.rchtxtCode.SelectionLength);
         }
+                
     }
 }
 

@@ -30,16 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDillenSQLManagementStudio));
             this.grvSelect = new System.Windows.Forms.DataGridView();
-            this.btnExecute = new System.Windows.Forms.Button();
-            this.rdSelect = new System.Windows.Forms.RadioButton();
-            this.rdNonQuery = new System.Windows.Forms.RadioButton();
-            this.btnChangeDtBs = new System.Windows.Forms.Button();
-            this.cbxChsDtBs = new System.Windows.Forms.ComboBox();
-            this.rdAutomatic = new System.Windows.Forms.RadioButton();
-            this.btnOtherDtBs = new System.Windows.Forms.Button();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btnBiggerFont = new System.Windows.Forms.Button();
-            this.btnSmallerFont = new System.Windows.Forms.Button();
             this.btnAllTables = new System.Windows.Forms.Button();
             this.btnAllProcFunc = new System.Windows.Forms.Button();
             this.lbExecutionResult = new System.Windows.Forms.Label();
@@ -52,14 +43,31 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.allCommandsSintaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.allowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.smallerRchtxtFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.largerRchtxtFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.automaticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeNonQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.queryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.rchtxtCode = new System.Windows.Forms.RichTextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lbDatabase = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // grvSelect
@@ -69,78 +77,12 @@
             this.grvSelect.Name = "grvSelect";
             this.grvSelect.ReadOnly = true;
             // 
-            // btnExecute
-            // 
-            resources.ApplyResources(this.btnExecute, "btnExecute");
-            this.btnExecute.Name = "btnExecute";
-            this.btnExecute.UseVisualStyleBackColor = true;
-            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
-            // 
-            // rdSelect
-            // 
-            resources.ApplyResources(this.rdSelect, "rdSelect");
-            this.rdSelect.Name = "rdSelect";
-            this.rdSelect.TabStop = true;
-            this.rdSelect.UseVisualStyleBackColor = true;
-            this.rdSelect.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
-            // 
-            // rdNonQuery
-            // 
-            resources.ApplyResources(this.rdNonQuery, "rdNonQuery");
-            this.rdNonQuery.Name = "rdNonQuery";
-            this.rdNonQuery.TabStop = true;
-            this.rdNonQuery.UseVisualStyleBackColor = true;
-            this.rdNonQuery.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
-            // 
-            // btnChangeDtBs
-            // 
-            resources.ApplyResources(this.btnChangeDtBs, "btnChangeDtBs");
-            this.btnChangeDtBs.Name = "btnChangeDtBs";
-            this.btnChangeDtBs.UseVisualStyleBackColor = true;
-            this.btnChangeDtBs.Click += new System.EventHandler(this.btnChangeDtBs_Click);
-            // 
-            // cbxChsDtBs
-            // 
-            this.cbxChsDtBs.FormattingEnabled = true;
-            this.cbxChsDtBs.Items.AddRange(new object[] {
-            resources.GetString("cbxChsDtBs.Items"),
-            resources.GetString("cbxChsDtBs.Items1")});
-            resources.ApplyResources(this.cbxChsDtBs, "cbxChsDtBs");
-            this.cbxChsDtBs.Name = "cbxChsDtBs";
-            // 
-            // rdAutomatic
-            // 
-            resources.ApplyResources(this.rdAutomatic, "rdAutomatic");
-            this.rdAutomatic.Checked = true;
-            this.rdAutomatic.Name = "rdAutomatic";
-            this.rdAutomatic.TabStop = true;
-            this.rdAutomatic.UseVisualStyleBackColor = true;
-            this.rdAutomatic.CheckedChanged += new System.EventHandler(this.rdSelect_CheckedChanged);
-            // 
-            // btnOtherDtBs
-            // 
-            resources.ApplyResources(this.btnOtherDtBs, "btnOtherDtBs");
-            this.btnOtherDtBs.Name = "btnOtherDtBs";
-            this.btnOtherDtBs.UseVisualStyleBackColor = true;
-            // 
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
-            this.lbTitle.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.lbTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            this.lbTitle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lbTitle.Name = "lbTitle";
-            // 
-            // btnBiggerFont
-            // 
-            resources.ApplyResources(this.btnBiggerFont, "btnBiggerFont");
-            this.btnBiggerFont.Name = "btnBiggerFont";
-            this.btnBiggerFont.UseVisualStyleBackColor = true;
-            // 
-            // btnSmallerFont
-            // 
-            this.btnSmallerFont.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            resources.ApplyResources(this.btnSmallerFont, "btnSmallerFont");
-            this.btnSmallerFont.Name = "btnSmallerFont";
-            this.btnSmallerFont.UseVisualStyleBackColor = true;
             // 
             // btnAllTables
             // 
@@ -164,12 +106,26 @@
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.allCommandsSintaxToolStripMenuItem});
-            resources.ApplyResources(this.menuStrip, "menuStrip");
+            this.changeDatabaseToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.allCommandsSintaxToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.allowToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.smallerRchtxtFontToolStripMenuItem,
+            this.largerRchtxtFontToolStripMenuItem,
+            this.toolStripMenuItem6,
+            this.executeToolStripMenuItem,
+            this.executeAsToolStripMenuItem});
+            this.menuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip.Name = "menuStrip";
+            this.menuStrip.ShowItemToolTips = true;
+            this.menuStrip.TabStop = true;
             // 
             // fileToolStripMenuItem
             // 
@@ -181,6 +137,7 @@
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator2,
             this.closeToolStripMenuItem});
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             // 
@@ -220,10 +177,108 @@
             resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
+            // changeDatabaseToolStripMenuItem
+            // 
+            resources.ApplyResources(this.changeDatabaseToolStripMenuItem, "changeDatabaseToolStripMenuItem");
+            this.changeDatabaseToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.changeDatabaseToolStripMenuItem.Name = "changeDatabaseToolStripMenuItem";
+            this.changeDatabaseToolStripMenuItem.Click += new System.EventHandler(this.changeDatabaseToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
+            this.toolStripMenuItem4.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            // 
             // allCommandsSintaxToolStripMenuItem
             // 
+            this.allCommandsSintaxToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            this.allCommandsSintaxToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.allCommandsSintaxToolStripMenuItem.Name = "allCommandsSintaxToolStripMenuItem";
             resources.ApplyResources(this.allCommandsSintaxToolStripMenuItem, "allCommandsSintaxToolStripMenuItem");
+            // 
+            // toolStripMenuItem1
+            // 
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            this.toolStripMenuItem1.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            // 
+            // allowToolStripMenuItem
+            // 
+            this.allowToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.allowToolStripMenuItem.Name = "allowToolStripMenuItem";
+            resources.ApplyResources(this.allowToolStripMenuItem, "allowToolStripMenuItem");
+            this.allowToolStripMenuItem.Click += new System.EventHandler(this.allowToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
+            // 
+            // toolStripMenuItem5
+            // 
+            resources.ApplyResources(this.toolStripMenuItem5, "toolStripMenuItem5");
+            this.toolStripMenuItem5.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            // 
+            // smallerRchtxtFontToolStripMenuItem
+            // 
+            this.smallerRchtxtFontToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.smallerRchtxtFontToolStripMenuItem.Name = "smallerRchtxtFontToolStripMenuItem";
+            resources.ApplyResources(this.smallerRchtxtFontToolStripMenuItem, "smallerRchtxtFontToolStripMenuItem");
+            this.smallerRchtxtFontToolStripMenuItem.Click += new System.EventHandler(this.smallerRchtxtFontToolStripMenuItem_Click);
+            // 
+            // largerRchtxtFontToolStripMenuItem
+            // 
+            this.largerRchtxtFontToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.largerRchtxtFontToolStripMenuItem.Name = "largerRchtxtFontToolStripMenuItem";
+            resources.ApplyResources(this.largerRchtxtFontToolStripMenuItem, "largerRchtxtFontToolStripMenuItem");
+            this.largerRchtxtFontToolStripMenuItem.Click += new System.EventHandler(this.largerRchtxtFontToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem6
+            // 
+            resources.ApplyResources(this.toolStripMenuItem6, "toolStripMenuItem6");
+            this.toolStripMenuItem6.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            // 
+            // executeToolStripMenuItem
+            // 
+            resources.ApplyResources(this.executeToolStripMenuItem, "executeToolStripMenuItem");
+            this.executeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
+            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
+            // 
+            // executeAsToolStripMenuItem
+            // 
+            this.executeAsToolStripMenuItem.Checked = true;
+            this.executeAsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.executeAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.automaticToolStripMenuItem,
+            this.executeNonQueryToolStripMenuItem,
+            this.queryToolStripMenuItem});
+            this.executeAsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.executeAsToolStripMenuItem.Name = "executeAsToolStripMenuItem";
+            resources.ApplyResources(this.executeAsToolStripMenuItem, "executeAsToolStripMenuItem");
+            this.executeAsToolStripMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            // 
+            // automaticToolStripMenuItem
+            // 
+            this.automaticToolStripMenuItem.Name = "automaticToolStripMenuItem";
+            resources.ApplyResources(this.automaticToolStripMenuItem, "automaticToolStripMenuItem");
+            this.automaticToolStripMenuItem.Click += new System.EventHandler(this.automaticToolStripMenuItem_Click);
+            // 
+            // executeNonQueryToolStripMenuItem
+            // 
+            this.executeNonQueryToolStripMenuItem.Name = "executeNonQueryToolStripMenuItem";
+            resources.ApplyResources(this.executeNonQueryToolStripMenuItem, "executeNonQueryToolStripMenuItem");
+            this.executeNonQueryToolStripMenuItem.Click += new System.EventHandler(this.executeNonQueryToolStripMenuItem_Click);
+            // 
+            // queryToolStripMenuItem
+            // 
+            this.queryToolStripMenuItem.Name = "queryToolStripMenuItem";
+            resources.ApplyResources(this.queryToolStripMenuItem, "queryToolStripMenuItem");
+            this.queryToolStripMenuItem.Click += new System.EventHandler(this.queryToolStripMenuItem_Click);
             // 
             // btnClose
             // 
@@ -240,13 +295,6 @@
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.UseVisualStyleBackColor = false;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::DillenManagementStudio.Properties.Resources.wolf1;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            // 
             // rchtxtCode
             // 
             this.rchtxtCode.AcceptsTab = true;
@@ -256,29 +304,41 @@
             this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
             this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DillenManagementStudio.Properties.Resources.wolf1;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
+            // 
+            // lbDatabase
+            // 
+            resources.ApplyResources(this.lbDatabase, "lbDatabase");
+            this.lbDatabase.Name = "lbDatabase";
+            // 
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Lavender;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(248)))), ((int)(((byte)(250)))));
+            this.Controls.Add(this.lbDatabase);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbExecutionResult);
             this.Controls.Add(this.btnAllProcFunc);
             this.Controls.Add(this.btnAllTables);
-            this.Controls.Add(this.btnSmallerFont);
-            this.Controls.Add(this.btnBiggerFont);
             this.Controls.Add(this.lbTitle);
-            this.Controls.Add(this.btnOtherDtBs);
-            this.Controls.Add(this.rdAutomatic);
             this.Controls.Add(this.grvSelect);
-            this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.rchtxtCode);
-            this.Controls.Add(this.rdSelect);
-            this.Controls.Add(this.rdNonQuery);
-            this.Controls.Add(this.btnChangeDtBs);
-            this.Controls.Add(this.cbxChsDtBs);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
@@ -290,6 +350,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,16 +359,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView grvSelect;
-        private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.RadioButton rdSelect;
-        private System.Windows.Forms.RadioButton rdNonQuery;
-        private System.Windows.Forms.Button btnChangeDtBs;
-        private System.Windows.Forms.ComboBox cbxChsDtBs;
-        private System.Windows.Forms.RadioButton rdAutomatic;
-        private System.Windows.Forms.Button btnOtherDtBs;
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Button btnBiggerFont;
-        private System.Windows.Forms.Button btnSmallerFont;
         private System.Windows.Forms.Button btnAllTables;
         private System.Windows.Forms.Button btnAllProcFunc;
         private System.Windows.Forms.Label lbExecutionResult;
@@ -325,6 +377,22 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.RichTextBox rchtxtCode;
+        private System.Windows.Forms.ToolStripMenuItem changeDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem largerRchtxtFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smallerRchtxtFontToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lbDatabase;
+        private System.Windows.Forms.ToolStripMenuItem allowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem executeAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem automaticToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem executeNonQueryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem queryToolStripMenuItem;
     }
 }
 

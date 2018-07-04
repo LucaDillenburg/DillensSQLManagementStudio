@@ -18,24 +18,46 @@ namespace DillenManagementStudio
         protected List<string> commands;
         protected List<string> reservedWords;
 
+        //execution
+        protected int lastExecution = 0;
+
         //richTextBox color
         protected List<char> specialChars = new List<char>();
         protected int iSingQuot;
-
         //richTextBox change
         protected bool ctrlZorY = false;
         protected int lastQtdSingQuot = 0;
         protected bool erased = false;
-
         //richTextBox color
         protected string lastText = "";
         protected string[] lastLines = new string[0];
-        //protected List<int> 
+        //larger or smaller font
+        protected const int QTD_CHANGE_FONT_SIZE = 4;
+        protected const int MIN_FONT_SIZE = 8;
+        protected const int MAX_FONT_SIZE = 30;
+        protected string fontNameRchTxt;
+        protected GraphicsUnit fontUnitRchTxt;
+        protected float fontSizeRchTxt;
+
+        //notification
+        protected bool allowNotification = true;
+        
+        //user
+        protected const int ID = 2;
+        protected User user;
         
         //form methods
         public FrmDillenSQLManagementStudio()
         {
             InitializeComponent();
+
+            //set SQL buttons
+            this.EnableWichDependsCon(false);
+
+            //larger or smaller font
+            this.fontNameRchTxt = this.rchtxtCode.Font.Name;
+            this.fontUnitRchTxt = this.rchtxtCode.Font.Unit;
+            this.fontSizeRchTxt = this.rchtxtCode.Font.Size;
 
             //reserved words
             reservedWords = mySqlCon.ReservedWords;
@@ -52,25 +74,39 @@ namespace DillenManagementStudio
 
         protected void Form1_Load(object sender, EventArgs e)
         {
-            this.cbxChsDtBs.SelectedIndex = 0;
-
-            //set SQL buttons
-            this.EnableWichDependsCon(false);
-
             //set RichTextBox
             this.rchtxtCode.Focus();
             this.rchtxtCode.SelectionStart = 0;
             this.rchtxtCode.SelectionLength = this.rchtxtCode.Text.Length;
+
+            bool closed = false;
+            //user
+            try
+            {
+                this.user = new User(ID);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Be sure you are connected with the Unicamp VPN! Connect and restart the program!");
+                closed = true;
+                this.Close();
+            }
+
+            if(!closed)
+            {
+                this.user.InicializeUser();
+
+                this.Show();
+                this.ShowChangeDatabaseForm(true);
+            }
         }
 
         protected void EnableWichDependsCon(bool enable)
         {
-            this.btnExecute.Enabled = enable;
             this.btnAllTables.Enabled = enable;
-            this.rdAutomatic.Enabled = enable;
-            this.rdNonQuery.Enabled = enable;
-            this.rdSelect.Enabled = enable;
+            this.executeAsToolStripMenuItem.Enabled = enable;
             this.btnAllProcFunc.Enabled = enable;
+            this.executeToolStripMenuItem.Enabled = enable;
             this.connected = enable;
         }
 
@@ -90,44 +126,260 @@ namespace DillenManagementStudio
         }
 
 
-        //change data base
-        protected void btnChangeDtBs_Click(object sender, EventArgs e)
+        //EXECUTE
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool error = false;
-            try
+            this.automaticToolStripMenuItem.PerformClick();
+        }
+
+        private void automaticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.connected && this.lastExecution != 0)
+                this.mySqlCon.restartCommands();
+
+            this.Execute(0);
+
+            this.lastExecution = 0;
+        }
+
+        private void executeNonQueryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Execute(1);
+            this.lastExecution = 1;
+        }
+
+        private void queryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Execute(2);
+            this.lastExecution = 2;
+        }
+        
+        protected void Execute(int executeType) //ExecuteType: 0=Automatic, 1=Non-Query, 2=Query
+        {
+            Queue<int> linesNoEvenQuotMarks = new Queue<int>();
+            //put txtCode.Items in a String (with spaces between each line)
+            string allCodes = "";
+            for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
             {
-                //stablish conection with the datebase
-                switch (cbxChsDtBs.SelectedIndex)
+                //if there're even
+                if (this.rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
+                    linesNoEvenQuotMarks.Enqueue(i);
+                else
+                    allCodes += " " + this.rchtxtCode.Lines[i];
+            }
+
+            if (linesNoEvenQuotMarks.Count > 0)
+            {
+                string msg = "Error! Add closing single quotation marks in lines: ";
+
+                while (linesNoEvenQuotMarks.Count > 0)
+                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count == 0 ? ", " : "!");
+
+                MessageBox.Show(msg);
+            }
+            else
+            if (executeType == 0)
+            {
+                Queue<Error> errors = new Queue<Error>();
+                this.grvSelect.DataSource = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors);
+
+                if (errors == null || errors.Count == 0)
                 {
-                    case 0:
-                        mySqlCon.ConnStr = Properties.Settings.Default.BD17188ConnectionString;
-                        break;
-                    case 1:
-                        mySqlCon.ConnStr = Properties.Settings.Default.BDPRII17188ConnectionString;
-                        break;
-                    default:
-                        MessageBox.Show("btnEscBanco_Click error due to new datebase!");
-                        break;
+                    this.lbExecutionResult.Text = "Succesfully executed!";
+                    this.lbExecutionResult.ForeColor = Color.Green;
+
+                    if (!this.lbExecutionResult.Visible)
+                        this.lbExecutionResult.Visible = true;
+
+                    if (this.allowNotification)
+                        MessageBox.Show("Succesfully executed!");
+                }
+                else
+                {
+                    this.lbExecutionResult.Text = "Unsuccesfully executed!";
+                    this.lbExecutionResult.ForeColor = Color.Red;
+
+                    if (!this.lbExecutionResult.Visible)
+                        this.lbExecutionResult.Visible = true;
+
+                    if (this.allowNotification)
+                    {
+                        while (errors.Count > 0)
+                        {
+                            //ask if the user wants to know how's the syntax of the command
+                            Error currErr = errors.Dequeue();
+
+                            if (currErr.IsConnectionException)
+                            {
+                                MessageBox.Show(currErr.Exception, "SQL Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.EnableWichDependsCon(false);
+                                break;
+                            }
+                            else
+                            {
+                                string message = "Error in code: \n\r" +
+                                                currErr.Code +
+                                                "\n\rError:" +
+                                                currErr.Exception;
+
+                                if (currErr.CodCommand < 0)
+                                    MessageBox.Show(message, "SQL Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                else
+                                {
+                                    message += "\n\r\n\rDo you wanna know more about '" + this.commands[currErr.CodCommand].Trim().ToUpper()
+                                        + "' sintax?";
+                                    DialogResult result = MessageBox.Show(message, "SQL Error",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                                    if (result == DialogResult.Yes)
+                                    {
+                                        //fazer
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            catch (Exception err)
+            else
             {
-                error = true;
-                MessageBox.Show("An error occurred when trying to connect to the database chosen!");
-                this.EnableWichDependsCon(false);
-            }
+                //execute one Query or Non-Query (based on the radiobutton checked)
+                DataTable dataTable = null;
+                bool worked = true;
+                string excep = null;
+                worked = this.mySqlCon.ExecuteOneSQLCmd(allCodes, executeType == 2, ref dataTable, ref excep);
 
-            if (!error)
-            {
-                this.commands = this.mySqlCon.Commands;
-                this.EnableWichDependsCon(true);
+                this.grvSelect.DataSource = dataTable;
 
-                MessageBox.Show("Database connected!");
+                if (this.allowNotification)
+                {
+                    if (!worked)
+                    {
+                        string message = "Error in code: \n\r" +
+                                              allCodes +
+                                              "\n\rError:" +
+                                              excep;
+
+                        MessageBox.Show(message, "SQL Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                        MessageBox.Show("Succesfull execution!");
+                }
             }
         }
 
 
-        //text procedures
+        //sql execute procedures
+        protected void btnAllTables_Click(object sender, EventArgs e)
+        {
+            this.grvSelect.DataSource = this.mySqlCon.AllTables();
+        }
+
+        private void btnAllProcFunc_Click(object sender, EventArgs e)
+        {
+            this.grvSelect.DataSource = this.mySqlCon.AllProcFunc();
+        }
+        
+
+        //CHANGE DATA BASE BUTTON
+        //GETTERS AND SETTERS
+        public User User
+        {
+            get
+            {
+                return this.user;
+            }
+        }
+
+        public MySqlConnection MySqlConnection
+        {
+            get
+            {
+                return this.mySqlCon;
+            }
+
+            set
+            {
+                this.mySqlCon = value;
+            }
+        }
+
+        //show FrmChangeDatabase
+        private void changeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ShowChangeDatabaseForm(false);
+        }
+
+        protected void ShowChangeDatabaseForm(bool fisrtTime)
+        {
+            FrmChangeDatabase frmChangeDatabase = new FrmChangeDatabase(this, fisrtTime);
+            frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(fisrtTime);
+            frmChangeDatabase.ShowDialog();
+        }
+
+        public void ChangeDatabaseName(string databaseName)
+        {
+            this.lbDatabase.Text = databaseName;
+        }
+
+        protected void ProceduresAfterNewDatabase(bool firstTime)
+        {
+            //if user didn't connected to any database and closed the form
+            if(firstTime && String.IsNullOrEmpty(this.mySqlCon.ConnStr))
+            {
+                this.Close();
+                return;
+            }
+            
+            this.commands = this.mySqlCon.Commands;
+            this.EnableWichDependsCon(!String.IsNullOrEmpty(this.mySqlCon.ConnStr));
+        }
+
+
+        //others
+        private void allowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.allowNotification)
+                this.allowToolStripMenuItem.Text = "Allow";
+            else
+                this.allowToolStripMenuItem.Text = "Not Allow";
+
+            this.allowNotification = !this.allowNotification;
+        }
+
+
+        //richtextbox Size
+        private void smallerRchtxtFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.fontSizeRchTxt -= QTD_CHANGE_FONT_SIZE;
+            this.PutRchtxtFont();
+
+            if (this.fontSizeRchTxt - QTD_CHANGE_FONT_SIZE < MIN_FONT_SIZE)
+                this.smallerRchtxtFontToolStripMenuItem.Enabled = false;
+            this.largerRchtxtFontToolStripMenuItem.Enabled = true;
+        }
+
+        private void largerRchtxtFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.fontSizeRchTxt += QTD_CHANGE_FONT_SIZE;
+            this.PutRchtxtFont();
+
+            if (this.fontSizeRchTxt + QTD_CHANGE_FONT_SIZE > MAX_FONT_SIZE)
+                this.largerRchtxtFontToolStripMenuItem.Enabled = false;
+            this.smallerRchtxtFontToolStripMenuItem.Enabled = true;
+        }
+
+        protected void PutRchtxtFont()
+        {
+            this.rchtxtCode.Font = new Font(new FontFamily(this.fontNameRchTxt), this.fontSizeRchTxt, FontStyle.Bold, this.fontUnitRchTxt);
+            this.PutAllRchTxtRealColorAlsoString();
+        }
+
+        //richtext procedures
         protected void rchtxtCode_TextChanged(object sender, EventArgs e)
         {
             //if there's nothing written in the richTextBox, there's nothing to do
@@ -209,7 +461,7 @@ namespace DillenManagementStudio
                 {
                     int countL1 = this.lastLines[lineStartedDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdCharsOtherStartL);
                     bool evenL1 = countL1%2==0;
-                    int countL2 = this.lastLines[lineFinishDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdNewChars - qtdCharsOtherEndL);
+                    int countL2 = this.lastLines[lineFinishDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdNewChars - qtdCharsOtherEndL - 1);
                     bool evenL2 = countL2 % 2 == 0;
 
                     if (evenL1 != evenL2)
@@ -365,6 +617,16 @@ namespace DillenManagementStudio
 
         
         //put words real color 
+        protected void PutAllRchTxtRealColorAlsoString()
+        {
+            int qtdCharsOtherLines = 0;
+            for(int i = 0; i<this.rchtxtCode.Lines.Length; i++)
+            {
+                this.putWordRealColorAlsoString(this.rchtxtCode.Lines[i], 0, 0, qtdCharsOtherLines);
+                qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length;
+            }
+        }
+
         protected void putWordRealColorAlsoString(string line, int indexSingQuot, int countApp, int qtdCharsOtherLines)
         {
             bool even = countApp % 2 == 0;
@@ -533,153 +795,13 @@ namespace DillenManagementStudio
         }
 
 
-        //sql execute procedures
-        protected void btnExecute_Click(object sender, EventArgs e)
-        {
-            bool allowNotification = true;
-            //fazer
-
-            Queue<int> linesNoEvenQuotMarks = new Queue<int>();
-            //put txtCode.Items in a String (with spaces between each line)
-            string allCodes = "";
-            for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
-            {
-                //if there're even
-                if (this.rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
-                    linesNoEvenQuotMarks.Enqueue(i);
-                else
-                   allCodes += " " + this.rchtxtCode.Lines[i];
-            }
-
-            if (linesNoEvenQuotMarks.Count > 0)
-            {
-                string msg = "Error! Add closing single quotation marks in lines: ";
-
-                while(linesNoEvenQuotMarks.Count > 0)
-                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count==0?", ":"!");
-
-                MessageBox.Show(msg);
-            } else
-            if (this.rdAutomatic.Checked)
-            {
-                Queue<Error> errors = new Queue<Error>();
-                this.grvSelect.DataSource = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors);
-
-                if (errors == null || errors.Count == 0)
-                {
-                    this.lbExecutionResult.Text = "Succesfully executed!";
-                    this.lbExecutionResult.ForeColor = Color.Green;
-
-                    if (!this.lbExecutionResult.Visible)
-                        this.lbExecutionResult.Visible = true;
-
-                    if (allowNotification)
-                        MessageBox.Show("Succesfully executed!");
-                }
-                else
-                {
-                    this.lbExecutionResult.Text = "Unsuccesfully executed!";
-                    this.lbExecutionResult.ForeColor = Color.Red;
-
-                    if (!this.lbExecutionResult.Visible)
-                        this.lbExecutionResult.Visible = true;
-
-                    if (allowNotification)
-                    {
-                        while (errors.Count > 0)
-                        {
-                            //ask if the user wants to know how's the syntax of the command
-                            Error currErr = errors.Dequeue();
-
-                            if (currErr.IsConnectionException)
-                            {
-                                MessageBox.Show(currErr.Exception, "SQL Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.EnableWichDependsCon(false);
-                                break;
-                            }
-                            else
-                            {
-                                string message = "Error in code: \n\r" +
-                                                currErr.Code +
-                                                "\n\rError:" +
-                                                currErr.Exception;
-
-                                if (currErr.CodCommand < 0)
-                                    MessageBox.Show(message, "SQL Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                else
-                                {
-                                    message += "\n\r\n\rDo you wanna know more about '" + this.commands[currErr.CodCommand].Trim().ToUpper()
-                                        + "' sintax?";
-                                    DialogResult result = MessageBox.Show(message, "SQL Error",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-
-                                    if (result == DialogResult.Yes)
-                                    {
-                                        //fazer
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                //execute one Query or Non-Query (based on the radiobutton checked)
-                DataTable dataTable = null;
-                bool worked = true;
-                string excep = null;
-                worked = this.mySqlCon.ExecuteOneSQLCmd(allCodes, this.rdSelect.Checked, ref dataTable, ref excep);
-
-                this.grvSelect.DataSource = dataTable;
-
-                if(allowNotification)
-                {
-                    if (!worked)
-                    {
-                        string message = "Error in code: \n\r" +
-                                              allCodes +
-                                              "\n\rError:" +
-                                              excep;
-
-                        MessageBox.Show(message, "SQL Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Succesfull execution!");
-                }
-            }
-        }
-        
-        protected void btnAllTables_Click(object sender, EventArgs e)
-        {
-            this.grvSelect.DataSource = this.mySqlCon.AllTables();
-        }
-
-        private void btnAllProcFunc_Click(object sender, EventArgs e)
-        {
-            this.grvSelect.DataSource = this.mySqlCon.AllProcFunc();
-        }
-
-
-        //others
-        private void rdSelect_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.rdAutomatic.Checked && this.connected)
-                this.mySqlCon.restartCommands();
-        }
-
-
-        //testss
+        //tests
         private void FrmDillenSQLManagementStudio_Click(object sender, EventArgs e)
         {
             //SELECTION START EH SEMPRE O QUE ESTA MAIS PERTO DO COMECO
             MessageBox.Show("SelecioctionStart: " + this.rchtxtCode.SelectionStart + "\n\rSelectionLength: " + this.rchtxtCode.SelectionLength);
         }
-                
+
     }
 }
 

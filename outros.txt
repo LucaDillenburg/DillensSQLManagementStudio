@@ -1,0 +1,32 @@
+Data Source=regulus.cotuca.unicamp.br;Initial Catalog=BD17188;Persist Security Info=True;User ID=bd17188;Password=bd17188
+
+encrypted: E2iUrZJiv0o=
+
+testar conexao com o banco antes de armazenar um database no banco
+
+btn to change or delete some databases
+
+criar uma tabela no proprio banco do usuario para que ele possa praticar, ver se ele esta praticando oq eh pra ele praticar (btnAutomatic: separar commands)
+
+drop view, create view, alter view como commands
+
+
+ ___ Tables in my database (BD17188) ____
+
+create table dillensqlmanagementstudiouser(
+id int primary key,
+qtdTimesUsedApp int not null
+)
+
+create table userdatabase(
+idUser int not null,
+conStr varchar(300) not null, --without password
+encryptedPassword varchar(256) not null,
+qtdExecutions int not null,
+qtdSintaxHelp int not null,
+wasLast bit not null,
+
+constraint fkIdUser foreign key (idUser) references
+dillensqlmanagementstudiouser(id), 
+constraint pkIdCon primary key (idUser, conStr)
+)

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-//to use my strings methods: static MyStringMethods
+using System;
 //to work with the database
 using System.Data.SqlClient;
 //to use DataTable
 using System.Data;
-using System;
+//to use regex
 using System.Text.RegularExpressions;
-using System.IO;
 
 namespace DillenManagementStudio
 {
@@ -106,12 +105,12 @@ namespace DillenManagementStudio
 
             set
             {
-                this.connStr = value;
-                this.NewConnection();
+                string strConn = value;
+                if(!String.IsNullOrEmpty(value))
+                    this.NewConnection(strConn);
             }
         }
-
-
+        
         public List<string> ReservedWords
         {
             get
@@ -160,12 +159,14 @@ namespace DillenManagementStudio
             this.con.Close();
         }
 
-        protected void NewConnection()
+        protected void NewConnection(string strConn)
         {
             this.con = new SqlConnection();
-            this.connStr = this.connStr.Substring(this.connStr.IndexOf("Data Source"));
-            this.con.ConnectionString = this.connStr;
+            strConn = strConn.Substring(strConn.IndexOf("Data Source"));
+            this.con.ConnectionString = strConn;
             this.con.Open();
+
+            this.connStr = strConn;
 
             this.PutAllCommands();
         }
@@ -610,7 +611,7 @@ namespace DillenManagementStudio
 
 
         //add or remove procedure or function from this.commands (change iFirstRealFunc if necessary)
-        private void addOrRemoveProfFunc(string currCode, int cmdN)
+        protected void addOrRemoveProfFunc(string currCode, int cmdN)
         {
             bool create;
             bool isProc;

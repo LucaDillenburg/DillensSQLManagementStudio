@@ -135,5 +135,14 @@
   <ItemGroup>
     <None Include="Resources\wolf1.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dillenburg%27s Product Icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading_icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading_icon1.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

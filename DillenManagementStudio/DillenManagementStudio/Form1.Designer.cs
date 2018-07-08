@@ -61,13 +61,19 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.rchtxtCode = new System.Windows.Forms.RichTextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lbDatabase = new System.Windows.Forms.Label();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.lbLoading = new System.Windows.Forms.Label();
+            this.picLoading = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.rchtxtAux = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // grvSelect
@@ -145,11 +151,13 @@
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             resources.ApplyResources(this.newToolStripMenuItem, "newToolStripMenuItem");
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -160,11 +168,13 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             resources.ApplyResources(this.saveAsToolStripMenuItem, "saveAsToolStripMenuItem");
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -301,15 +311,37 @@
             resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
             this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtCode.Name = "rchtxtCode";
+            this.rchtxtCode.UseWaitCursor = true;
             this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
             this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             // 
-            // pictureBox1
+            // lbDatabase
             // 
-            this.pictureBox1.Image = global::DillenManagementStudio.Properties.Resources.wolf1;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
+            resources.ApplyResources(this.lbDatabase, "lbDatabase");
+            this.lbDatabase.Name = "lbDatabase";
+            // 
+            // openFileDialog
+            // 
+            resources.ApplyResources(this.openFileDialog, "openFileDialog");
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "sql";
+            resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
+            // 
+            // lbLoading
+            // 
+            resources.ApplyResources(this.lbLoading, "lbLoading");
+            this.lbLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.lbLoading.Name = "lbLoading";
+            // 
+            // picLoading
+            // 
+            this.picLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
+            resources.ApplyResources(this.picLoading, "picLoading");
+            this.picLoading.Name = "picLoading";
+            this.picLoading.TabStop = false;
             // 
             // pictureBox2
             // 
@@ -318,16 +350,26 @@
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
             // 
-            // lbDatabase
+            // pictureBox1
             // 
-            resources.ApplyResources(this.lbDatabase, "lbDatabase");
-            this.lbDatabase.Name = "lbDatabase";
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
+            // rchtxtAux
+            // 
+            this.rchtxtAux.AcceptsTab = true;
+            resources.ApplyResources(this.rchtxtAux, "rchtxtAux");
+            this.rchtxtAux.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.rchtxtAux.Name = "rchtxtAux";
             // 
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(248)))), ((int)(((byte)(250)))));
+            this.Controls.Add(this.lbLoading);
+            this.Controls.Add(this.picLoading);
             this.Controls.Add(this.lbDatabase);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnMinimize);
@@ -340,6 +382,7 @@
             this.Controls.Add(this.grvSelect);
             this.Controls.Add(this.rchtxtCode);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.rchtxtAux);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "FrmDillenSQLManagementStudio";
@@ -349,8 +392,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,6 +437,11 @@
         private System.Windows.Forms.ToolStripMenuItem automaticToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeNonQueryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem queryToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.PictureBox picLoading;
+        private System.Windows.Forms.Label lbLoading;
+        private System.Windows.Forms.RichTextBox rchtxtAux;
     }
 }
 

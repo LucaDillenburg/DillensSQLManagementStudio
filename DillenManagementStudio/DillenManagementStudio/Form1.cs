@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 //to work with the database: MySqlCommand
 
@@ -9,6 +11,10 @@ namespace DillenManagementStudio
 {
     public partial class FrmDillenSQLManagementStudio : Form
     {
+        //teste
+        protected const bool teste = true;
+
+
         //conection
         protected string connStr;
         protected MySqlConnection mySqlCon = new MySqlConnection();
@@ -22,10 +28,10 @@ namespace DillenManagementStudio
         protected int lastExecution = 0;
 
         //richTextBox color
-        protected List<char> specialChars = new List<char>();
+        protected List<char> specialChars;
         protected int iSingQuot;
         //richTextBox change
-        protected bool ctrlZorY = false;
+        protected bool notChangeTxtbxCode = false;
         protected int lastQtdSingQuot = 0;
         protected bool erased = false;
         //richTextBox color
@@ -39,8 +45,18 @@ namespace DillenManagementStudio
         protected GraphicsUnit fontUnitRchTxt;
         protected float fontSizeRchTxt;
 
+        //general
+        protected const string TITLE = "Dillen's SQL Management Studio (Dillenburg's Product)";
+
+        //file
+        protected string fileName;
+        protected bool isSaved = false;
+
         //notification
         protected bool allowNotification = true;
+
+        //has't typed anything
+        protected bool hasTyped = false;
         
         //user
         protected const int ID = 2;
@@ -63,13 +79,8 @@ namespace DillenManagementStudio
             reservedWords = mySqlCon.ReservedWords;
 
             //special chars
-            specialChars.Add(' ');
-            iSingQuot = specialChars.Count;
-            specialChars.Add('\'');
-            specialChars.Add('.');
-            specialChars.Add(';');
-            specialChars.Add(',');
-            specialChars.Add('*');
+            specialChars = mySqlCon.SpecialChars;
+            iSingQuot = mySqlCon.IndexSingQuot;
         }
 
         protected void Form1_Load(object sender, EventArgs e)
@@ -112,7 +123,8 @@ namespace DillenManagementStudio
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (this.AskUserWantsToSaveIfNeeded())
+                this.Close();
         }
 
         protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -126,6 +138,162 @@ namespace DillenManagementStudio
         }
 
 
+        //FILE MENU
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(this.AskUserWantsToSaveIfNeeded())
+            {
+                //choose file
+                DialogResult result = this.saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    this.fileName = this.saveFileDialog.FileName;
+
+                    this.rchtxtCode.Text = "";
+                    this.isSaved = true;
+                    this.ChangeTitle();
+                    //creates and writes file
+                    this.SaveFile();
+                }
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //sees if wants to save if it's not saved yet
+            if (!this.AskUserWantsToSaveIfNeeded())
+                return;
+
+            //show dialog
+            DialogResult result = this.openFileDialog.ShowDialog();
+
+            //if user selected a file
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                //visual
+                this.rchtxtCode.Visible = false;
+                this.picLoading.Visible = true;
+                this.lbLoading.Visible = true;
+                this.rchtxtCode.ReadOnly = true;
+
+                this.fileName = this.openFileDialog.FileName;
+
+                StreamReader reader = new StreamReader(this.fileName);
+
+                //Clear
+                this.rchtxtCode.Lines = new string[0];
+
+                //changes title
+                this.isSaved = true;
+                this.ChangeTitle();
+
+                //write all text on RichTextBox and Colors it
+                this.notChangeTxtbxCode = true;
+                this.rchtxtCode.Text = File.ReadAllText(this.fileName, Encoding.UTF8);
+                this.PutAllRchTxtRealColorAlsoString();
+                this.notChangeTxtbxCode = false;
+
+                /* ARRUMAR
+                int qtdCharsOtherLines = 0;
+                for (; ;)
+                {
+                    string line = reader.ReadLine();
+                    if (line == null)
+                        break;
+
+                    this.rchtxtCode.Text += System.Environment.NewLine + line;
+                    this.PutWordRealColorAlsoString (line, 0, 0, qtdCharsOtherLines);
+                    qtdCharsOtherLines += line.Length;
+                }*/
+
+                //close the file
+                reader.Close();
+
+                //visual 
+                this.picLoading.Visible = false;
+                this.lbLoading.Visible = false;
+                this.rchtxtCode.Visible = true;
+                this.rchtxtCode.ReadOnly = false;
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!this.isSaved)
+            {
+                if (String.IsNullOrEmpty(this.fileName))
+                    this.saveAsToolStripMenuItem.PerformClick();
+                else
+                {
+                    this.SaveFile();
+                    this.isSaved = true;
+                    this.ChangeTitle();
+                }
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = this.saveFileDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                this.fileName = this.saveFileDialog.FileName;
+                
+                this.isSaved = true;
+                this.ChangeTitle();
+                //creates and writes file
+                this.SaveFile();
+            }
+        }
+
+        //auxiliary file menu
+        protected void SaveFile()
+        {
+            this.rchtxtCode.SaveFile(this.fileName, RichTextBoxStreamType.UnicodePlainText);
+
+            /*
+            //clear and write fisrt line
+            StreamWriter writer = new StreamWriter(this.fileName);
+            if(this.rchtxtCode.Lines.Length > 0)
+                writer.WriteLine(this.rchtxtCode.Lines[0]);
+            else
+                writer.WriteLine("");
+            writer.Close();
+
+            //write other lines
+            writer = new StreamWriter(this.fileName, true);
+            for(int i = 1; i< this.rchtxtCode.Lines.Length; i++)
+                writer.WriteLine(this.rchtxtCode.Lines[i]); //use \n\r if necessary
+            writer.Close();*/
+        }
+
+        protected bool AskUserWantsToSaveIfNeeded()
+        {
+            if (this.isSaved || !this.hasTyped)
+                return true;
+
+            DialogResult result = MessageBox.Show("Do you want to save your file?", "Save file?",
+              MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+                this.saveToolStripMenuItem.PerformClick();
+            else
+            if (result == DialogResult.Cancel)
+                return false;
+
+            return true;
+        }
+
+        protected void ChangeTitle()
+        {
+            if (String.IsNullOrEmpty(this.fileName))
+                this.lbTitle.Text = TITLE;
+            else
+                this.lbTitle.Text = this.fileName + (this.isSaved?"":"*") + " - " + TITLE;
+        }
+
+
         //EXECUTE
         private void executeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -135,7 +303,7 @@ namespace DillenManagementStudio
         private void automaticToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.connected && this.lastExecution != 0)
-                this.mySqlCon.restartCommands();
+                this.mySqlCon.RestartCommands();
 
             this.Execute(0);
 
@@ -159,13 +327,56 @@ namespace DillenManagementStudio
             Queue<int> linesNoEvenQuotMarks = new Queue<int>();
             //put txtCode.Items in a String (with spaces between each line)
             string allCodes = "";
-            for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
+
+            //if there's nothing selected
+            if (this.rchtxtCode.SelectionLength <= 0)
+                for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
+                {
+                    //if there're even
+                    if (this.rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
+                        linesNoEvenQuotMarks.Enqueue(i);
+                    else
+                        allCodes += " " + this.rchtxtCode.Lines[i];
+                }
+            else
+            //there's something selected
             {
-                //if there're even
-                if (this.rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
-                    linesNoEvenQuotMarks.Enqueue(i);
-                else
-                    allCodes += " " + this.rchtxtCode.Lines[i];
+                int qtdOtherChars1 = 0;
+                int indexFirstLine = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref qtdOtherChars1);
+                int qtdOtherChars2 = 0;
+                int indexLastLine = this.IndexOfLine(this.rchtxtCode.SelectionStart + this.rchtxtCode.SelectionLength, 
+                    ref qtdOtherChars2);
+
+                for(int i = indexFirstLine; i <= indexLastLine; i++)
+                {
+                    string line;
+                    if (i == indexFirstLine)
+                    {
+                        int final;
+                        if (indexFirstLine == indexLastLine)
+                            final = this.rchtxtCode.SelectionStart + this.rchtxtCode.SelectionLength - qtdOtherChars1;
+                        else
+                            final = this.rchtxtCode.Lines[i].Length;
+
+                        int start = this.rchtxtCode.SelectionStart - qtdOtherChars1;
+
+                        line = this.rchtxtCode.Lines[i].Substring(start, final - start);
+                    }
+                    else
+                    if (i == indexLastLine)
+                        line = this.rchtxtCode.Lines[i].Substring(0, this.rchtxtCode.SelectionStart + this.rchtxtCode.SelectionLength - qtdOtherChars2);
+                    else
+                    if (i < indexLastLine)
+                        line = this.rchtxtCode.Lines[i];
+                    else
+                        break;
+
+                    //if there're even
+                    if (line.CountAppearances('\'') % 2 != 0)
+                        linesNoEvenQuotMarks.Enqueue(i);
+                    else
+                        allCodes += " " + line;
+                }
             }
 
             if (linesNoEvenQuotMarks.Count > 0)
@@ -173,7 +384,7 @@ namespace DillenManagementStudio
                 string msg = "Error! Add closing single quotation marks in lines: ";
 
                 while (linesNoEvenQuotMarks.Count > 0)
-                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count == 0 ? ", " : "!");
+                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count == 0 ? "!" : ", ");
 
                 MessageBox.Show(msg);
             }
@@ -379,11 +590,20 @@ namespace DillenManagementStudio
             this.PutAllRchTxtRealColorAlsoString();
         }
 
+
         //richtext procedures
         protected void rchtxtCode_TextChanged(object sender, EventArgs e)
         {
+            this.hasTyped = true;
+
+            if (this.isSaved && !this.rchtxtCode.ReadOnly)
+            {
+                this.isSaved = false;
+                this.ChangeTitle();
+            }
+
             //if there's nothing written in the richTextBox, there's nothing to do
-            if (this.rchtxtCode.Lines.Length == 0 || this.ctrlZorY)
+            if (this.rchtxtCode.Lines.Length == 0 || this.notChangeTxtbxCode)
             {
                 //to control the addition of text
                 this.lastLines = this.rchtxtCode.Lines;
@@ -420,7 +640,7 @@ namespace DillenManagementStudio
                         currCoutApp = 0;
                     }
                     
-                    this.putWordRealColorAlsoString(currLine, indexBegin, currCoutApp, qtdCharsOtherLines);
+                    this.PutWordRealColorAlsoString(currLine, indexBegin, currCoutApp, qtdCharsOtherLines);
                     qtdCharsOtherLines += currLine.Length + 1;
                 }
 
@@ -488,7 +708,7 @@ namespace DillenManagementStudio
                     //count number of ' before the current '
                     countApp = line.CountAppearances('\'', 0, indexSingQuot);
 
-                this.putWordRealColorAlsoString(line, indexSingQuot, countApp, qtdCharsOtherLines);
+                this.PutWordRealColorAlsoString(line, indexSingQuot, countApp, qtdCharsOtherLines);
 
                 this.lastLines = this.rchtxtCode.Lines;
                 this.lastText = this.rchtxtCode.Text;
@@ -506,7 +726,7 @@ namespace DillenManagementStudio
                 for (int i = 0; i < 2; i++)
                 {
                     if (i == 0) //word to the left
-                        this.putWordRealColor(line, qtdCharsOtherLines);
+                        this.PutWordRealColor(line, qtdCharsOtherLines);
                     else //word to the right
                     {
                         int firstWordLetter;
@@ -536,7 +756,7 @@ namespace DillenManagementStudio
                                         if (even)
                                             this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot + qtdCharsOtherLines, endString + qtdCharsOtherLines);
                                         else
-                                            this.putAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
+                                            this.PutAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
 
                                         even = !even;
                                         indexSingQuot = endString;
@@ -545,7 +765,7 @@ namespace DillenManagementStudio
                                 {
                                     firstWordLetter = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
                                     bool isString = false;
-                                    this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
+                                    this.PutWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
 
                                     if (!isString)
                                         this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
@@ -569,8 +789,12 @@ namespace DillenManagementStudio
         protected void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             this.erased = false;
-            this.ctrlZorY = false;
+            this.notChangeTxtbxCode = false;
 
+            if (e.KeyCode == Keys.F5)
+            {
+                this.executeToolStripMenuItem.PerformClick();
+            }else
             //put spaces when the user presses tab
             if (e.KeyCode == Keys.Tab)
             {
@@ -605,13 +829,13 @@ namespace DillenManagementStudio
             if (e.KeyCode == Keys.Z)
             {
                 if (ModifierKeys.HasFlag(Keys.Control))
-                    this.ctrlZorY = true;
+                    this.notChangeTxtbxCode = true;
             }
             else
             if (e.KeyCode == Keys.Y)
             {
                 if (ModifierKeys.HasFlag(Keys.Control))
-                    this.ctrlZorY = true;
+                    this.notChangeTxtbxCode = true;
             }
         }
 
@@ -622,14 +846,17 @@ namespace DillenManagementStudio
             int qtdCharsOtherLines = 0;
             for(int i = 0; i<this.rchtxtCode.Lines.Length; i++)
             {
-                this.putWordRealColorAlsoString(this.rchtxtCode.Lines[i], 0, 0, qtdCharsOtherLines);
-                qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length;
+                this.PutWordRealColorAlsoString(this.rchtxtCode.Lines[i], 0, 0, qtdCharsOtherLines);
+                qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length + 1;
             }
         }
 
-        protected void putWordRealColorAlsoString(string line, int indexSingQuot, int countApp, int qtdCharsOtherLines)
+        protected void PutWordRealColorAlsoString(string line, int indexSingQuot, int countApp, int qtdCharsOtherLines)
         {
             bool even = countApp % 2 == 0;
+
+            if (indexSingQuot == line.Length)
+                return;
 
             int startIndex;
             if (even)
@@ -645,13 +872,14 @@ namespace DillenManagementStudio
             while (endString < line.Length)
             {
                 endString = line.IndexOf('\'', startIndex + 1);
+                
                 if (endString < 0)
                     endString = line.Length;
                 else
                     endString += (even ? 0 : 1);
 
                 if (even)
-                    this.putAllWordsRealColorFromIndex(line, startIndex, endString, qtdCharsOtherLines);
+                    this.PutAllWordsRealColorFromIndex(line, startIndex, endString, qtdCharsOtherLines);
                 else
                     this.rchtxtCode.ChangeTextColor(Color.Red, startIndex + qtdCharsOtherLines, endString + qtdCharsOtherLines);
 
@@ -660,7 +888,7 @@ namespace DillenManagementStudio
             }
         }
         
-        protected void putAllWordsRealColorFromIndex(string line, int startIndex, int endString, int qtdCharsOtherLines)
+        protected void PutAllWordsRealColorFromIndex(string line, int startIndex, int endString, int qtdCharsOtherLines)
         {
             int proxIndex = line.Length;
             while (true)
@@ -675,7 +903,7 @@ namespace DillenManagementStudio
                 }else
                     this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, lastChar + qtdCharsOtherLines, lastChar + 1 + qtdCharsOtherLines);
 
-                this.putWordRealColor(line, startIndex, lastChar, qtdCharsOtherLines);
+                this.PutWordRealColor(line, startIndex, lastChar, qtdCharsOtherLines);
 
                 if (proxIndex == line.Length)
                     startIndex = line.IndexOf(specialChars, startIndex, endString);
@@ -692,13 +920,13 @@ namespace DillenManagementStudio
             }
         }
 
-        protected void putWordRealColor(string line, int qtdCharsOtherLines)
+        protected void PutWordRealColor(string line, int qtdCharsOtherLines)
         {
             bool isString = false;
-            this.putWordRealColor(line, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColor(line, qtdCharsOtherLines, ref isString);
         }
 
-        protected void putWordRealColor(string line, int qtdCharsOtherLines, ref bool isString)
+        protected void PutWordRealColor(string line, int qtdCharsOtherLines, ref bool isString)
         {
             int end = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 2;
             int firstLetter;
@@ -706,30 +934,30 @@ namespace DillenManagementStudio
                 firstLetter = line.LastIndexOf(specialChars, end) + 1;
             else
                 firstLetter = 0;
-            this.putWordRealColor(line, firstLetter, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColor(line, firstLetter, qtdCharsOtherLines, ref isString);
         }
 
-        protected void putWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines)
+        protected void PutWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines)
         {
             bool isString = false;
-            this.putWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
         }
         
-        protected void putWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines, ref bool isString)
+        protected void PutWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines, ref bool isString)
         {
             int lastChar = line.IndexOf(specialChars, firstWordLetter);
             if (lastChar < 0)
                 lastChar = line.Length;
-            this.putWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
         }
 
-        protected void putWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines)
+        protected void PutWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines)
         {
             bool isString = false;
-            this.putWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
         }
         
-        protected void putWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines, ref bool isString)
+        protected void PutWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines, ref bool isString)
         {
             int lengthFromSpace = (lastChar - firstWordLetter) + 1;
             string newWord = line.Substring(firstWordLetter, lengthFromSpace - 1);
@@ -798,8 +1026,9 @@ namespace DillenManagementStudio
         //tests
         private void FrmDillenSQLManagementStudio_Click(object sender, EventArgs e)
         {
+            if(teste)
             //SELECTION START EH SEMPRE O QUE ESTA MAIS PERTO DO COMECO
-            MessageBox.Show("SelecioctionStart: " + this.rchtxtCode.SelectionStart + "\n\rSelectionLength: " + this.rchtxtCode.SelectionLength);
+                MessageBox.Show("SelecioctionStart: " + this.rchtxtCode.SelectionStart + "\n\rSelectionLength: " + this.rchtxtCode.SelectionLength);
         }
 
     }

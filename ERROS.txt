@@ -1,9 +1,17 @@
- 1. nao esta retornando a query se tem algum non-query depois
- 2. //verificar
+mudar zoom ao inves de font
+deixar font menor e zoom maior
 
+deixar frmChangeDatabase mais automatico, quando selecionar fechar na hora
 
    ___ TEXT COLOR ___
-1. 
+1.
+//antes
+select 'asdf ljds as'(
+
+//depois
+asdf ljds as'(
+
+2.
 //antes
 'joaozinho'[espaco]
 
@@ -12,7 +20,7 @@
 
 
 
-2. 
+3.
 //antes
 create function heysa()
 returns table

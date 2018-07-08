@@ -39,6 +39,10 @@ namespace DillenManagementStudio
         //nonQuery to select
         protected List<string> nonQueryToSelect = new List<string>();
 
+        //special chars (to separe commands)
+        protected List<char> specialChars = new List<char>();
+        protected int iSingQuot;
+
         //reserved words
         protected List<string> reservedWords = new List<string>();
         
@@ -50,6 +54,19 @@ namespace DillenManagementStudio
             nonQueryToSelect.Add("alter table ");
             nonQueryToSelect.Add("create table ");
             nonQueryToSelect.Add("delete from ");
+
+
+            //special chars
+            specialChars.Add(' ');
+            iSingQuot = specialChars.Count;
+            specialChars.Add('\'');
+            specialChars.Add('(');
+            specialChars.Add(')');
+            specialChars.Add('.');
+            specialChars.Add(';');
+            specialChars.Add(',');
+            specialChars.Add('*');
+
 
             //Reserved Words
             reservedWords.Add("select");
@@ -116,10 +133,26 @@ namespace DillenManagementStudio
             get
             {
                 List<string> ret = new List<string>(this.reservedWords);
-                for (int i = this.iFirstProcFuncTrigger; i < this.commands.Count; i++)
-                    ret.Add(this.commands[i]);
+                //for (int i = this.iFirstProcFuncTrigger; i < this.commands.Count; i++)
+                //    ret.Add(this.commands[i]);
 
                 return ret;
+            }
+        }
+
+        public List<char> SpecialChars
+        {
+            get
+            {
+                return new List<char>(specialChars);
+            }
+        }
+
+        public int IndexSingQuot
+        {
+            get
+            {
+                return iSingQuot;
             }
         }
 
@@ -185,6 +218,7 @@ namespace DillenManagementStudio
             this.commands.Add("update ");
             this.commands.Add("create table ");
             this.commands.Add("create rule ");
+            this.commands.Add("drop view ");
             this.iDropProc = this.commands.Count;
             this.commands.Add("drop proc ");
             this.iDropProcedure = this.commands.Count;
@@ -193,7 +227,7 @@ namespace DillenManagementStudio
             this.commands.Add("drop function ");
             this.commands.Add("drop trigger ");
 
-            //PROCEDURES, FUNCTIONS, TRIGGER
+            //PROCEDURES, FUNCTIONS, TRIGGER (and view)
             this.iFirstProcFuncTrigger = this.commands.Count; //i BASIC
             this.iCreateProc = this.commands.Count;
             this.commands.Add("create proc ");
@@ -208,6 +242,8 @@ namespace DillenManagementStudio
             this.commands.Add("create trigger ");
             this.iAlterTrigger = this.commands.Count; //i
             this.commands.Add("alter trigger ");
+            this.commands.Add("create view ");
+            this.commands.Add("alter view ");
 
             //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
             this.iCommandExec = this.commands.Count; //i BASIC
@@ -255,7 +291,7 @@ namespace DillenManagementStudio
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
                             string nameProc = ds.Tables[0].Rows[i].ItemArray[0].ToString();
-                            this.commands.Add(nameProc);
+                            this.commands.Add(nameProc + " ");
                         }
                     }
                     catch(Exception e) { }
@@ -263,7 +299,7 @@ namespace DillenManagementStudio
             }
         }
 
-        public void restartCommands()
+        public void RestartCommands()
         {
             this.PutAllCommands();
         }
@@ -302,7 +338,7 @@ namespace DillenManagementStudio
             Queue<int> nSQLCommands = new Queue<int>();
             int nQuery = -1;
             int nNonQuerySelect = -1;
-            Queue<string> codes = this.transformCodeInCommands(allCodes, ref nSQLCommands, ref nQuery, ref nNonQuerySelect);
+            Queue<string> codes = this.TransformCodeInCommands(allCodes, ref nSQLCommands, ref nQuery, ref nNonQuerySelect);
             
             cmdErrors = new Queue<Error>();
 
@@ -342,7 +378,7 @@ namespace DillenManagementStudio
                 {
                     //if procedure or function was dropped or created, respectively add and remove from this.commands (change iFirstRealFunc if necessary)
                     if (cmdN == iCreateProc || cmdN == iCreateProcedure || cmdN == iCreateFunc || cmdN == iDropProc || cmdN == iDropProcedure || cmdN == iDropFunc)
-                        this.addOrRemoveProfFunc(currCode, cmdN);
+                        this.AddOrRemoveProfFunc(currCode, cmdN);
 
                     if (executeQuery)
                         ultimateDataTable = auxDtTable;
@@ -397,7 +433,7 @@ namespace DillenManagementStudio
                         firstLetter = code.IndexOfEvenSingQuotMarksAndNothingBefore(this.commands[iCommand], 0) + this.commands[iCommand].Length;
 
                     //create select based on the table that was modified
-                    int indAfterWord = code.IndexOf(" ", firstLetter + 1);
+                    int indAfterWord = code.IndexOf(specialChars, firstLetter + 1);
                     if (indAfterWord < 0) //if the table name is the last thing in the sentence
                         indAfterWord = code.Length;
 
@@ -459,7 +495,7 @@ namespace DillenManagementStudio
             return true;
         }
 
-        protected bool cmdIsNonQueryToSelect(int iCommand)
+        protected bool CmdIsNonQueryToSelect(int iCommand)
         {
             if (iCommand < 0 || iCommand >= this.commands.Count)
                 return false;
@@ -476,7 +512,7 @@ namespace DillenManagementStudio
 
         
         //transform allCodes in a commands Queue
-        protected Queue<string> transformCodeInCommands(string code, ref Queue<int> nSQLCommands, ref int nQuery, ref int nNonQuerySelect)
+        protected Queue<string> TransformCodeInCommands(string code, ref Queue<int> nSQLCommands, ref int nQuery, ref int nNonQuerySelect)
         {
             //separate the whole code in commands in a QUEUE
             Queue<string> codes = new Queue<string>();
@@ -513,8 +549,9 @@ namespace DillenManagementStudio
                     //if it's a query command
                     if(prevCmdNumber >= this.iFirstQuery && prevCmdNumber < this.iFirstRealProc)
                         nQuery = codes.Count - 1;
+                    else
                     //if there ins't any query yet and it's a command that can be selected
-                    if (nQuery < 0 && this.cmdIsNonQueryToSelect(prevCmdNumber))
+                    if (nQuery < 0 && this.CmdIsNonQueryToSelect(prevCmdNumber))
                         nNonQuerySelect = codes.Count - 1;
                     break;
                 }
@@ -529,7 +566,7 @@ namespace DillenManagementStudio
                     if (prevCmdNumber >= this.iFirstQuery && prevCmdNumber < this.iFirstRealProc)
                         nQuery = codes.Count - 1;
                     //if there ins't any query yet and it's a command that can be selected
-                    if (nQuery < 0 && this.cmdIsNonQueryToSelect(prevCmdNumber))
+                    if (nQuery < 0 && this.CmdIsNonQueryToSelect(prevCmdNumber))
                         nNonQuerySelect = codes.Count - 1;
                 }
 
@@ -548,7 +585,7 @@ namespace DillenManagementStudio
                         startIndex = lastIndexOfCmd + 1;
                     }
                     else
-                        startIndex = this.lastIndexProc(code, indexBegin) + 1;
+                        startIndex = this.LastIndexProc(code, indexBegin) + 1;
                 }
                 else
                     startIndex = lastIndexOfWords + 1;
@@ -575,7 +612,7 @@ namespace DillenManagementStudio
             return codes;
         }
 
-        protected int lastIndexProc(string code, int indexBegin)
+        protected int LastIndexProc(string code, int indexBegin)
         {
             //the procedure, function or trigger has more than one command
             int lastIndexBeginEnd = indexBegin + 5; //index after first begin
@@ -611,7 +648,7 @@ namespace DillenManagementStudio
 
 
         //add or remove procedure or function from this.commands (change iFirstRealFunc if necessary)
-        protected void addOrRemoveProfFunc(string currCode, int cmdN)
+        protected void AddOrRemoveProfFunc(string currCode, int cmdN)
         {
             bool create;
             bool isProc;
@@ -667,15 +704,15 @@ namespace DillenManagementStudio
             {
                 if (isProc)
                 {
-                    this.commands.Insert(this.iFirstRealProc, procOrFuncName);
+                    this.commands.Insert(this.iFirstRealProc, procOrFuncName + " ");
                     this.iFirstRealFunc++;
                 }
                 else
-                    this.commands.Add(procOrFuncName);
+                    this.commands.Add(procOrFuncName + " ");
             }else
             //if user droped a proc or function
             {
-                this.commands.Remove(procOrFuncName);
+                this.commands.Remove(procOrFuncName + " ");
 
                 if (isProc)
                     this.iFirstRealFunc--;

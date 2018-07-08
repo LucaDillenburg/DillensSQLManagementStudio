@@ -1,15 +1,4 @@
-Data Source=regulus.cotuca.unicamp.br;Initial Catalog=BD17188;Persist Security Info=True;User ID=bd17188;Password=bd17188
-
-encrypted: E2iUrZJiv0o=
-
-testar conexao com o banco antes de armazenar um database no banco
-
-btn to change or delete some databases
-
 criar uma tabela no proprio banco do usuario para que ele possa praticar, ver se ele esta praticando oq eh pra ele praticar (btnAutomatic: separar commands)
-
-drop view, create view, alter view como commands
-
 
  ___ Tables in my database (BD17188) ____
 

@@ -290,7 +290,11 @@ namespace DillenManagementStudio
             lis.Add(' ');
             lis.Add('(');
 
-            return str.Substring(index, str.IndexOf(lis, index) - index);
+            int final = str.IndexOf(lis, index);
+            if (final < 0)
+                final = str.Length;
+                
+            return str.Substring(index, final - index);
         }
 
 

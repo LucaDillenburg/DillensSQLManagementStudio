@@ -311,7 +311,6 @@
             resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
             this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtCode.Name = "rchtxtCode";
-            this.rchtxtCode.UseWaitCursor = true;
             this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
             this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             // 

@@ -69,6 +69,7 @@
     <Compile Include="FrmChangeDatabase.Designer.cs">
       <DependentUpon>FrmChangeDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Computer.cs" />
     <Compile Include="User.cs" />
     <Compile Include="MySqlConnection.cs" />
     <Compile Include="StringAndCharExtensions.cs" />

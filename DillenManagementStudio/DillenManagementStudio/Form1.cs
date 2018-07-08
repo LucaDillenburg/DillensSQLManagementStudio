@@ -38,12 +38,9 @@ namespace DillenManagementStudio
         protected string lastText = "";
         protected string[] lastLines = new string[0];
         //larger or smaller font
-        protected const int QTD_CHANGE_FONT_SIZE = 4;
-        protected const int MIN_FONT_SIZE = 8;
-        protected const int MAX_FONT_SIZE = 30;
-        protected string fontNameRchTxt;
-        protected GraphicsUnit fontUnitRchTxt;
-        protected float fontSizeRchTxt;
+        protected const int MIN_RCHTXT_ZOOM = 1;
+        protected const int MAX_RCHTXT_ZOOM = 5;
+        protected float rchtxtZoomFactor; //inicialized in FrmDillenSQLManagementStudio()
 
         //general
         protected const string TITLE = "Dillen's SQL Management Studio (Dillenburg's Product)";
@@ -59,7 +56,7 @@ namespace DillenManagementStudio
         protected bool hasTyped = false;
         
         //user
-        protected const int ID = 2;
+        protected string MAC_ADRESS = Computer.MacAdress;
         protected User user;
         
         //form methods
@@ -67,13 +64,13 @@ namespace DillenManagementStudio
         {
             InitializeComponent();
 
+            MessageBox.Show(this.MAC_ADRESS);
+
             //set SQL buttons
             this.EnableWichDependsCon(false);
 
-            //larger or smaller font
-            this.fontNameRchTxt = this.rchtxtCode.Font.Name;
-            this.fontUnitRchTxt = this.rchtxtCode.Font.Unit;
-            this.fontSizeRchTxt = this.rchtxtCode.Font.Size;
+            //zoom
+            this.rchtxtZoomFactor = this.rchtxtCode.ZoomFactor;
 
             //reserved words
             reservedWords = mySqlCon.ReservedWords;
@@ -94,7 +91,7 @@ namespace DillenManagementStudio
             //user
             try
             {
-                this.user = new User(ID);
+                this.user = new User(this.MAC_ADRESS);
             }
             catch (Exception err)
             {
@@ -527,7 +524,7 @@ namespace DillenManagementStudio
 
         protected void ShowChangeDatabaseForm(bool fisrtTime)
         {
-            FrmChangeDatabase frmChangeDatabase = new FrmChangeDatabase(this, fisrtTime);
+            FrmChangeDatabase frmChangeDatabase = new FrmChangeDatabase(this);
             frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(fisrtTime);
             frmChangeDatabase.ShowDialog();
         }
@@ -566,28 +563,30 @@ namespace DillenManagementStudio
         //richtextbox Size
         private void smallerRchtxtFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.fontSizeRchTxt -= QTD_CHANGE_FONT_SIZE;
-            this.PutRchtxtFont();
+            if (this.rchtxtZoomFactor == 2 || this.rchtxtZoomFactor == 1.5)
+                this.rchtxtZoomFactor = this.rchtxtZoomFactor - (float)0.5;
+            else
+                this.rchtxtZoomFactor--;
 
-            if (this.fontSizeRchTxt - QTD_CHANGE_FONT_SIZE < MIN_FONT_SIZE)
+            this.rchtxtCode.ZoomFactor = this.rchtxtZoomFactor;
+
+            if (this.rchtxtZoomFactor <= MIN_RCHTXT_ZOOM)
                 this.smallerRchtxtFontToolStripMenuItem.Enabled = false;
             this.largerRchtxtFontToolStripMenuItem.Enabled = true;
         }
 
         private void largerRchtxtFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.fontSizeRchTxt += QTD_CHANGE_FONT_SIZE;
-            this.PutRchtxtFont();
+            if (this.rchtxtZoomFactor == 1 || this.rchtxtZoomFactor == 1.5)
+                this.rchtxtZoomFactor = this.rchtxtZoomFactor + (float)0.5;
+            else
+                this.rchtxtZoomFactor++;
 
-            if (this.fontSizeRchTxt + QTD_CHANGE_FONT_SIZE > MAX_FONT_SIZE)
+            this.rchtxtCode.ZoomFactor = this.rchtxtZoomFactor;
+
+            if (this.rchtxtZoomFactor >= MAX_RCHTXT_ZOOM)
                 this.largerRchtxtFontToolStripMenuItem.Enabled = false;
             this.smallerRchtxtFontToolStripMenuItem.Enabled = true;
-        }
-
-        protected void PutRchtxtFont()
-        {
-            this.rchtxtCode.Font = new Font(new FontFamily(this.fontNameRchTxt), this.fontSizeRchTxt, FontStyle.Bold, this.fontUnitRchTxt);
-            this.PutAllRchTxtRealColorAlsoString();
         }
 
 
@@ -1030,6 +1029,7 @@ namespace DillenManagementStudio
             //SELECTION START EH SEMPRE O QUE ESTA MAIS PERTO DO COMECO
                 MessageBox.Show("SelecioctionStart: " + this.rchtxtCode.SelectionStart + "\n\rSelectionLength: " + this.rchtxtCode.SelectionLength);
         }
+
 
     }
 }

@@ -22,22 +22,14 @@ namespace DillenManagementStudio
         //conection strings
         protected List<string> conStrs;
 
-        //canClose
-        protected bool required;
-
         //update
         protected bool updating = false;
 
 
         //inicialize
-        public FrmChangeDatabase(FrmDillenSQLManagementStudio mainForm, bool databaseRequired)
+        public FrmChangeDatabase(FrmDillenSQLManagementStudio mainForm)
         {
-            this.required = databaseRequired;
-
             InitializeComponent();
-
-            if(this.required)
-                this.btnAddNewDatabase.Text = "Add and use new database";
 
             //variables to send the conection to the main form
             this.frmMain = mainForm;
@@ -91,10 +83,7 @@ namespace DillenManagementStudio
             //change database name in lbDatabase in the Main Form
             this.frmMain.ChangeDatabaseName(FrmChangeDatabase.DatabaseName(this.mySqlCon.ConnStr));
 
-            MessageBox.Show("Database connected!");
-            
-            if (this.required)
-                this.Close();
+            this.Close();
         }
 
         //DELETE
@@ -143,10 +132,7 @@ namespace DillenManagementStudio
 
             //enable and change names of the update buttons
             this.btnCancel.Visible = true;
-            if(!this.required)
-                this.btnAddNewDatabase.Text = "Update database";
-            else
-                this.btnAddNewDatabase.Text = "Update and use database";
+            this.btnAddNewDatabase.Text = "Update database";
 
             string strCon = this.conStrs[this.cbxChsDtBs.SelectedIndex];
 
@@ -283,9 +269,6 @@ namespace DillenManagementStudio
                 this.txtPassword.Text = "";
                 this.txtUserID.Text = "";
             }
-            
-            if (this.required)
-                this.Close();
         }
 
 

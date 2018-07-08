@@ -13,9 +13,9 @@ namespace DillenManagementStudio
     public class User
     {
         protected SqlConnection con;
-        protected int userID;
+        protected string MAC_ADRESS;
 
-        public User(int id)
+        public User(string macAdress)
         {
             string connStr = Properties.Settings.Default.BD17188ConnectionString;
             connStr = connStr.Substring(connStr.IndexOf("Data Source"));
@@ -24,7 +24,7 @@ namespace DillenManagementStudio
             this.con.ConnectionString = connStr;
             this.con.Open();
 
-            this.userID = id;
+            this.MAC_ADRESS = macAdress;
         }
 
         ///getters
@@ -35,9 +35,9 @@ namespace DillenManagementStudio
             get
             {
                 string code = "select conStr, encryptedpassword, wasLast from userdatabase " +
-                "where idUser = @userID";
+                "where macAdressPC = @macAdressPC";
                 SqlCommand cmd = new SqlCommand(code, this.con);
-                cmd.Parameters.AddWithValue("@userID", this.userID);
+                cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
                 SqlDataAdapter adapt = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -74,9 +74,9 @@ namespace DillenManagementStudio
 
         protected bool UserExists()
         {
-            string code = "select * from dillensqlmanagementstudiouser where id = @userID ";
+            string code = "select * from dillensqlmanagementstudiouser where macAdressPC = @macAdressPC ";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
             SqlDataAdapter adapt = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -88,10 +88,10 @@ namespace DillenManagementStudio
         protected void UpdateQtdUsed()
         {
             string code = "update dillensqlmanagementstudiouser set qtdTimesUsedApp = " +
-                "(select qtdTimesUsedApp from dillensqlmanagementstudiouser where id = @userID) + 1 " +
-                "where id = @userID";
+                "(select qtdTimesUsedApp from dillensqlmanagementstudiouser where macAdressPC = @macAdressPC) + 1 " +
+                "where macAdressPC = @macAdressPC";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
             int iResult = cmd.ExecuteNonQuery();
             if (iResult <= 0)
@@ -100,9 +100,9 @@ namespace DillenManagementStudio
 
         protected void InsertNewUser()
         {
-            string code = "insert into dillensqlmanagementstudiouser values(@userID, @qtdUsed)";
+            string code = "insert into dillensqlmanagementstudiouser values(@macAdressPC, @qtdUsed)";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@qtdUsed", 1);
 
             int iResult = cmd.ExecuteNonQuery();
@@ -115,10 +115,10 @@ namespace DillenManagementStudio
         public void OneMoreExecution(string conString)
         {
             string code = "update userdatabase set qtdExecutions = " +
-                "(select qtdExecutions from userdatabase where idUser = @userID and conStr = @conStr) + 1 " +
-                "where idUser = @userID and constr = @strconn";
+                "(select qtdExecutions from userdatabase where macAdressPC = @macAdressPC and conStr = @conStr) + 1 " +
+                "where macAdressPC = @macAdressPC and constr = @strconn";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@conStr", conString.Substring(0, conString.LastIndexOf("Password=")));
 
             int iResult = cmd.ExecuteNonQuery();
@@ -133,16 +133,16 @@ namespace DillenManagementStudio
         {
             //1. put every database with last = 0
             string code = "update userdatabase set wasLast = 0 " +
-                "where idUser = @userID";
+                "where macAdressPC = @macAdressPC";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
             int iResult = cmd.ExecuteNonQuery();
 
             //2. insert database with wasLast = 1
-            code = "insert into userdatabase values(@userID, @strconn, @password, @qtdExecutions, @qtdSintaxHelp, @wasLast)";
+            code = "insert into userdatabase values(@macAdressPC, @strconn, @password, @qtdExecutions, @qtdSintaxHelp, @wasLast)";
             cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@strconn", strConn.Substring(0, strConn.LastIndexOf("Password=")));
             cmd.Parameters.AddWithValue("@password", strConn.Substring(strConn.LastIndexOf("Password=") + 9));
             cmd.Parameters.AddWithValue("@qtdExecutions", 0);
@@ -156,9 +156,9 @@ namespace DillenManagementStudio
         
         public void DeleteDatabase(string strConn)
         {
-            string code = "delete from userdatabase where idUser = @userID and conStr = @conStr";
+            string code = "delete from userdatabase where macAdressPC = @macAdressPC and conStr = @conStr";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@conStr",
                 strConn.Substring(0, strConn.LastIndexOf("Password=")));
 
@@ -173,17 +173,17 @@ namespace DillenManagementStudio
         {
             //1. put every database with last = 0
             string code = "update userdatabase set wasLast = 0 " +
-                "where idUser = @userID";
+                "where macAdressPC = @macAdressPC";
             SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
             int iResult = cmd.ExecuteNonQuery();
             
             //2. set last = 1 in this database
             code = "update userdatabase set wasLast = 1 " +
-                "where idUser = @userID and constr = @strconn";
+                "where macAdressPC = @macAdressPC and constr = @strconn";
             cmd = new SqlCommand(code, this.con);
-            cmd.Parameters.AddWithValue("@userID", this.userID);
+            cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@strconn", strConn.Substring(0, strConn.LastIndexOf("Password=")));
 
             iResult = cmd.ExecuteNonQuery();

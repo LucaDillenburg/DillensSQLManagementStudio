@@ -298,6 +298,42 @@ namespace DillenManagementStudio
         }
 
 
+        ///word-break
+        // method returns the string with enters based on the numbers of characters allowed in each line
+        //
+        public static string BreakWords(this string str, int qtdMaxCharsPerLine)
+        {
+            str += " ";
+            int iCurrSpace = 0;
+            int iLastSpace = 0;
+
+            for (; ; )
+            {
+                int iEspaco = -1;
+
+                while (iEspaco - iCurrSpace <= qtdMaxCharsPerLine)
+                {
+                    iLastSpace = iEspaco;
+                    iEspaco = str.IndexOf(" ", iLastSpace + 1);
+
+                    if (iEspaco < 0)
+                    {
+                        iLastSpace = iEspaco;
+                        break;
+                    }
+                }
+
+                if (iLastSpace == str.Length - 1 || iLastSpace < 0)
+                    break;
+
+                str = str.Insert(iLastSpace + 1, "\n");
+                iCurrSpace = iLastSpace + 2;
+            }
+
+            return str;
+        }
+
+
         ///CHAR EXTENSIONS
         public static int EqualsList(this char c, List<char> list)
         {

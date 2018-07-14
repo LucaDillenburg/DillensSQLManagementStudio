@@ -15,7 +15,7 @@ namespace DillenManagementStudio
         protected SqlConnection con;
         protected string MAC_ADRESS;
 
-        public User(string macAdress)
+        public User()
         {
             string connStr = Properties.Settings.Default.BD17188ConnectionString;
             connStr = connStr.Substring(connStr.IndexOf("Data Source"));
@@ -24,8 +24,47 @@ namespace DillenManagementStudio
             this.con.ConnectionString = connStr;
             this.con.Open();
 
-            this.MAC_ADRESS = macAdress;
+            this.MAC_ADRESS = Computer.MacAdress;
         }
+
+        ///Command Explanation
+        public string CommandFromCod(int codCmd)
+        {
+            string code = "select name from sqlCommand " +
+                "where codCmd = @codCmd";
+            SqlCommand cmd = new SqlCommand(code, this.con);
+            cmd.Parameters.AddWithValue("@codCmd", codCmd);
+
+            SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            adapt.Fill(ds);
+
+            return ds.Tables[0].Rows[0].ItemArray[0].ToString();
+        }
+
+        public void GetExplanationSqlCommand(int codCmd, ref List<string> titles, 
+            ref List<string> cmdExplanations, ref List<string> textsUserTry)
+        {
+            string code = "select title, explanation, textUserTry " +
+                "from explanationSqlCommand where codCmd = @codCmd order by stage";
+            SqlCommand cmd = new SqlCommand(code, this.con);
+            cmd.Parameters.AddWithValue("@codCmd", codCmd);
+
+            SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            adapt.Fill(ds);
+
+            titles = new List<string>();
+            cmdExplanations = new List<string>();
+            textsUserTry = new List<string>();
+            for(int i = 0; i< ds.Tables[0].Rows.Count; i++)
+            {
+                titles.Add(ds.Tables[0].Rows[i].ItemArray[0].ToString());
+                cmdExplanations.Add(ds.Tables[0].Rows[i].ItemArray[1].ToString());
+                textsUserTry.Add(ds.Tables[0].Rows[i].ItemArray[2].ToString());
+            }
+        }
+        
 
         ///getters
         //first of the list is the last one user used
@@ -59,6 +98,24 @@ namespace DillenManagementStudio
                 }
 
                 return databases;
+            }
+        }
+
+        public List<string> SqlCommands
+        {
+            get
+            {
+                string code = "select codCmd, name from SqlCommand where justUsedOnHelp = 0 order by codCmd";
+                SqlCommand cmd = new SqlCommand(code, this.con);
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adapt.Fill(ds);
+
+                List<string> sqlCommands = new List<string>();
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    sqlCommands.Add(ds.Tables[0].Rows[i].ItemArray[1].ToString());
+                return sqlCommands;
             }
         }
 
@@ -137,7 +194,7 @@ namespace DillenManagementStudio
             SqlCommand cmd = new SqlCommand(code, this.con);
             cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
-            int iResult = cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
 
             //2. insert database with wasLast = 1
             code = "insert into userdatabase values(@macAdressPC, @strconn, @password, @qtdExecutions, @qtdSintaxHelp, @wasLast)";
@@ -149,7 +206,7 @@ namespace DillenManagementStudio
             cmd.Parameters.AddWithValue("@qtdSintaxHelp", 0);
             cmd.Parameters.AddWithValue("@wasLast", 1);
 
-            iResult = cmd.ExecuteNonQuery();
+            int iResult = cmd.ExecuteNonQuery();
             if (iResult <= 0)
                 throw new Exception("MyDatabaseOperations.AddDatabase(conString) couldn't insert!");
         }
@@ -177,7 +234,7 @@ namespace DillenManagementStudio
             SqlCommand cmd = new SqlCommand(code, this.con);
             cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
 
-            int iResult = cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
             
             //2. set last = 1 in this database
             code = "update userdatabase set wasLast = 1 " +
@@ -186,7 +243,7 @@ namespace DillenManagementStudio
             cmd.Parameters.AddWithValue("@macAdressPC", this.MAC_ADRESS);
             cmd.Parameters.AddWithValue("@strconn", strConn.Substring(0, strConn.LastIndexOf("Password=")));
 
-            iResult = cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
         }
 
     }

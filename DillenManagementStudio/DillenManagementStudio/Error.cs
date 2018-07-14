@@ -12,12 +12,14 @@ namespace DillenManagementStudio
         protected string code = null;
         protected string exception = null;
         protected bool isConnectionExcp = false;
+        protected string strCmd = null;
 
-        public Error(int codCommand, string c, string excep, bool connectionExcp)
+        public Error(int codCommand, string strCommand, string wrongCode, string excep, bool connectionExcp)
         {
             this.codCmd = codCommand;
+            this.strCmd = strCommand;
             this.exception = excep;
-            this.code = c;
+            this.code = wrongCode;
             this.isConnectionExcp = connectionExcp;
         }
 
@@ -31,6 +33,19 @@ namespace DillenManagementStudio
             set
             {
                 this.codCmd = value;
+            }
+        }
+
+        public string StrCommand
+        {
+            get
+            {
+                return this.strCmd;
+            }
+
+            set
+            {
+                this.strCmd = value;
             }
         }
 

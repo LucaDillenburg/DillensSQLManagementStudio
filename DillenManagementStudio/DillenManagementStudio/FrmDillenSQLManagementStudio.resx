@@ -138,7 +138,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;grvSelect.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="lbTitle.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -172,7 +172,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbTitle.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="btnAllTables.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -199,7 +199,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnAllTables.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="btnAllProcFunc.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -226,7 +226,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnAllProcFunc.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="lbExecutionResult.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -262,7 +262,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbExecutionResult.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -295,7 +295,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 24</value>
@@ -339,14 +339,32 @@
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="changeDatabaseToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9.75pt</value>
+  <data name="toolStripMenuItem2.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="changeDatabaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 24</value>
   </data>
-  <data name="changeDatabaseToolStripMenuItem.Text" xml:space="preserve">
-    <value>Change database</value>
+  <data name="toolStripMenuItem2.Text" xml:space="preserve">
+    <value>|</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 24</value>
+  </data>
+  <data name="saveToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 24</value>
+  </data>
+  <data name="undoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 24</value>
+  </data>
+  <data name="redoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Redo</value>
   </data>
   <data name="toolStripMenuItem4.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -356,6 +374,15 @@
   </data>
   <data name="toolStripMenuItem4.Text" xml:space="preserve">
     <value>|</value>
+  </data>
+  <data name="changeDatabaseToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9.75pt</value>
+  </data>
+  <data name="changeDatabaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 24</value>
+  </data>
+  <data name="changeDatabaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>Change database</value>
   </data>
   <data name="allCommandsSintaxToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 24</value>
@@ -475,7 +502,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="btnMinimize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -502,40 +529,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnMinimize.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="rchtxtCode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 8.25pt, style=Bold</value>
-  </data>
-  <data name="rchtxtCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 84</value>
-  </data>
-  <data name="rchtxtCode.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="rchtxtCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>749, 608</value>
-  </data>
-  <data name="rchtxtCode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="rchtxtCode.Text" xml:space="preserve">
-    <value>Write down your SQL code in here...</value>
-  </data>
-  <data name="rchtxtCode.ZoomFactor" type="System.Single, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;rchtxtCode.Name" xml:space="preserve">
-    <value>rchtxtCode</value>
-  </data>
-  <data name="&gt;&gt;rchtxtCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rchtxtCode.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rchtxtCode.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="lbDatabase.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -568,7 +562,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbDatabase.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
@@ -592,7 +586,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbLoading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>321, 246</value>
+    <value>106, 31</value>
   </data>
   <data name="lbLoading.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 42</value>
@@ -603,9 +597,6 @@
   <data name="lbLoading.Text" xml:space="preserve">
     <value>Loading...</value>
   </data>
-  <data name="lbLoading.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;lbLoading.Name" xml:space="preserve">
     <value>lbLoading</value>
   </data>
@@ -613,16 +604,16 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbLoading.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>pnlLoading</value>
   </data>
   <data name="&gt;&gt;lbLoading.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="picLoading.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="picLoading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 234</value>
+    <value>34, 19</value>
   </data>
   <data name="picLoading.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 66</value>
@@ -633,9 +624,6 @@
   <data name="picLoading.TabIndex" type="System.Int32, mscorlib">
     <value>37</value>
   </data>
-  <data name="picLoading.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;picLoading.Name" xml:space="preserve">
     <value>picLoading</value>
   </data>
@@ -643,10 +631,10 @@
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;picLoading.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>pnlLoading</value>
   </data>
   <data name="&gt;&gt;picLoading.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="pictureBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -670,7 +658,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -720,25 +708,76 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
-  <data name="rchtxtAux.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="rchtxtCode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt, style=Bold</value>
+  </data>
+  <data name="rchtxtCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 85</value>
+  </data>
+  <data name="rchtxtCode.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="rchtxtCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>749, 608</value>
+  </data>
+  <data name="rchtxtCode.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="rchtxtCode.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rchtxtCode.ZoomFactor" type="System.Single, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rchtxtCode.Name" xml:space="preserve">
+    <value>rchtxtCode</value>
+  </data>
+  <data name="&gt;&gt;rchtxtCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pnlLoading.Location" type="System.Drawing.Point, System.Drawing">
+    <value>208, 199</value>
+  </data>
+  <data name="pnlLoading.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 108</value>
+  </data>
+  <data name="pnlLoading.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;pnlLoading.Name" xml:space="preserve">
+    <value>pnlLoading</value>
+  </data>
+  <data name="&gt;&gt;pnlLoading.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlLoading.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlLoading.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="rchtxtAux.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 14.25pt, style=Bold</value>
+    <value>Courier New, 8.25pt, style=Bold</value>
   </data>
   <data name="rchtxtAux.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 84</value>
+    <value>12, 85</value>
+  </data>
+  <data name="rchtxtAux.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
   </data>
   <data name="rchtxtAux.Size" type="System.Drawing.Size, System.Drawing">
     <value>749, 608</value>
   </data>
   <data name="rchtxtAux.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
+    <value>40</value>
   </data>
   <data name="rchtxtAux.Text" xml:space="preserve">
     <value />
+  </data>
+  <data name="rchtxtAux.ZoomFactor" type="System.Single, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;rchtxtAux.Name" xml:space="preserve">
     <value>rchtxtAux</value>
@@ -750,7 +789,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rchtxtAux.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -857,16 +896,40 @@
   <data name="&gt;&gt;closeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;changeDatabaseToolStripMenuItem.Name" xml:space="preserve">
-    <value>changeDatabaseToolStripMenuItem</value>
+  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
+    <value>toolStripMenuItem2</value>
   </data>
-  <data name="&gt;&gt;changeDatabaseToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveToolStripMenuItem1.Name" xml:space="preserve">
+    <value>saveToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;saveToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;undoToolStripMenuItem.Name" xml:space="preserve">
+    <value>undoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;undoToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;redoToolStripMenuItem.Name" xml:space="preserve">
+    <value>redoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;redoToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">
     <value>toolStripMenuItem4</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;changeDatabaseToolStripMenuItem.Name" xml:space="preserve">
+    <value>changeDatabaseToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;changeDatabaseToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;allCommandsSintaxToolStripMenuItem.Name" xml:space="preserve">

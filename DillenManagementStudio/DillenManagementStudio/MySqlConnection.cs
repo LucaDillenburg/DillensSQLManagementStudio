@@ -39,6 +39,9 @@ namespace DillenManagementStudio
         //nonQuery to select
         protected List<string> nonQueryToSelect = new List<string>();
 
+        //user: to get all commands
+        protected User user;
+
         //special chars (to separe commands)
         protected List<char> specialChars = new List<char>();
         protected int iSingQuot;
@@ -46,8 +49,11 @@ namespace DillenManagementStudio
         //reserved words
         protected List<string> reservedWords = new List<string>();
         
-        public MySqlConnection()
+        public MySqlConnection(User us)
         {
+            //user: to get all commands
+            this.user = us;
+
             //Non Query To Select
             nonQueryToSelect.Add("insert into ");
             nonQueryToSelect.Add("update ");
@@ -206,57 +212,9 @@ namespace DillenManagementStudio
 
         protected void PutAllCommands()
         {
-            this.commands = new List<string>();
-
             //INICIALIZAR COMMANDS
-            //NON-QUERIES
-            this.commands.Add("insert into ");
-            this.iDropTable = this.commands.Count; //i
-            this.commands.Add("drop table ");
-            this.commands.Add("alter table ");
-            this.commands.Add("delete from ");
-            this.commands.Add("update ");
-            this.commands.Add("create table ");
-            this.commands.Add("create rule ");
-            this.commands.Add("drop view ");
-            this.iDropProc = this.commands.Count;
-            this.commands.Add("drop proc ");
-            this.iDropProcedure = this.commands.Count;
-            this.commands.Add("drop procedure ");
-            this.iDropFunc = this.commands.Count;
-            this.commands.Add("drop function ");
-            this.commands.Add("drop trigger ");
-
-            //PROCEDURES, FUNCTIONS, TRIGGER (and view)
-            this.iFirstProcFuncTrigger = this.commands.Count; //i BASIC
-            this.iCreateProc = this.commands.Count;
-            this.commands.Add("create proc ");
-            this.iCreateProcedure = this.commands.Count;
-            this.commands.Add("create procedure ");
-            this.commands.Add("alter proc ");
-            this.commands.Add("alter procedure ");
-            this.iCreateFunc = this.commands.Count;
-            this.commands.Add("create function ");
-            this.commands.Add("alter function ");
-            this.iCreateTrigger = this.commands.Count; //i
-            this.commands.Add("create trigger ");
-            this.iAlterTrigger = this.commands.Count; //i
-            this.commands.Add("alter trigger ");
-            this.commands.Add("create view ");
-            this.commands.Add("alter view ");
-
-            //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
-            this.iCommandExec = this.commands.Count; //i BASIC
-            this.commands.Add("exec ");
+            this.GetSqlCommandsFromDb();
             
-            //QUERIES
-            this.iFirstQuery = this.commands.Count; //i BASIC
-            this.commands.Add("sp_bindrule ");
-            this.commands.Add("sp_unbindrule ");
-            this.commands.Add("select ");
-            this.iSpHelp = this.commands.Count;
-            this.commands.Add("sp_help ");
-
             //REAL PROCEDURES AND FUNCTIONS
             //get all procedures and functions
             this.iFirstRealProc = this.commands.Count; //i BASIC
@@ -274,8 +232,6 @@ namespace DillenManagementStudio
                             "INNER JOIN sys.objects o ON m.object_id = o.object_id " +
                             "WHERE type_desc like '%function%'";
 
-                        //code = "SELECT name AS function_name,SCHEMA_NAME(schema_id) AS schema_name, type_desc" +
-                        //    "FROM sys.objects WHERE type_desc LIKE '%FUNCTION%'";
                         this.iFirstRealFunc = this.commands.Count; //i BASIC
                     }
                     
@@ -297,6 +253,32 @@ namespace DillenManagementStudio
                     catch(Exception e) { }
                 }
             }
+        }
+
+        protected void GetSqlCommandsFromDb()
+        {
+            this.commands = this.user.SqlCommands;
+
+            //NON-QUERIES
+            this.iDropTable = this.commands.IndexOf("drop table ");
+            this.iDropProc = this.commands.IndexOf("drop proc ");
+            this.iDropProcedure = this.commands.IndexOf("drop procedure ");
+            this.iDropFunc = this.commands.IndexOf("drop function ");
+
+            //PROCEDURES, FUNCTIONS, TRIGGER (and view)
+            this.iCreateProc = this.commands.IndexOf("create proc ");
+            this.iFirstProcFuncTrigger = this.iCreateProc; //BASIC
+            this.iCreateProcedure = this.commands.IndexOf("create procedure ");
+            this.iCreateFunc = this.commands.IndexOf("create function ");
+            this.iCreateTrigger = this.commands.IndexOf("create trigger ");
+            this.iAlterTrigger = this.commands.IndexOf("alter trigger ");
+
+            //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
+            this.iCommandExec = this.commands.IndexOf("exec "); //BASIC
+
+            //QUERIES
+            this.iFirstQuery = this.commands.IndexOf("sp_bindrule "); //BASIC
+            this.iSpHelp = this.commands.IndexOf("sp_help ");
         }
 
         public void RestartCommands()
@@ -345,7 +327,7 @@ namespace DillenManagementStudio
             if (!this.IsConected())
             {
                 //Say that the conection is over
-                cmdErrors.Enqueue(new Error(-1, "", "Connection with database is down!", true));
+                cmdErrors.Enqueue(new Error(-1, "", "", "Connection with database is down!", true));
                 return new DataTable();
             }
 
@@ -371,7 +353,18 @@ namespace DillenManagementStudio
 
                 if (!worked)
                 {
-                    Error curErr = new Error(cmdN, currCode, excep, false);
+                    int cmdNError;
+                    if (cmdN >= this.iFirstRealProc)
+                    {
+                        if (cmdN < this.iFirstRealFunc) //if it's a procedure
+                            cmdNError = this.iFirstRealProc;
+                        else //if it's a function
+                            cmdNError = this.iFirstRealProc + 1;
+                    }
+                    else
+                        cmdNError = cmdN;
+
+                    Error curErr = new Error(cmdNError, cmdN>=0?this.commands[cmdN].Trim().ToUpper():"Not existent command", currCode, excep, false);
                     cmdErrors.Enqueue(curErr);
                 }
                 else
@@ -476,23 +469,33 @@ namespace DillenManagementStudio
                     exception = "Query error: " + err.Message;
                     return false;
                 }
-                
+
 
                 //I have to do what's in above independing if it was a select or not 
                 //because if it was wrong I'd have to tell the user
                 if (executeQuery)
-                {
-                    //change number of rows and columns of the DataGridView
-                    //put the names of the columns                 
-                    for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
-                        table.Columns.Add(ds.Tables[0].Columns[i].ColumnName + " (" + ds.Tables[0].Columns[i].DataType.ToString() + ")", ds.Tables[0].Columns[i].DataType == typeof(bool) ? typeof(string) : ds.Tables[0].Columns[i].DataType);
-
-                    for (int ir = 0; ir < ds.Tables[0].Rows.Count; ir++)
-                        table.Rows.Add(ds.Tables[0].Rows[ir].ItemArray);
-                }
+                    MySqlConnection.ConstructTable(ds, ref table);
             }
 
             return true;
+        }
+
+        public static DataTable DataTableFromDs(DataSet ds)
+        {
+            DataTable table = new DataTable();
+            MySqlConnection.ConstructTable(ds, ref table);
+            return table;
+        }
+
+        protected static void ConstructTable(DataSet ds, ref DataTable table)
+        {
+            //change number of rows and columns of the DataGridView
+            //put the names of the columns                 
+            for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
+                table.Columns.Add(ds.Tables[0].Columns[i].ColumnName + " (" + ds.Tables[0].Columns[i].DataType.ToString() + ")", ds.Tables[0].Columns[i].DataType == typeof(bool) ? typeof(string) : ds.Tables[0].Columns[i].DataType);
+
+            for (int ir = 0; ir < ds.Tables[0].Rows.Count; ir++)
+                table.Rows.Add(ds.Tables[0].Rows[ir].ItemArray);
         }
 
         protected bool CmdIsNonQueryToSelect(int iCommand)

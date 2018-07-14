@@ -1,8 +1,3 @@
-mudar zoom ao inves de font
-deixar font menor e zoom maior
-
-deixar frmChangeDatabase mais automatico, quando selecionar fechar na hora
-
    ___ TEXT COLOR ___
 1.
 //antes
@@ -36,5 +31,3 @@ as
 
 
 se esta selecionado mais de um caracter e aperta qualquer tecla que nao seja [Delete] e [Backspace], ele da pau
-
-01234567890123456789012345678901234567890

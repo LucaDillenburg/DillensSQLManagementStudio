@@ -10,6 +10,7 @@ namespace DillenManagementStudio
 {
     public static class RichTextBoxExtensions
     {
+        //general multicolor richtextbox
         //https://stackoverflow.com/questions/1926264/color-different-parts-of-a-richtextbox-string
         public static void ChangeTextColor(this RichTextBox rchtxt, Color color, int startIndex, int endIndex)
         {

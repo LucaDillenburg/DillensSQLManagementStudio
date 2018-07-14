@@ -43,8 +43,12 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allCommandsSintaxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.allowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +64,6 @@
             this.queryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
-            this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             this.lbDatabase = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -68,12 +71,15 @@
             this.picLoading = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.rchtxtCode = new System.Windows.Forms.RichTextBox();
+            this.pnlLoading = new System.Windows.Forms.Panel();
             this.rchtxtAux = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlLoading.SuspendLayout();
             this.SuspendLayout();
             // 
             // grvSelect
@@ -116,8 +122,12 @@
             resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.changeDatabaseToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.saveToolStripMenuItem1,
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem,
             this.toolStripMenuItem4,
+            this.changeDatabaseToolStripMenuItem,
             this.allCommandsSintaxToolStripMenuItem,
             this.toolStripMenuItem1,
             this.allowToolStripMenuItem,
@@ -187,18 +197,45 @@
             resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // changeDatabaseToolStripMenuItem
+            // toolStripMenuItem2
             // 
-            resources.ApplyResources(this.changeDatabaseToolStripMenuItem, "changeDatabaseToolStripMenuItem");
-            this.changeDatabaseToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
-            this.changeDatabaseToolStripMenuItem.Name = "changeDatabaseToolStripMenuItem";
-            this.changeDatabaseToolStripMenuItem.Click += new System.EventHandler(this.changeDatabaseToolStripMenuItem_Click);
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
+            this.toolStripMenuItem2.ForeColor = System.Drawing.SystemColors.Control;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            // 
+            // saveToolStripMenuItem1
+            // 
+            this.saveToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.Control;
+            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
+            this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            resources.ApplyResources(this.undoToolStripMenuItem, "undoToolStripMenuItem");
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            resources.ApplyResources(this.redoToolStripMenuItem, "redoToolStripMenuItem");
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
             this.toolStripMenuItem4.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            // 
+            // changeDatabaseToolStripMenuItem
+            // 
+            resources.ApplyResources(this.changeDatabaseToolStripMenuItem, "changeDatabaseToolStripMenuItem");
+            this.changeDatabaseToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.changeDatabaseToolStripMenuItem.Name = "changeDatabaseToolStripMenuItem";
+            this.changeDatabaseToolStripMenuItem.Click += new System.EventHandler(this.changeDatabaseToolStripMenuItem_Click);
             // 
             // allCommandsSintaxToolStripMenuItem
             // 
@@ -305,15 +342,6 @@
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.UseVisualStyleBackColor = false;
             // 
-            // rchtxtCode
-            // 
-            this.rchtxtCode.AcceptsTab = true;
-            resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
-            this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.rchtxtCode.Name = "rchtxtCode";
-            this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
-            this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
-            // 
             // lbDatabase
             // 
             resources.ApplyResources(this.lbDatabase, "lbDatabase");
@@ -331,12 +359,12 @@
             // lbLoading
             // 
             resources.ApplyResources(this.lbLoading, "lbLoading");
-            this.lbLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.lbLoading.BackColor = System.Drawing.Color.Transparent;
             this.lbLoading.Name = "lbLoading";
             // 
             // picLoading
             // 
-            this.picLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.picLoading.BackColor = System.Drawing.Color.Transparent;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
             resources.ApplyResources(this.picLoading, "picLoading");
             this.picLoading.Name = "picLoading";
@@ -355,20 +383,37 @@
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
+            // rchtxtCode
+            // 
+            this.rchtxtCode.AcceptsTab = true;
+            this.rchtxtCode.EnableAutoDragDrop = true;
+            resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
+            this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.rchtxtCode.Name = "rchtxtCode";
+            // 
+            // pnlLoading
+            // 
+            this.pnlLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlLoading.Controls.Add(this.picLoading);
+            this.pnlLoading.Controls.Add(this.lbLoading);
+            resources.ApplyResources(this.pnlLoading, "pnlLoading");
+            this.pnlLoading.Name = "pnlLoading";
+            // 
             // rchtxtAux
             // 
             this.rchtxtAux.AcceptsTab = true;
+            this.rchtxtAux.EnableAutoDragDrop = true;
             resources.ApplyResources(this.rchtxtAux, "rchtxtAux");
             this.rchtxtAux.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtAux.Name = "rchtxtAux";
+            this.rchtxtAux.ReadOnly = true;
             // 
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(248)))), ((int)(((byte)(250)))));
-            this.Controls.Add(this.lbLoading);
-            this.Controls.Add(this.picLoading);
+            this.Controls.Add(this.pnlLoading);
             this.Controls.Add(this.lbDatabase);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnMinimize);
@@ -379,21 +424,22 @@
             this.Controls.Add(this.btnAllTables);
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.grvSelect);
-            this.Controls.Add(this.rchtxtCode);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.rchtxtAux);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "FrmDillenSQLManagementStudio";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Click += new System.EventHandler(this.FrmDillenSQLManagementStudio_Click);
+            this.Load += new System.EventHandler(this.FrmDillenSQLManagementStudio_Load);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.FrmDillenSQLManagementStudio_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlLoading.ResumeLayout(false);
+            this.pnlLoading.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,7 +465,6 @@
         private System.Windows.Forms.ToolStripMenuItem allCommandsSintaxToolStripMenuItem;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnMinimize;
-        private System.Windows.Forms.RichTextBox rchtxtCode;
         private System.Windows.Forms.ToolStripMenuItem changeDatabaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
@@ -440,6 +485,12 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.PictureBox picLoading;
         private System.Windows.Forms.Label lbLoading;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox rchtxtCode;
+        private System.Windows.Forms.Panel pnlLoading;
         private System.Windows.Forms.RichTextBox rchtxtAux;
     }
 }

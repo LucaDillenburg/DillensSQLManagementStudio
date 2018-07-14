@@ -298,22 +298,6 @@ namespace DillenManagementStudio
             return currDatabase + " (" + currDataSource + ")";
         }
 
-        
-
-        //tests
-        private void FrmChangeDatabase_Click(object sender, EventArgs e)
-        {
-            string password1 = this.txtPassword.Text;
-            string encryptedPassword = Encryption.Encrypt(password1);
-            string password2 = Encryption.Decrypt(encryptedPassword);
-
-            MessageBox.Show("Password: " + password1 +
-                "\n\rEncrypted: " + encryptedPassword +
-                "\n\rPassword After: " + password2);
-
-            //this.mySqlCon.ConnStr = Properties.Settings.Default.BD17188ConnectionString;
-            //this.Close();
-        }
-
+      
     }
 }

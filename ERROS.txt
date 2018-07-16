@@ -28,6 +28,12 @@ returns s
 as
  return select nome from aluno
 
+4. 
+//antes
+INSERT INTO test VALUES(20, 'Jack', 'Loves to hear violin in the sea.')
+
+//depois
+INSERT INTO test(id, name) VALUES(20, 'Jack')
 
 
 se esta selecionado mais de um caracter e aperta qualquer tecla que nao seja [Delete] e [Backspace], ele da pau

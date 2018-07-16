@@ -64,9 +64,11 @@
             this.lbExplanation.Size = new System.Drawing.Size(658, 234);
             this.lbExplanation.TabIndex = 1;
             this.lbExplanation.Text = resources.GetString("lbExplanation.Text");
+            this.lbExplanation.Visible = false;
             // 
             // rchtxtTryCode
             // 
+            this.rchtxtTryCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rchtxtTryCode.Location = new System.Drawing.Point(24, 281);
             this.rchtxtTryCode.Name = "rchtxtTryCode";
             this.rchtxtTryCode.Size = new System.Drawing.Size(249, 161);

@@ -55,6 +55,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="MulticolorLabel.cs" />
     <Compile Include="SqlRichTextBox.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Error.cs" />

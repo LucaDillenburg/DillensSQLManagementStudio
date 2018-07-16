@@ -15,7 +15,7 @@ namespace DillenManagementStudio
         //iArrayNumber: which position of the ministr list
         //lastLetter: the last letter of the ministr
         //to show multiple spaces in a string put "%"
-        public static int IndexOfFirstMinistrListMultSpacesCI(this string str, List<String> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
+        public static int IndexOfFirstMinistrListMultSpacesCI(this string str, List<string> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
         {
             //function will return the index of the first letter of the string that was been search
                 //example: " hi, how           are you? ".IndexOfSupreme("how%are") => 5
@@ -125,7 +125,7 @@ namespace DillenManagementStudio
         //method returns the index of the first ministr in the str (case insensitive)
         //iArrayNumber: which position of the ministr list
         //lastLetter: the last letter of the ministr
-        public static int IndexOfFirstMinistrListCI(this string str, List<String> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
+        public static int IndexOfFirstMinistrListCI(this string str, List<string> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
         {
             //function will return the index of the first letter of the string that was been search
                 //example: " hi, how are you? ".IndexOfSupreme("how are") => 5
@@ -181,6 +181,30 @@ namespace DillenManagementStudio
                 return str1.Length;
         }
 
+
+        ///indexOf List<string> simple
+        //method returns the index of the first ministr in the str (case insensitive)
+        //iArrayNumber: which position of the ministr list
+        public static int IndexOf(this string str, List<string> ministrs, int startIndex, ref int iArrayNumber)
+        {
+            int ret = str.Length;
+            iArrayNumber = -1;
+
+            for (int i = 0; i < ministrs.Count; i++)
+            {
+                int currentIndex = str.IndexOf(ministrs[i], startIndex);
+
+                if (currentIndex >= 0 && currentIndex < ret)
+                {
+                    ret = currentIndex;
+                    iArrayNumber = i;
+                }
+            }
+
+            if (ret == str.Length)
+                return -1;
+            return ret;
+        }
 
         ///indexOf and LastIndexOf List<char>
         // method returns de first indexOf of the list of char from a startIndex

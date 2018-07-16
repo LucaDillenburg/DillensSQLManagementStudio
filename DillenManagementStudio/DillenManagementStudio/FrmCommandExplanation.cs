@@ -34,6 +34,9 @@ namespace DillenManagementStudio
         //rich text box
         protected SqlRichTextBox sqlRchtxtbx;
 
+        //multicolor label
+        protected MulticolorLabel multicolorLabel;
+
 
         //INICIALIZE
         public FrmCommandExplanation(int codCmd, User user, MySqlConnection mySqlCon)
@@ -57,22 +60,27 @@ namespace DillenManagementStudio
 
         private void FrmCommandExplanation_Shown(object sender, EventArgs e)
         {
+            this.multicolorLabel = new MulticolorLabel(new Point(8, 49), 656, 230, this, new Font(new FontFamily("Courier New"), 12.0F),
+                Color.Black, SystemColors.Control);
+
+            this.CreateTableToUserTry();
+
             //put strings in the right way
             this.ManageStrings();
 
             this.ShowCurrExplanationStage();
 
-            this.CreateTableToUserTry();
+            this.btnHelp.PerformClick();
         }
 
         protected void ManageStrings()
         {
-            //break string into phrases
+            /*
+            //not needed because MulticolorLabel does that automatically
+            break string into phrases
             for (int i = 0; i < this.cmdExplanations.Count; i++)
                 this.cmdExplanations[i] = this.cmdExplanations[i].BreakWords(QTD_MAX_CHARS_PER_LINE);
-
-            //put color the label and erase marks
-
+            */
 
             //change [tableName] and [valueX] to real values
             for(int ib = 0; ib<this.textsUserTry.Count; ib++)
@@ -104,7 +112,7 @@ namespace DillenManagementStudio
                 }
             }
         }
-
+        
         protected void CreateTableToUserTry()
         {
             this.con = new SqlConnection();
@@ -136,8 +144,6 @@ namespace DillenManagementStudio
                 "insert into " + this.tableName + " values(12, 'John', 'He is usually calm, but when people steal his mustang and kill his dog, he likes to use pistols.') ";
             cmd = new SqlCommand(code, con);
             cmd.ExecuteNonQuery();
-            
-            this.btnHelp.PerformClick();
         }
 
         protected void SetNewTableName()
@@ -181,7 +187,9 @@ namespace DillenManagementStudio
             this.CentralizeTitle();
 
             //cmd explanation
-            this.lbExplanation.Text = this.cmdExplanations[this.stage];
+            //put color in the label and erase marks
+            this.PutCmdExplanationInLabel();
+            //this.lbExplanation.Text = this.cmdExplanations[this.stage];
 
             //try text
             this.rchtxtTryCode.Text = this.textsUserTry[this.stage];
@@ -195,6 +203,74 @@ namespace DillenManagementStudio
                 this.btnNext.Visible = false;
             else
                 this.btnNext.Visible = true;
+        }
+
+        protected void PutCmdExplanationInLabel()
+        {
+            this.multicolorLabel.Clear();
+
+            string text = this.cmdExplanations[this.stage];
+
+            //put Colorful, Bold, Italic and normal text in Label
+            int startIndex = 0;
+            while(startIndex < text.Length)
+            {
+                int beginSpecialText = text.IndexOf("<<", startIndex);
+
+                //put text until "<<"
+                this.multicolorLabel.Append(text.Substring(startIndex, 
+                    (beginSpecialText<0?text.Length:beginSpecialText) - startIndex));
+
+                if (beginSpecialText < 0)
+                    break;
+
+                //put text after "<<" until ">>"
+                int endSpecialText = text.IndexOf(">>", beginSpecialText);
+                if(endSpecialText < 0)
+                {
+                    this.multicolorLabel.Append(text.Substring(beginSpecialText));
+                    break;
+                }
+                else
+                {
+                    Color color = this.multicolorLabel.DefaultTextColor;
+                    Font font = this.multicolorLabel.DefaultFont;
+                    this.ColorOrFontFromLetter(text[beginSpecialText+2], ref color, ref font);
+
+                    int start = beginSpecialText + 3;
+                    string curText = text.Substring(start, endSpecialText - start);
+                    this.multicolorLabel.Append(curText, color, font);
+                }
+
+                startIndex = endSpecialText + 2;
+            }
+        }
+
+        protected void ColorOrFontFromLetter(char c, ref Color color, ref Font font)
+        {
+            /*
+            __ Explanation __
+              - <<*bold>>
+              - <<_underlined>>
+              - <<bBLUE TEXT>>
+              - <<rRED TEXT>>
+            */
+
+            switch (c)
+            {
+                case '*':
+                    font = new Font(font, FontStyle.Bold);
+                    break;
+                case '_':
+                    font = new Font(font, FontStyle.Italic);
+                    break;
+                case 'b':
+                    color = Color.Blue;
+                    break;
+                case 'r':
+                    color = Color.Red;
+                    break;
+            }
         }
 
         protected void CentralizeTitle()

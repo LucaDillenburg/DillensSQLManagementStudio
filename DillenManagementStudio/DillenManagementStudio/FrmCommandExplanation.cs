@@ -17,8 +17,11 @@ namespace DillenManagementStudio
         //stage
         protected int stage = 0;
 
-        //sql memory
+        //main atributes
         protected string command;
+        protected int codCmd;
+
+        //sql memory
         protected List<string> titles;
         protected List<string> cmdExplanations;
         protected List<string> textsUserTry;
@@ -28,14 +31,14 @@ namespace DillenManagementStudio
         protected SqlConnection con;
         protected string tableName;
 
-        //auxiliary
-        protected const int QTD_MAX_CHARS_PER_LINE = 65;
-
         //rich text box
         protected SqlRichTextBox sqlRchtxtbx;
 
         //multicolor label
         protected MulticolorLabel multicolorLabel;
+
+        protected const int FORM_MORE_WIDTH_PIXELS = 17;
+        protected const int FORM_MORE_HEIGHT_PIXELS = 38;
 
 
         //INICIALIZE
@@ -46,9 +49,9 @@ namespace DillenManagementStudio
             this.mySqlConn = mySqlCon;
 
             //name
-            this.command = user.CommandFromCod(codCmd);
-            this.Text = new CultureInfo("en-US", false).TextInfo.ToTitleCase(this.command);
+            this.command = new CultureInfo("en-US", false).TextInfo.ToTitleCase(user.CommandFromCod(codCmd));
             //fisrt letters of all words in upper case
+            this.Text = this.command;
 
             //explanation
             user.GetExplanationSqlCommand(codCmd, ref this.titles, ref this.cmdExplanations,
@@ -60,7 +63,10 @@ namespace DillenManagementStudio
 
         private void FrmCommandExplanation_Shown(object sender, EventArgs e)
         {
-            this.multicolorLabel = new MulticolorLabel(new Point(8, 49), 656, 230, this, new Font(new FontFamily("Courier New"), 12.0F),
+            int x = 8;
+            int y = 49;
+            this.multicolorLabel = new MulticolorLabel(new Point(x, y), this.Width - 2*x - FORM_MORE_WIDTH_PIXELS, this.rchtxtAux.Location.Y - y - x,
+                this, new Font(new FontFamily("Courier New"), 12.0F),
                 Color.Black, SystemColors.Control);
 
             this.CreateTableToUserTry();
@@ -68,7 +74,8 @@ namespace DillenManagementStudio
             //put strings in the right way
             this.ManageStrings();
 
-            this.ShowCurrExplanationStage();
+            this.ShowCurrExplanationStage(false);
+            FrmCommandExplanation_Resize(null, null);
 
             this.btnHelp.PerformClick();
         }
@@ -179,8 +186,94 @@ namespace DillenManagementStudio
         }
 
 
+        //AJUST
+        private void FrmCommandExplanation_Resize(object sender, EventArgs e)
+        {
+            //title
+            this.CentralizeTitle();
+
+            //explanation
+            this.AjustMulticolorLabel();
+            this.PutCmdExplanationInLabel();
+
+            //bottom buttons
+            this.AjustNextPrevButtons();
+
+            //try area
+            this.AjustRichTxtBxArea();
+            this.AjustSelectionArea();
+            this.AjustExecute();
+        }
+
+        protected void AjustMulticolorLabel()
+        {
+            int x = (int)Math.Round(0.012*(this.Width-FORM_MORE_WIDTH_PIXELS)); //1.2%
+            int y = 49;
+            this.multicolorLabel.X = x;
+            this.multicolorLabel.Width = this.Width - 2 * x - FORM_MORE_WIDTH_PIXELS;
+            this.multicolorLabel.Height = this.rchtxtAux.Location.Y - y -
+                (int)Math.Round(0.012 * (this.Width - FORM_MORE_HEIGHT_PIXELS));
+        }
+
+        protected void AjustNextPrevButtons()
+        {
+            this.btnPrevious.Location = new Point(12, this.Height - 74);
+            this.btnNext.Location = new Point(this.Width - 91, this.Height - 74);
+        }
+
+        protected void AjustRichTxtBxArea()
+        {
+            //rchtxtTryCode
+            this.rchtxtTryCode.Width = (int)Math.Round(0.38 * (this.Width - FORM_MORE_WIDTH_PIXELS)); //38%
+            this.rchtxtTryCode.Height = (int)Math.Round(0.41 * (this.Height - FORM_MORE_HEIGHT_PIXELS)); //41%
+            int x = (int)Math.Round(0.03 * (this.Width - FORM_MORE_WIDTH_PIXELS)); //3%
+            int y = (int)Math.Round(0.50 * (this.Height - FORM_MORE_HEIGHT_PIXELS)); //50%
+            this.rchtxtTryCode.Location = new Point(x, y);
+
+            //rchtxtAux
+            this.rchtxtAux.Width = this.rchtxtTryCode.Width;
+            this.rchtxtAux.Height = this.rchtxtTryCode.Height;
+            this.rchtxtAux.Location = this.rchtxtTryCode.Location;
+
+            //picLoading
+            this.picLoading.Width = (int)Math.Round(0.08 * (this.Width - FORM_MORE_WIDTH_PIXELS)); //8%
+            this.picLoading.Height = this.picLoading.Width; //
+            x = (this.rchtxtTryCode.Width - this.picLoading.Width) / 2 + this.rchtxtTryCode.Location.X;
+            y = (this.rchtxtTryCode.Height - this.picLoading.Height) / 2 + this.rchtxtTryCode.Location.Y;
+            this.picLoading.Location = new Point(x, y);
+
+            //btnHelp
+            this.btnHelp.Location = new Point(this.rchtxtTryCode.Location.X + this.rchtxtTryCode.Width + 5,
+                this.rchtxtTryCode.Location.Y);
+        }
+
+        protected void AjustSelectionArea()
+        {
+            this.grvSelectTry.Width = (int)Math.Round(0.44 * (this.Width - FORM_MORE_WIDTH_PIXELS)); //44%
+            this.grvSelectTry.Height = (int)Math.Round(0.41 * (this.Height - FORM_MORE_HEIGHT_PIXELS))
+                - this.lbExecutionResult.Height - 3; //42%
+
+            int x = (int)Math.Round(0.96 * (this.Width - FORM_MORE_WIDTH_PIXELS))/*96%*/
+                - this.grvSelectTry.Width;
+            this.lbExecutionResult.Location = new Point(x, this.rchtxtTryCode.Location.Y);
+            this.grvSelectTry.Location = new Point(this.lbExecutionResult.Location.X,
+                this.lbExecutionResult.Location.Y + this.lbExecutionResult.Height + 3);
+        }
+
+        protected void AjustExecute()
+        {
+            this.btnExecute.Width = (int)Math.Round(0.094 * (this.Width - FORM_MORE_WIDTH_PIXELS)); //9.4
+            this.btnExecute.Height = (int)Math.Round(0.088 * (this.Height - FORM_MORE_HEIGHT_PIXELS)); //8.8
+
+            int y = (this.rchtxtTryCode.Height - this.btnExecute.Height) / 2 + this.rchtxtTryCode.Location.Y;
+            int x = (this.grvSelectTry.Location.X - this.rchtxtTryCode.Location.X - this.rchtxtTryCode.Width - this.btnExecute.Width) / 2 
+                + this.rchtxtTryCode.Location.X + this.rchtxtTryCode.Width;
+            this.btnExecute.Location = new Point(x, y);
+        }
+
+
         //Show Stage
-        protected void ShowCurrExplanationStage()
+        protected void ShowCurrExplanationStage(bool putCmdExplanationInLabel)
         {
             //title
             this.lbTitle.Text = this.titles[this.stage];
@@ -188,7 +281,8 @@ namespace DillenManagementStudio
 
             //cmd explanation
             //put color in the label and erase marks
-            this.PutCmdExplanationInLabel();
+            if(putCmdExplanationInLabel)
+                this.PutCmdExplanationInLabel();
             //this.lbExplanation.Text = this.cmdExplanations[this.stage];
 
             //try text
@@ -284,13 +378,13 @@ namespace DillenManagementStudio
         private void btnNext_Click(object sender, EventArgs e)
         {
             this.stage++;
-            this.ShowCurrExplanationStage();
+            this.ShowCurrExplanationStage(true);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             this.stage--;
-            this.ShowCurrExplanationStage();
+            this.ShowCurrExplanationStage(true);
         }
 
 
@@ -305,7 +399,7 @@ namespace DillenManagementStudio
             this.grvSelectTry.DataSource = table;
 
             MessageBox.Show("Hi! I created a table so you can practice what I will teach you!\n\r\n\r" +
-                "The table's name is " + this.tableName + " and you can see its fields in the selection below...");
+                "The table's name is '" + this.tableName + "' and you can see its fields in the selection...");
         }
 
 
@@ -318,5 +412,53 @@ namespace DillenManagementStudio
             cmd.ExecuteNonQuery();
         }
 
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            //get allCodes or lines without even quotation marks
+            Queue<int> linesNoEvenQuotMarks = new Queue<int>();
+            string allCodes = SqlExecuteProcedures.AllCodes(this.sqlRchtxtbx, ref linesNoEvenQuotMarks);
+
+            if (linesNoEvenQuotMarks.Count > 0)
+            {
+                string msg = SqlExecuteProcedures.MessageFromNoEvenQuotMarks(linesNoEvenQuotMarks);
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }else
+            {
+                //1. See if user is practicing the right command
+                Queue<int> commandsCod = this.mySqlConn.GetCodCommandsFromCode(allCodes);
+                bool onlyTryingCmd = true;
+                while (commandsCod.Count > 0)
+                    if (commandsCod.Dequeue() != this.codCmd)
+                    {
+                        onlyTryingCmd = false;
+                        break;
+                    }
+
+                if (!onlyTryingCmd)
+                {
+                    this.grvSelectTry.DataSource = new DataTable();
+                    MessageBox.Show("This area is for you to practice '" + this.command.Trim().ToUpper() + "'command ! Use the main form to make other commands!",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //2. Execute the command
+                    DataTable dataTable = new DataTable();
+                    string excep = null;
+                    bool worked = this.mySqlConn.ExecuteOneSQLCmd(allCodes, this.mySqlConn.CommandIsQuery(this.codCmd), ref dataTable, ref excep);
+
+                    //change label
+                    SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+
+                    this.grvSelectTry.DataSource = dataTable;
+
+                    if (!worked)
+                        MessageBox.Show("SQL Exception:\r\n" + excep,
+                            "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        
     }
 }

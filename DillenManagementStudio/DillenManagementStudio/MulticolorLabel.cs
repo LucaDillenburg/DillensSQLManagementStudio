@@ -17,6 +17,7 @@ namespace DillenManagementStudio
         protected Color backgroundColor = Color.Transparent;
         protected Font defaultFont = new Font(FontFamily.GenericSansSerif, 8.25F, FontStyle.Regular);
         protected PictureBox picBx;
+        protected bool isImage;
         
 
         /// CONSTRUCTORS
@@ -58,7 +59,7 @@ namespace DillenManagementStudio
             this.picBx.Location = location;
             this.picBx.Width = width;
             this.picBx.Height = height;
-            this.picBx.Image = new Bitmap(width, height);
+            this.picBx.Image = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
 
             // create background all one color for drawing
             Graphics.FromImage(this.picBx.Image).FillRectangle(new SolidBrush(backgroundColor), 0, 0, 
@@ -66,6 +67,8 @@ namespace DillenManagementStudio
 
             frm.Controls.Add(this.picBx);
             this.InicializeLabelFromPb(defaultFont, defaultTextColor);
+
+            this.isImage = false;
         }
 
 
@@ -86,6 +89,8 @@ namespace DillenManagementStudio
         {
             this.picBx = pb;
             this.InicializeLabelFromPb(defaultFont, defaultTextColor);
+
+            this.isImage = true;
         }
 
         protected void InicializeLabelFromPb(Font defaultFont, Color defaultTextColor)
@@ -93,7 +98,7 @@ namespace DillenManagementStudio
             this.defaultFont = defaultFont;
             this.defaultTextColor = defaultTextColor;
         }
-        
+
 
         /// GETTERS AND SETTERS
         public string Text
@@ -185,7 +190,33 @@ namespace DillenManagementStudio
             }
         }
         
-        
+        public int Width
+        {
+            get
+            {
+                return this.picBx.Width;
+            }
+
+            set
+            {
+                this.picBx.Width = value;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return this.picBx.Height;
+            }
+
+            set
+            {
+                this.picBx.Height = value;
+            }
+        }
+
+
         ///ADD TEXT PROCEDURES 
         public void Append(string text)
         {
@@ -286,8 +317,9 @@ namespace DillenManagementStudio
         {
             this.x = 0;
             this.y = 0;
-
+            
             this.picBx.Invalidate();
+            
             Graphics.FromImage(this.picBx.Image).Clear(this.backgroundColor);
         }
 

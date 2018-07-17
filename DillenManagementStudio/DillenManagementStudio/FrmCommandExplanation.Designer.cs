@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCommandExplanation));
             this.lbTitle = new System.Windows.Forms.Label();
-            this.lbExplanation = new System.Windows.Forms.Label();
             this.rchtxtTryCode = new System.Windows.Forms.RichTextBox();
             this.btnExecute = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
@@ -48,48 +49,37 @@
             // 
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitle.Location = new System.Drawing.Point(135, 9);
+            this.lbTitle.Location = new System.Drawing.Point(209, 9);
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(400, 31);
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "Part of Command Explanation";
             // 
-            // lbExplanation
-            // 
-            this.lbExplanation.AutoSize = true;
-            this.lbExplanation.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.lbExplanation.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbExplanation.Location = new System.Drawing.Point(8, 49);
-            this.lbExplanation.Name = "lbExplanation";
-            this.lbExplanation.Size = new System.Drawing.Size(658, 234);
-            this.lbExplanation.TabIndex = 1;
-            this.lbExplanation.Text = resources.GetString("lbExplanation.Text");
-            this.lbExplanation.Visible = false;
-            // 
             // rchtxtTryCode
             // 
-            this.rchtxtTryCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchtxtTryCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rchtxtTryCode.Location = new System.Drawing.Point(24, 281);
             this.rchtxtTryCode.Name = "rchtxtTryCode";
-            this.rchtxtTryCode.Size = new System.Drawing.Size(249, 161);
+            this.rchtxtTryCode.Size = new System.Drawing.Size(315, 234);
             this.rchtxtTryCode.TabIndex = 2;
             this.rchtxtTryCode.Text = "";
             // 
             // btnExecute
             // 
             this.btnExecute.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExecute.Location = new System.Drawing.Point(295, 334);
+            this.btnExecute.Location = new System.Drawing.Point(349, 379);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(78, 50);
             this.btnExecute.TabIndex = 3;
             this.btnExecute.Text = "Execute >>";
             this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(12, 462);
+            this.btnPrevious.Location = new System.Drawing.Point(12, 530);
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(75, 23);
+            this.btnPrevious.Size = new System.Drawing.Size(64, 23);
             this.btnPrevious.TabIndex = 4;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
@@ -97,9 +87,9 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(584, 462);
+            this.btnNext.Location = new System.Drawing.Point(754, 530);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.Size = new System.Drawing.Size(64, 23);
             this.btnNext.TabIndex = 5;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -108,9 +98,26 @@
             // grvSelectTry
             // 
             this.grvSelectTry.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grvSelectTry.Location = new System.Drawing.Point(405, 297);
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grvSelectTry.DefaultCellStyle = dataGridViewCellStyle1;
+            this.grvSelectTry.Location = new System.Drawing.Point(438, 297);
             this.grvSelectTry.Name = "grvSelectTry";
-            this.grvSelectTry.Size = new System.Drawing.Size(240, 145);
+            this.grvSelectTry.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grvSelectTry.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.grvSelectTry.Size = new System.Drawing.Size(361, 218);
             this.grvSelectTry.TabIndex = 6;
             // 
             // lbExecutionResult
@@ -119,7 +126,7 @@
             this.lbExecutionResult.Font = new System.Drawing.Font("Modern No. 20", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbExecutionResult.ForeColor = System.Drawing.Color.Green;
             this.lbExecutionResult.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lbExecutionResult.Location = new System.Drawing.Point(411, 279);
+            this.lbExecutionResult.Location = new System.Drawing.Point(438, 279);
             this.lbExecutionResult.Name = "lbExecutionResult";
             this.lbExecutionResult.Size = new System.Drawing.Size(138, 15);
             this.lbExecutionResult.TabIndex = 31;
@@ -128,7 +135,7 @@
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(279, 281);
+            this.btnHelp.Location = new System.Drawing.Point(344, 281);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(26, 26);
             this.btnHelp.TabIndex = 32;
@@ -160,7 +167,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 496);
+            this.ClientSize = new System.Drawing.Size(829, 565);
             this.Controls.Add(this.rchtxtTryCode);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnHelp);
@@ -169,14 +176,15 @@
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnExecute);
-            this.Controls.Add(this.lbExplanation);
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.rchtxtAux);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmCommandExplanation";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Command Name";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmCommandExplanation_FormClosed);
             this.Shown += new System.EventHandler(this.FrmCommandExplanation_Shown);
+            this.Resize += new System.EventHandler(this.FrmCommandExplanation_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
@@ -187,7 +195,6 @@
         #endregion
 
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Label lbExplanation;
         private System.Windows.Forms.RichTextBox rchtxtTryCode;
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.Button btnPrevious;

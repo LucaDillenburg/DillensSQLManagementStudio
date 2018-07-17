@@ -265,72 +265,15 @@ namespace DillenManagementStudio
         
         protected void Execute(int executeType) //ExecuteType: 0=Automatic, 1=Non-Query, 2=Query
         {
+            //get allCodes or lines without even quotation marks
             Queue<int> linesNoEvenQuotMarks = new Queue<int>();
-            //put txtCode.Items in a String (with spaces between each line)
-            string allCodes = "";
+            string allCodes = SqlExecuteProcedures.AllCodes(this.sqlRchtxtbx, ref linesNoEvenQuotMarks);
             
-            RichTextBox rchtxtCode = this.sqlRchtxtbx.SQLRichTextBox;
-            //or this.rchtxtCode
-
-            //if there's nothing selected
-            if (rchtxtCode.SelectionLength <= 0)
-                for (int i = 0; i < rchtxtCode.Lines.Length; i++)
-                {
-                    //if there're even
-                    if (rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
-                        linesNoEvenQuotMarks.Enqueue(i);
-                    else
-                        allCodes += " " + rchtxtCode.Lines[i];
-                }
-            else
-            //there's something selected
-            {
-                int qtdOtherChars1 = 0;
-                int indexFirstLine = this.sqlRchtxtbx.IndexOfLine(rchtxtCode.SelectionStart, ref qtdOtherChars1);
-                int qtdOtherChars2 = 0;
-                int indexLastLine = this.sqlRchtxtbx.IndexOfLine(rchtxtCode.SelectionStart + rchtxtCode.SelectionLength, 
-                    ref qtdOtherChars2);
-
-                for(int i = indexFirstLine; i <= indexLastLine; i++)
-                {
-                    string line;
-                    if (i == indexFirstLine)
-                    {
-                        int final;
-                        if (indexFirstLine == indexLastLine)
-                            final = rchtxtCode.SelectionStart + rchtxtCode.SelectionLength - qtdOtherChars1;
-                        else
-                            final = rchtxtCode.Lines[i].Length;
-
-                        int start = rchtxtCode.SelectionStart - qtdOtherChars1;
-
-                        line = rchtxtCode.Lines[i].Substring(start, final - start);
-                    }
-                    else
-                    if (i == indexLastLine)
-                        line = rchtxtCode.Lines[i].Substring(0, rchtxtCode.SelectionStart + rchtxtCode.SelectionLength - qtdOtherChars2);
-                    else
-                    if (i < indexLastLine)
-                        line = rchtxtCode.Lines[i];
-                    else
-                        break;
-
-                    //if there're even
-                    if (line.CountAppearances('\'') % 2 != 0)
-                        linesNoEvenQuotMarks.Enqueue(i);
-                    else
-                        allCodes += " " + line;
-                }
-            }
-
             if (linesNoEvenQuotMarks.Count > 0)
             {
-                string msg = "Error! Add closing single quotation marks in lines: ";
+                string msg = SqlExecuteProcedures.MessageFromNoEvenQuotMarks(linesNoEvenQuotMarks);
 
-                while (linesNoEvenQuotMarks.Count > 0)
-                    msg += linesNoEvenQuotMarks.Dequeue() + (linesNoEvenQuotMarks.Count == 0 ? "!" : ", ");
-
-                MessageBox.Show(msg);
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             if (executeType == 0)
@@ -338,28 +281,20 @@ namespace DillenManagementStudio
                 Queue<Error> errors = new Queue<Error>();
                 this.grvSelect.DataSource = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors);
 
-                if (errors == null || errors.Count == 0)
+                bool worked = (errors == null || errors.Count == 0);
+
+                //change label
+                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+
+                //notification
+                if (worked)
                 {
-                    this.lbExecutionResult.Text = "Succesfully executed!";
-                    this.lbExecutionResult.ForeColor = Color.Green;
-
-                    if (!this.lbExecutionResult.Visible)
-                        this.lbExecutionResult.Visible = true;
-
                     if (this.allowNotification)
                         MessageBox.Show("Succesfully executed!");
                 }
                 else
-                {
-                    this.lbExecutionResult.Text = "Unsuccesfully executed!";
-                    this.lbExecutionResult.ForeColor = Color.Red;
-
-                    if (!this.lbExecutionResult.Visible)
-                        this.lbExecutionResult.Visible = true;
-
                     if (this.allowNotification)
                         this.ShowErrors(errors);
-                }
             }
             else
             {
@@ -371,6 +306,10 @@ namespace DillenManagementStudio
 
                 this.grvSelect.DataSource = dataTable;
 
+                //change label
+                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+
+                //notification
                 if (this.allowNotification)
                 {
                     if (!worked)

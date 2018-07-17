@@ -17,6 +17,7 @@ namespace DillenManagementStudio
 
         //commands
         protected List<string> commands = new List<string>(); //nonqueries, procs, exec, queries, sps
+        protected Regex regex;
         //most important indexes (basic ones)
         protected int iFirstProcFuncTrigger;
         protected int iCommandExec;
@@ -53,6 +54,10 @@ namespace DillenManagementStudio
         {
             //user: to get all commands
             this.user = us;
+
+            //replace multiple spaces with a single space where it's not an string
+            RegexOptions options = RegexOptions.None;
+            this.regex = new Regex("[ ]{2,}", options);
 
             //Non Query To Select
             nonQueryToSelect.Add("insert into ");
@@ -285,37 +290,11 @@ namespace DillenManagementStudio
         {
             this.PutAllCommands();
         }
-        
+
 
         //sql execute user commands
         public DataTable ExecuteAutomaticSqlCommands(string allCodes, ref Queue<Error> cmdErrors)
         {
-            //replace multiple spaces with a single space where it's not an string
-            RegexOptions options = RegexOptions.None;
-            Regex regex = new Regex("[ ]{2,}", options);
-
-            string auxAllCodes = "";
-            bool isString = false;
-            int startIndex = 0;
-            
-            while (startIndex < allCodes.Length)
-            {
-                int endIndex = allCodes.IndexOf('\'', startIndex + 1);
-                if (endIndex < 0)
-                    endIndex = allCodes.Length;
-
-                string aux = allCodes.Substring(startIndex, endIndex - startIndex);
-                if (isString)
-                    auxAllCodes += aux;
-                else
-                    auxAllCodes += regex.Replace(aux, " ").ToLower();
-
-                startIndex = endIndex;
-                isString = !isString;
-            }
-
-            allCodes = auxAllCodes.Trim();
-
             //separate the whole code in a commands QUEUE
             Queue<int> nSQLCommands = new Queue<int>();
             int nQuery = -1;
@@ -346,25 +325,14 @@ namespace DillenManagementStudio
                       || (nQuery < 0 && nNonQuerySelect == iCode)); //if it's the last non-query select and there's no queries
 
                 bool worked = this.ExecuteOneSQLCmd(currCode, 
-                    (cmdN >= this.iFirstQuery && cmdN < this.iFirstRealProc),
+                    this.CommandIsQuery(cmdN),
                     executeQuery,
                     cmdN, ref auxDtTable, ref excep);
                 //returns true if it worked and false if it didn't work
 
                 if (!worked)
                 {
-                    int cmdNError;
-                    if (cmdN >= this.iFirstRealProc)
-                    {
-                        if (cmdN < this.iFirstRealFunc) //if it's a procedure
-                            cmdNError = this.iFirstRealProc;
-                        else //if it's a function
-                            cmdNError = this.iFirstRealProc + 1;
-                    }
-                    else
-                        cmdNError = cmdN;
-
-                    Error curErr = new Error(cmdNError, cmdN>=0?this.commands[cmdN].Trim().ToUpper():"Not existent command", currCode, excep, false);
+                    Error curErr = new Error(this.RevisedCodCmd(cmdN), cmdN>=0?this.commands[cmdN].Trim().ToUpper():"Not existent command", currCode, excep, false);
                     cmdErrors.Enqueue(curErr);
                 }
                 else
@@ -382,7 +350,7 @@ namespace DillenManagementStudio
                 ultimateDataTable = new DataTable();
             return ultimateDataTable;
         }
-
+        
         public bool ExecuteOneSQLCmd(string code, bool queryExecution, ref DataTable table, ref string exception)
         {
             return this.ExecuteOneSQLCmd(code, queryExecution, queryExecution, -1, ref table, ref exception);
@@ -513,10 +481,46 @@ namespace DillenManagementStudio
             return false;
         }
 
-        
+        protected int RevisedCodCmd(int codCmd)
+        {
+            if (codCmd >= this.iFirstRealProc)
+            {
+                if (codCmd < this.iFirstRealFunc) //if it's a procedure
+                    return this.iFirstRealProc;
+                else //if it's a function
+                    return this.iFirstRealProc + 1;
+            }
+            else
+                return codCmd;
+        }
+
+
+        //for FrmExplanation
+        public Queue<int> GetCodCommandsFromCode(string code)
+        {
+            Queue<int> nSQLCommands = new Queue<int>();
+            int nQuery = -1;
+            int nNonQuerySelect = -1;
+            Queue<string> notUsing = this.TransformCodeInCommands(code, ref nSQLCommands, ref nQuery, ref nNonQuerySelect);
+
+            Queue<int> nSQLCommandsRevised = new Queue<int>();
+            while (nSQLCommands.Count > 0)
+                nSQLCommandsRevised.Enqueue(this.RevisedCodCmd(nSQLCommands.Dequeue()));
+
+            return nSQLCommandsRevised;
+        }
+
+        public bool CommandIsQuery(int codCmd)
+        {
+            return (codCmd >= this.iFirstQuery && codCmd < this.iFirstRealProc);
+        }
+
+
         //transform allCodes in a commands Queue
         protected Queue<string> TransformCodeInCommands(string code, ref Queue<int> nSQLCommands, ref int nQuery, ref int nNonQuerySelect)
         {
+            this.ManageAllCodeSpaces(ref code);
+
             //separate the whole code in commands in a QUEUE
             Queue<string> codes = new Queue<string>();
             //Enqueue(Object) Add an object in the Queue       
@@ -613,6 +617,31 @@ namespace DillenManagementStudio
             }
 
             return codes;
+        }
+
+        protected void ManageAllCodeSpaces(ref string allCodes)
+        {
+            string auxAllCodes = "";
+            bool isString = false;
+            int startIndex = 0;
+
+            while (startIndex < allCodes.Length)
+            {
+                int endIndex = allCodes.IndexOf('\'', startIndex + 1);
+                if (endIndex < 0)
+                    endIndex = allCodes.Length;
+
+                string aux = allCodes.Substring(startIndex, endIndex - startIndex);
+                if (isString)
+                    auxAllCodes += aux;
+                else
+                    auxAllCodes += this.regex.Replace(aux, " ").ToLower();
+
+                startIndex = endIndex;
+                isString = !isString;
+            }
+
+            allCodes = auxAllCodes.Trim();
         }
 
         protected int LastIndexProc(string code, int indexBegin)

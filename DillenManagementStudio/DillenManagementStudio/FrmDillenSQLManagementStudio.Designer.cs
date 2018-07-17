@@ -393,7 +393,7 @@
             // 
             // pnlLoading
             // 
-            this.pnlLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlLoading.BackColor = System.Drawing.SystemColors.Control;
             this.pnlLoading.Controls.Add(this.picLoading);
             this.pnlLoading.Controls.Add(this.lbLoading);
             resources.ApplyResources(this.pnlLoading, "pnlLoading");

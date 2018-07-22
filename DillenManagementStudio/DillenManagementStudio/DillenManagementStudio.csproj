@@ -55,7 +55,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Force.cs" />
     <Compile Include="MulticolorLabel.cs" />
+    <Compile Include="SqlCommandExtension.cs" />
     <Compile Include="SqlExecuteProcedures.cs" />
     <Compile Include="SqlRichTextBox.cs" />
     <Compile Include="Encryption.cs" />

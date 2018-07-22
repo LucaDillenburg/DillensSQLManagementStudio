@@ -1,4 +1,6 @@
-﻿namespace DillenManagementStudio
+﻿using System.Windows.Forms;
+
+namespace DillenManagementStudio
 {
     partial class FrmDillenSQLManagementStudio
     {
@@ -28,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDillenSQLManagementStudio));
             this.grvSelect = new System.Windows.Forms.DataGridView();
             this.lbTitle = new System.Windows.Forms.Label();
@@ -74,12 +77,28 @@
             this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             this.pnlLoading = new System.Windows.Forms.Panel();
             this.rchtxtAux = new System.Windows.Forms.RichTextBox();
+            this.tmrCheckVPNConn = new System.Windows.Forms.Timer(this.components);
+            this.lbTableName = new System.Windows.Forms.Label();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlSearch = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtReplace = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnReplaceCurr = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnReplaceAll = new System.Windows.Forms.Button();
+            this.btnSeeReplace = new System.Windows.Forms.Button();
+            this.btnNotSeeReplace = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlLoading.SuspendLayout();
+            this.pnlSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // grvSelect
@@ -88,6 +107,7 @@
             resources.ApplyResources(this.grvSelect, "grvSelect");
             this.grvSelect.Name = "grvSelect";
             this.grvSelect.ReadOnly = true;
+            this.grvSelect.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvSelect_CellContentDoubleClick);
             // 
             // lbTitle
             // 
@@ -259,6 +279,9 @@
             // 
             // editToolStripMenuItem
             // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findToolStripMenuItem,
+            this.replaceToolStripMenuItem});
             this.editToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
@@ -408,11 +431,113 @@
             this.rchtxtAux.Name = "rchtxtAux";
             this.rchtxtAux.ReadOnly = true;
             // 
+            // tmrCheckVPNConn
+            // 
+            this.tmrCheckVPNConn.Enabled = true;
+            this.tmrCheckVPNConn.Interval = 10000;
+            this.tmrCheckVPNConn.Tick += new System.EventHandler(this.tmrCheckVPNConn_Tick);
+            // 
+            // lbTableName
+            // 
+            resources.ApplyResources(this.lbTableName, "lbTableName");
+            this.lbTableName.Name = "lbTableName";
+            // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            resources.ApplyResources(this.findToolStripMenuItem, "findToolStripMenuItem");
+            this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
+            // 
+            // replaceToolStripMenuItem
+            // 
+            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
+            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
+            // 
+            // pnlSearch
+            // 
+            this.pnlSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(180)))));
+            this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSearch.Controls.Add(this.btnNotSeeReplace);
+            this.pnlSearch.Controls.Add(this.btnSeeReplace);
+            this.pnlSearch.Controls.Add(this.btnReplaceAll);
+            this.pnlSearch.Controls.Add(this.checkBox1);
+            this.pnlSearch.Controls.Add(this.btnReplaceCurr);
+            this.pnlSearch.Controls.Add(this.btnNext);
+            this.pnlSearch.Controls.Add(this.textBox1);
+            this.pnlSearch.Controls.Add(this.txtReplace);
+            this.pnlSearch.Controls.Add(this.label2);
+            this.pnlSearch.Controls.Add(this.label1);
+            resources.ApplyResources(this.pnlSearch, "pnlSearch");
+            this.pnlSearch.Name = "pnlSearch";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // txtReplace
+            // 
+            resources.ApplyResources(this.txtReplace, "txtReplace");
+            this.txtReplace.Name = "txtReplace";
+            // 
+            // textBox1
+            // 
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
+            // 
+            // btnNext
+            // 
+            resources.ApplyResources(this.btnNext, "btnNext");
+            this.btnNext.Name = "btnNext";
+            this.btnNext.UseVisualStyleBackColor = true;
+            // 
+            // btnReplaceCurr
+            // 
+            resources.ApplyResources(this.btnReplaceCurr, "btnReplaceCurr");
+            this.btnReplaceCurr.Name = "btnReplaceCurr";
+            this.btnReplaceCurr.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            resources.ApplyResources(this.checkBox1, "checkBox1");
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // btnReplaceAll
+            // 
+            resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
+            this.btnReplaceAll.Name = "btnReplaceAll";
+            this.btnReplaceAll.UseVisualStyleBackColor = true;
+            // 
+            // btnSeeReplace
+            // 
+            resources.ApplyResources(this.btnSeeReplace, "btnSeeReplace");
+            this.btnSeeReplace.Name = "btnSeeReplace";
+            this.btnSeeReplace.UseVisualStyleBackColor = true;
+            this.btnSeeReplace.Click += new System.EventHandler(this.btnSeeReplace_Click);
+            // 
+            // btnNotSeeReplace
+            // 
+            resources.ApplyResources(this.btnNotSeeReplace, "btnNotSeeReplace");
+            this.btnNotSeeReplace.Name = "btnNotSeeReplace";
+            this.btnNotSeeReplace.UseVisualStyleBackColor = true;
+            this.btnNotSeeReplace.Click += new System.EventHandler(this.btnNotSeeReplace_Click);
+            // 
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(248)))), ((int)(((byte)(250)))));
+            this.Controls.Add(this.pnlSearch);
+            this.Controls.Add(this.lbTableName);
             this.Controls.Add(this.pnlLoading);
             this.Controls.Add(this.lbDatabase);
             this.Controls.Add(this.pictureBox2);
@@ -440,6 +565,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlLoading.ResumeLayout(false);
             this.pnlLoading.PerformLayout();
+            this.pnlSearch.ResumeLayout(false);
+            this.pnlSearch.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,6 +619,21 @@
         private System.Windows.Forms.RichTextBox rchtxtCode;
         private System.Windows.Forms.Panel pnlLoading;
         private System.Windows.Forms.RichTextBox rchtxtAux;
+        private Timer tmrCheckVPNConn;
+        private Label lbTableName;
+        private ToolStripMenuItem findToolStripMenuItem;
+        private ToolStripMenuItem replaceToolStripMenuItem;
+        private Panel pnlSearch;
+        private TextBox textBox1;
+        private TextBox txtReplace;
+        private Label label2;
+        private Label label1;
+        private CheckBox checkBox1;
+        private Button btnReplaceCurr;
+        private Button btnNext;
+        private Button btnReplaceAll;
+        private Button btnSeeReplace;
+        private Button btnNotSeeReplace;
     }
 }
 

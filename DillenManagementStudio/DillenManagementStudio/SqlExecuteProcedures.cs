@@ -82,15 +82,15 @@ namespace DillenManagementStudio
             return msg;
         }
 
-        public static void ChangeExecuteResultLabel(ref Label lbExecutionResult, bool worked)
+        public static void ChangeExecuteResultLabel(ref Label lbExecutionResult, bool worked, int qtdLinesChanged)
         {
             if(worked)
             {
-                lbExecutionResult.Text = "Succesfully executed!";
+                lbExecutionResult.Text = "Succesfully executed! (" + qtdLinesChanged + " lines changed...)";
                 lbExecutionResult.ForeColor = Color.Green;
             }else
             {
-                lbExecutionResult.Text = "Unsuccesfully executed!";
+                lbExecutionResult.Text = "Unsuccesfully executed! (" + qtdLinesChanged + " lines changed...)";
                 lbExecutionResult.ForeColor = Color.Red;
             }
             

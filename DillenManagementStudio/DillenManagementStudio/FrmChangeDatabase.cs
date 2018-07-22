@@ -34,16 +34,66 @@ namespace DillenManagementStudio
             //variables to send the conection to the main form
             this.frmMain = mainForm;
             this.mySqlCon = mainForm.MySqlConnection;
-            this.user = mainForm.User;
-
-            //adding databases to the combobox
-            this.conStrs = this.user.ConectionsString;
-            for(int i = 0; i<this.conStrs.Count; i++)
-                this.cbxChsDtBs.Items.Add(DatabaseName(this.conStrs[i]));
-
-            if(this.cbxChsDtBs.Items.Count > 0)
-                this.cbxChsDtBs.SelectedIndex = 0;
+            this.User = mainForm.User;
         }
+
+        public User User
+        {
+            get
+            {
+                return this.user;
+            }
+
+            set
+            {
+                this.user = value;
+
+                //adding databases to the combobox
+                if (this.user != null)
+                {
+                    this.conStrs = this.user.ConectionsString;
+
+                    //clear
+                    while (this.cbxChsDtBs.Items.Count > 0)
+                        this.cbxChsDtBs.Items.RemoveAt(0);
+                    for (int i = 0; i < this.conStrs.Count; i++)
+                        this.cbxChsDtBs.Items.Add(DatabaseName(this.conStrs[i]));
+
+                    if (this.cbxChsDtBs.Items.Count > 0)
+                        this.cbxChsDtBs.SelectedIndex = 0;
+
+                    //visual
+                    this.lbTitle1.Enabled = true;
+                    this.cbxChsDtBs.Enabled = true;
+                    this.btnSelectDatabase.Enabled = true;
+                    this.btnUpdateDatabase.Enabled = true;
+                    this.btnDeleteDatabase.Enabled = true;
+                    this.btnAddNewDatabase.Text = "Add new database";
+                }
+                else
+                {
+                    //visual
+
+                    if(this.cbxChsDtBs.Items.Count <= 0)
+                    {
+                        this.lbTitle1.Enabled = false;
+                        this.cbxChsDtBs.Enabled = false;
+                        this.btnSelectDatabase.Enabled = false;
+                    }
+
+                    this.btnUpdateDatabase.Enabled = false;
+                    this.btnDeleteDatabase.Enabled = false;
+
+                    this.btnAddNewDatabase.Text = "Connect";
+                }
+            }
+        }
+
+        private void FrmChangeDatabase_Load(object sender, EventArgs e)
+        {
+            Force.Focus(this.btnSelectDatabase);
+        }
+
 
         //FORM CLOSING
         protected void FrmChangeDatabase_FormClosing(object sender, FormClosingEventArgs e)
@@ -70,9 +120,14 @@ namespace DillenManagementStudio
 
                 string conStr = choosenConStr.Substring(0, choosenConStr.LastIndexOf("Password=") + 9) + password;
                 this.mySqlCon.ConnStr = conStr;
-
-                //set last
-                this.user.SetLastDatabase(this.conStrs[this.cbxChsDtBs.SelectedIndex]);
+                
+                try
+                {
+                    //set last
+                    this.user.SetLastDatabase(this.conStrs[this.cbxChsDtBs.SelectedIndex]);
+                }
+                catch(Exception err2)
+                {}
             }
             catch (Exception err)
             {
@@ -100,8 +155,18 @@ namespace DillenManagementStudio
 
             if (result == DialogResult.Yes)
             {
-                //bd
-                this.user.DeleteDatabase(this.conStrs[this.cbxChsDtBs.SelectedIndex]);
+                try
+                {
+                    //bd
+                    this.user.DeleteDatabase(this.conStrs[this.cbxChsDtBs.SelectedIndex]);
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Unicamp VPN was disconnected! This resource is not available...");
+                    this.User = null;
+                    this.frmMain.User = null;
+                    return;
+                }
 
                 //variables
                 this.conStrs.RemoveAt(this.cbxChsDtBs.SelectedIndex);
@@ -191,11 +256,8 @@ namespace DillenManagementStudio
                 return;
             }
 
-            string conStr = "Data Source=" + this.txtDataSource.Text +
-                ";Initial Catalog=" + this.txtInicialCatalog.Text +
-                ";Persist Security Info=True;User ID=" + this.txtUserID.Text +
-                ";Password=";
-
+            string conStr = this.GetConnStrWithoutPasswFromFields();
+            
             string conStrComplete = conStr + Encryption.Encrypt(this.txtPassword.Text);
             if (this.updating && this.conStrs[this.cbxChsDtBs.SelectedIndex] == conStrComplete)
             {
@@ -216,16 +278,35 @@ namespace DillenManagementStudio
             string conStrNoEncryp = conStr + this.txtPassword.Text;
             try
             {
-                SqlConnection auxCon = new SqlConnection();
-                auxCon.ConnectionString = conStrNoEncryp;
-                auxCon.Open();
+                if (this.user == null)
+                    //connect to new database
+                    this.mySqlCon.ConnStr = conStrNoEncryp;
+                else
+                {
+                    SqlConnection auxCon = new SqlConnection();
+                    auxCon.ConnectionString = conStrNoEncryp;
+                    auxCon.Open();
+                }
             }catch(Exception err)
             {
-                DialogResult result = MessageBox.Show("Can not connect to this database!\r\nDo you want to add it in your databases even so?",
-                    "Attention!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = DialogResult.No;
+                if (this.user == null)
+                    MessageBox.Show("Cannot connect to this database!",
+                        "Connection Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                    result = MessageBox.Show("Cannot connect to this database!\r\nDo you want to add it in your databases even so?",
+                        "Attention!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 
                 if(result == DialogResult.No)
                     return;
+            }
+
+            if (this.user == null)
+            {
+                //change database name in lbDatabase in the Main Form
+                this.frmMain.ChangeDatabaseName(FrmChangeDatabase.DatabaseName(this.mySqlCon.ConnStr));
+                this.Close();
+                return;
             }
 
             if (this.updating)
@@ -271,6 +352,14 @@ namespace DillenManagementStudio
             }
         }
 
+        protected string GetConnStrWithoutPasswFromFields()
+        {
+            return "Data Source=" + this.txtDataSource.Text +
+                ";Initial Catalog=" + this.txtInicialCatalog.Text +
+                ";Persist Security Info=True;User ID=" + this.txtUserID.Text +
+                ";Password=";
+        }
+
 
         //view password
         protected void checkBox1_MouseDown(object sender, MouseEventArgs e)
@@ -298,6 +387,65 @@ namespace DillenManagementStudio
             return currDatabase + " (" + currDataSource + ")";
         }
 
-      
+        public void ShowMessage(string msg)
+        {
+            MessageBox.Show(msg);
+        }
+
+
+        // Try Connection
+        protected void btnTryConn_Click(object sender, EventArgs e)
+        {            
+            string conStr;
+            bool fromCbx = String.IsNullOrEmpty(this.txtDataSource.Text) ||
+                String.IsNullOrEmpty(this.txtInicialCatalog.Text) ||
+                String.IsNullOrEmpty(this.txtPassword.Text) ||
+                String.IsNullOrEmpty(this.txtUserID.Text);
+            if (fromCbx)
+            {
+                //selected item in combobox
+
+                if (this.cbxChsDtBs.SelectedIndex < 0)
+                {
+                    MessageBox.Show((this.cbxChsDtBs.Items.Count > 0 ? "Select a databse in combobox or c" : "C") + "omplete all fields!");
+                    return;
+                }
+                
+                //Try connection with database
+                string choosenConStr = this.conStrs[this.cbxChsDtBs.SelectedIndex];
+                string password = Encryption.Decrypt(
+                    choosenConStr.Substring(choosenConStr.LastIndexOf("Password=") + 9));
+                conStr = choosenConStr.Substring(0, choosenConStr.LastIndexOf("Password=") + 9) + password;
+            }
+            else
+            {
+                //every field is completed: Connection based on fields
+                conStr = this.GetConnStrWithoutPasswFromFields() + this.txtPassword.Text;
+            }
+
+            bool worked = true;
+            try
+            {
+                SqlConnection con = new SqlConnection(conStr);
+                if(con != null)
+                {
+                    con.Open();
+                    worked = con.IsConnected();
+                }
+            }
+            catch (Exception err)
+            {
+                worked = false;
+            }
+
+            string databaseName = FrmChangeDatabase.DatabaseName(conStr);
+            if (worked)
+                MessageBox.Show("Successfully connection with "+databaseName+"!", "Succefully connection",
+               MessageBoxButtons.OK);
+            else
+                MessageBox.Show("Unsuccessfully connection with " + databaseName + "!", "Unsuccefully connection",
+               MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
     }
 }

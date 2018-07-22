@@ -441,21 +441,6 @@ namespace DillenManagementStudio
             this.rchtxtCode.ZoomFactor = lastZoom;
         }
 
-        public void ForceFocus()
-        {
-            new Thread(() => this.AuxForceFocus()).Start();
-        }
-
-        protected void AuxForceFocus()
-        {
-            try
-            {
-                while (! (bool)this.rchtxtCode.Invoke(new Action(() => this.rchtxtCode.Focus())) )
-                { }
-            }catch(Exception e)
-            { }
-        }
-
 
         //AUXILIARY METHODS (put words real color)
         protected void PutAllRchTxtRealColorAlsoString()

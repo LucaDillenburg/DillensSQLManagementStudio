@@ -32,7 +32,7 @@
             this.btnAddNewDatabase = new System.Windows.Forms.Button();
             this.btnSelectDatabase = new System.Windows.Forms.Button();
             this.cbxChsDtBs = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbTitle1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDataSource = new System.Windows.Forms.TextBox();
@@ -47,14 +47,15 @@
             this.btnUpdateDatabase = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnTryConn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAddNewDatabase
             // 
             this.btnAddNewDatabase.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAddNewDatabase.Location = new System.Drawing.Point(199, 302);
+            this.btnAddNewDatabase.Location = new System.Drawing.Point(192, 281);
             this.btnAddNewDatabase.Name = "btnAddNewDatabase";
-            this.btnAddNewDatabase.Size = new System.Drawing.Size(170, 23);
+            this.btnAddNewDatabase.Size = new System.Drawing.Size(143, 23);
             this.btnAddNewDatabase.TabIndex = 26;
             this.btnAddNewDatabase.Text = "Add new database";
             this.btnAddNewDatabase.UseVisualStyleBackColor = true;
@@ -79,15 +80,15 @@
             this.cbxChsDtBs.Size = new System.Drawing.Size(397, 21);
             this.cbxChsDtBs.TabIndex = 24;
             // 
-            // label1
+            // lbTitle1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(363, 20);
-            this.label1.TabIndex = 27;
-            this.label1.Text = "Choose an database you have already used:";
+            this.lbTitle1.AutoSize = true;
+            this.lbTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTitle1.Location = new System.Drawing.Point(12, 12);
+            this.lbTitle1.Name = "lbTitle1";
+            this.lbTitle1.Size = new System.Drawing.Size(363, 20);
+            this.lbTitle1.TabIndex = 27;
+            this.lbTitle1.Text = "Choose an database you have already used:";
             // 
             // label2
             // 
@@ -103,7 +104,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(42, 168);
+            this.label3.Location = new System.Drawing.Point(41, 168);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(95, 18);
             this.label3.TabIndex = 29;
@@ -112,24 +113,24 @@
             // txtDataSource
             // 
             this.txtDataSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDataSource.Location = new System.Drawing.Point(156, 168);
+            this.txtDataSource.Location = new System.Drawing.Point(142, 168);
             this.txtDataSource.Name = "txtDataSource";
-            this.txtDataSource.Size = new System.Drawing.Size(282, 21);
+            this.txtDataSource.Size = new System.Drawing.Size(296, 21);
             this.txtDataSource.TabIndex = 30;
             // 
             // txtInicialCatalog
             // 
             this.txtInicialCatalog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInicialCatalog.Location = new System.Drawing.Point(156, 195);
+            this.txtInicialCatalog.Location = new System.Drawing.Point(142, 195);
             this.txtInicialCatalog.Name = "txtInicialCatalog";
-            this.txtInicialCatalog.Size = new System.Drawing.Size(282, 21);
+            this.txtInicialCatalog.Size = new System.Drawing.Size(296, 21);
             this.txtInicialCatalog.TabIndex = 32;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(38, 196);
+            this.label4.Location = new System.Drawing.Point(41, 196);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 18);
             this.label4.TabIndex = 31;
@@ -138,16 +139,16 @@
             // txtUserID
             // 
             this.txtUserID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserID.Location = new System.Drawing.Point(156, 222);
+            this.txtUserID.Location = new System.Drawing.Point(142, 222);
             this.txtUserID.Name = "txtUserID";
-            this.txtUserID.Size = new System.Drawing.Size(282, 21);
+            this.txtUserID.Size = new System.Drawing.Size(296, 21);
             this.txtUserID.TabIndex = 34;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(38, 223);
+            this.label5.Location = new System.Drawing.Point(41, 223);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 18);
             this.label5.TabIndex = 33;
@@ -156,17 +157,17 @@
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(156, 250);
+            this.txtPassword.Location = new System.Drawing.Point(142, 250);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(282, 21);
+            this.txtPassword.Size = new System.Drawing.Size(296, 21);
             this.txtPassword.TabIndex = 36;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(38, 250);
+            this.label6.Location = new System.Drawing.Point(41, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 18);
             this.label6.TabIndex = 35;
@@ -217,7 +218,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(76, 302);
+            this.btnCancel.Location = new System.Drawing.Point(351, 281);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(67, 23);
             this.btnCancel.TabIndex = 41;
@@ -226,11 +227,23 @@
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnTryConn
+            // 
+            this.btnTryConn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTryConn.Location = new System.Drawing.Point(8, 309);
+            this.btnTryConn.Name = "btnTryConn";
+            this.btnTryConn.Size = new System.Drawing.Size(91, 22);
+            this.btnTryConn.TabIndex = 42;
+            this.btnTryConn.Text = "Test connection";
+            this.btnTryConn.UseVisualStyleBackColor = true;
+            this.btnTryConn.Click += new System.EventHandler(this.btnTryConn_Click);
+            // 
             // FrmChangeDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 344);
+            this.ClientSize = new System.Drawing.Size(463, 340);
+            this.Controls.Add(this.btnTryConn);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnUpdateDatabase);
@@ -245,7 +258,7 @@
             this.Controls.Add(this.txtDataSource);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbTitle1);
             this.Controls.Add(this.btnAddNewDatabase);
             this.Controls.Add(this.btnSelectDatabase);
             this.Controls.Add(this.cbxChsDtBs);
@@ -254,6 +267,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Choose your database";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmChangeDatabase_FormClosing);
+            this.Load += new System.EventHandler(this.FrmChangeDatabase_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,7 +278,7 @@
         private System.Windows.Forms.Button btnAddNewDatabase;
         private System.Windows.Forms.Button btnSelectDatabase;
         private System.Windows.Forms.ComboBox cbxChsDtBs;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbTitle1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtDataSource;
@@ -279,5 +293,6 @@
         private System.Windows.Forms.Button btnUpdateDatabase;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnTryConn;
     }
 }

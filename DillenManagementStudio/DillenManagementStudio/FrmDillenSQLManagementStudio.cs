@@ -32,34 +32,82 @@ namespace DillenManagementStudio
 
         //notification
         protected bool allowNotification = true;
-        
+
         //user
         protected User user;
-        
-        //form methods
+
+        //FrmChangeDatabase (using VPN Connection)
+        protected FrmChangeDatabase frmChangeDatabase;
+
+
+        //form iniciate and finish
         public FrmDillenSQLManagementStudio()
         {
             InitializeComponent();
+
+            //ajust form
+            this.AjustForm();
+
+            //set font to TableName's Cell in grvSelect
+            this.grvSelect.TopLeftHeaderCell.Style.Font = new Font(new FontFamily("Modern No. 20"), 10.0F, FontStyle.Bold);
 
             //set SQL buttons
             this.EnableWichDependsCon(false);
         }
 
+        protected void AjustForm()
+        {
+            ///Size
+            //Form
+            this.Width = Screen.PrimaryScreen.WorkingArea.Width;
+            this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+            //RichTextBox Code
+            this.rchtxtCode.Width = (int)Math.Round(0.548 * this.Width); //54.8%
+            this.rchtxtCode.Height = (int)Math.Round(0.915 * (this.Height - this.menuStrip.Height)); //91.5%
+            this.rchtxtAux.Width = this.rchtxtCode.Width;
+            this.rchtxtAux.Height = this.rchtxtCode.Height;
+            this.pnlLoading.Width = (int)Math.Round(0.24 * this.Width); //24%
+            this.pnlLoading.Height = (int)Math.Round(0.183 * (this.Height - this.menuStrip.Height)); //16.3%
+            //DataGridView Select
+            this.grvSelect.Width = (int)Math.Round(0.423 * this.Width); //42.3%
+            this.grvSelect.Height = (int)Math.Round(0.92 * (this.Height - this.menuStrip.Height)); //92%
+
+
+            ///LOCATION
+            //RichTextBox Code
+            int x = (int)Math.Round(0.0088 * (this.Width)); //0.88%
+            int y = (int)Math.Round(0.122 * (this.Height - this.menuStrip.Height)); //12.8%
+            this.rchtxtCode.Location = new Point(x, y);
+            this.rchtxtAux.Location = this.rchtxtCode.Location;
+            //DataGridView Select
+            x = (int)Math.Round(0.571 * (this.Width)); //57.1%
+            y = (int)Math.Round(0.158 * (this.Height - this.menuStrip.Height)); //15.8%
+            this.grvSelect.Location = new Point(x, y);
+            this.lbExecutionResult.Location = new Point(this.grvSelect.Location.X + 2, 
+                this.grvSelect.Location.Y - this.lbExecutionResult.Height - 4);
+            this.btnAllTables.Location = new Point(this.grvSelect.Location.X + this.grvSelect.Width - this.btnAllTables.Width - 2,
+                this.lbExecutionResult.Location.Y - 4);
+            this.btnAllProcFunc.Location = new Point(this.btnAllTables.Location.X - this.btnAllProcFunc.Width - 10,
+                this.btnAllTables.Location.Y);
+            // Close and Minimize
+            int distanceBetweenBtns = 12;
+            this.btnClose.Location = new Point(this.Width - this.btnClose.Width - distanceBetweenBtns, this.btnClose.Location.Y);
+            this.btnMinimize.Location = new Point(this.btnClose.Location.X - this.btnMinimize.Width - distanceBetweenBtns, this.btnClose.Location.Y);
+            // Label Database
+            x = (int)Math.Round(0.019 * (this.Width)); //1.9%
+            y = (int)Math.Round(1.054 * (this.Height - this.menuStrip.Height)); //105.4%
+            this.lbDatabase.Location = new Point(x, y);
+            this.pnlSearch.Location = new Point(this.rchtxtCode.Location.X + this.rchtxtCode.Width + 2,
+                this.pnlSearch.Location.Y);
+
+
+            //MessageBox.Show("Width: " + (((float)this.lbDatabase.Location.X) / ((float)this.Width))*100 + "%" ); //1.9%
+            //MessageBox.Show("Height: " + (((float)this.lbDatabase.Location.Y) / ((float)this.Height - this.menuStrip.Height))*100 + "%"); //105.4%
+        }
+
         protected void FrmDillenSQLManagementStudio_Load(object sender, EventArgs e)
         {
-            //user
-            try
-            {
-                this.user = new User();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show("Be sure you are connected with the Unicamp VPN! Connect and restart the program!");
-                this.Close();
-                return;
-            }
-            
-            this.user.InicializeUser();
+            this.TryConnWithMyDtbs(true);
 
             //mySQLConnection
             this.mySqlCon = new MySqlConnection(this.user);
@@ -69,9 +117,21 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.SetNewEvents(new System.EventHandler(this.newRchtxtCode_TextChanged),
                 new System.Windows.Forms.PreviewKeyDownEventHandler(this.newRchtxtCode_PreviewKeyDown));
 
-            this.ShowChangeDatabaseForm(true);
+            this.ShowChangeDatabaseForm();
         }
 
+        protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                this.mySqlCon.CloseConnection();
+            }
+            catch (Exception err)
+            { }
+        }
+        
+
+        //other form's methods
         protected void FrmDillenSQLManagementStudio_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -118,15 +178,69 @@ namespace DillenManagementStudio
             if (this.AskUserWantsToSaveIfNeeded())
                 this.Close();
         }
+        
 
-        protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        //VPN Connection
+        private void tmrCheckVPNConn_Tick(object sender, EventArgs e)
         {
+            //if was connected
+            if (this.user != null)
+            {
+                //if user was disconnected
+                if (!this.user.IsConnected())
+                {
+                    this.user = null;
+                    this.allCommandsSintaxToolStripMenuItem.Enabled = false;
+
+                    if (this.frmChangeDatabase != null)
+                        this.frmChangeDatabase.User = null;
+
+                    this.ShowMessageRightPlace("You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!");
+                }
+            }else
+               this.TryConnWithMyDtbs(false);
+        }
+        
+        protected void TryConnWithMyDtbs(bool firstTime)
+        {
+            //Forward, user is null...
+
             try
             {
-                this.mySqlCon.CloseConnection();
+                this.user = new User();
             }
             catch (Exception err)
-            { }
+            {
+                if (firstTime)
+                {
+                    //MessageBox.Show("Be sure you are connected with Unicamp VPN! Connect and restart the program!");
+                    //this.Close();
+                    //return;
+                    MessageBox.Show("You are not connected with Unicamp VPN... If you want to learn more about commands or have your databases saved, connect it!");
+                }
+            }
+
+            this.allCommandsSintaxToolStripMenuItem.Enabled = this.user!=null;
+            if (this.user != null)
+            {
+                this.user.InicializeUser();
+                
+                if (!firstTime)
+                {
+                    if(this.frmChangeDatabase != null)
+                        this.frmChangeDatabase.User = this.user;
+                    
+                    this.ShowMessageRightPlace("Now you are connected with Unicamp VPN! You can learn more about commands or have your databases saved!");
+                }
+            }
+        }
+
+        protected void ShowMessageRightPlace(string msg)
+        {
+            if (this.frmChangeDatabase != null)
+                this.frmChangeDatabase.ShowMessage(msg);
+            else
+                MessageBox.Show(msg);
         }
 
 
@@ -195,7 +309,7 @@ namespace DillenManagementStudio
             if (result == DialogResult.OK)
             {
                 this.fileName = this.saveFileDialog.FileName;
-                
+
                 this.isSaved = true;
                 this.ChangeTitle();
                 //creates and writes file
@@ -231,7 +345,7 @@ namespace DillenManagementStudio
             if (String.IsNullOrEmpty(this.fileName))
                 this.lbTitle.Text = TITLE;
             else
-                this.lbTitle.Text = this.fileName + (this.isSaved?"":"*") + " - " + TITLE;
+                this.lbTitle.Text = this.fileName + (this.isSaved ? "" : "*") + " - " + TITLE;
         }
 
 
@@ -262,13 +376,14 @@ namespace DillenManagementStudio
             this.Execute(2);
             this.lastExecution = 2;
         }
-        
+
         protected void Execute(int executeType) //ExecuteType: 0=Automatic, 1=Non-Query, 2=Query
         {
             //get allCodes or lines without even quotation marks
             Queue<int> linesNoEvenQuotMarks = new Queue<int>();
             string allCodes = SqlExecuteProcedures.AllCodes(this.sqlRchtxtbx, ref linesNoEvenQuotMarks);
-            
+            int qtdLinesChanged = 0;
+
             if (linesNoEvenQuotMarks.Count > 0)
             {
                 string msg = SqlExecuteProcedures.MessageFromNoEvenQuotMarks(linesNoEvenQuotMarks);
@@ -279,22 +394,29 @@ namespace DillenManagementStudio
             if (executeType == 0)
             {
                 Queue<Error> errors = new Queue<Error>();
-                this.grvSelect.DataSource = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors);
+                string tableName = "";
+
+                //DataGridView
+                DataTable dataTable = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors, 
+                    ref qtdLinesChanged, ref tableName);
+                this.grvSelect.TopLeftHeaderCell.Value = tableName;
+                //this.lbTableName.Text = tableName;
+                //this.lbTableName.Visible = true;
+                this.grvSelect.DataSource = dataTable;
 
                 bool worked = (errors == null || errors.Count == 0);
 
                 //change label
-                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked, qtdLinesChanged);
 
                 //notification
-                if (worked)
+                if (this.allowNotification)
                 {
-                    if (this.allowNotification)
+                    if (worked)
                         MessageBox.Show("Succesfully executed!");
-                }
-                else
-                    if (this.allowNotification)
+                    else
                         this.ShowErrors(errors);
+                }
             }
             else
             {
@@ -302,12 +424,14 @@ namespace DillenManagementStudio
                 DataTable dataTable = null;
                 bool worked = true;
                 string excep = null;
-                worked = this.mySqlCon.ExecuteOneSQLCmd(allCodes, executeType == 2, ref dataTable, ref excep);
+                worked = this.mySqlCon.ExecuteOneSQLCmd(allCodes, executeType == 2, ref dataTable, ref excep, ref qtdLinesChanged);
 
+                this.grvSelect.TopLeftHeaderCell.Value = "";
+                //this.lbTableName.Visible = false;
                 this.grvSelect.DataSource = dataTable;
 
                 //change label
-                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked, qtdLinesChanged);
 
                 //notification
                 if (this.allowNotification)
@@ -337,9 +461,10 @@ namespace DillenManagementStudio
 
                 if (currErr.IsConnectionException)
                 {
+                    this.EnableWichDependsCon(false);
+                    this.lbDatabase.Text = "Not connected";
                     MessageBox.Show(currErr.Exception, "SQL Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.EnableWichDependsCon(false);
                     return;
                 }
                 else
@@ -365,27 +490,39 @@ namespace DillenManagementStudio
                 }
             }
         }
-
+        
 
         //sql execute procedures
         protected void btnAllTables_Click(object sender, EventArgs e)
         {
+            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
+            this.grvSelect.TopLeftHeaderCell.Value = "";
+            //this.lbTableName.Visible = false;
             this.grvSelect.DataSource = this.mySqlCon.AllTables();
         }
 
         protected void btnAllProcFunc_Click(object sender, EventArgs e)
         {
+            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
+            this.grvSelect.TopLeftHeaderCell.Value = "";
+            //this.lbTableName.Visible = false;
             this.grvSelect.DataSource = this.mySqlCon.AllProcFunc();
         }
-        
+
 
         //CHANGE DATA BASE BUTTON
-        //GETTERS AND SETTERS
+        //getters and setters
         public User User
         {
             get
             {
+                //can be null
                 return this.user;
+            }
+
+            set
+            {
+                this.user = value;
             }
         }
 
@@ -401,21 +538,19 @@ namespace DillenManagementStudio
                 this.mySqlCon = value;
             }
         }
-        
+
         //show FrmChangeDatabase
         protected void changeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ShowChangeDatabaseForm(false);
+            this.ShowChangeDatabaseForm();
         }
 
-        protected void ShowChangeDatabaseForm(bool fisrtTime)
+        protected void ShowChangeDatabaseForm()
         {
-            FrmChangeDatabase frmChangeDatabase = new FrmChangeDatabase(this);
-            frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(fisrtTime);
-            frmChangeDatabase.ShowDialog();
-            
-            //set Focus in RichTextBox
-            this.sqlRchtxtbx.ForceFocus();
+            this.frmChangeDatabase = new FrmChangeDatabase(this);
+            string oldDatabase = this.mySqlCon.ConnStr;
+            this.frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(oldDatabase);
+            this.frmChangeDatabase.ShowDialog();
         }
 
         public void ChangeDatabaseName(string databaseName)
@@ -423,20 +558,55 @@ namespace DillenManagementStudio
             this.lbDatabase.Text = databaseName;
         }
 
-        protected void ProceduresAfterNewDatabase(bool firstTime)
+        protected void ProceduresAfterNewDatabase(string oldDatabase)
         {
-            //if user didn't connected to any database and closed the form
-            if(firstTime && String.IsNullOrEmpty(this.mySqlCon.ConnStr))
-            {
-                this.Close();
-                return;
-            }
-            
+            string newDatabase = this.mySqlCon.ConnStr;
+            //if connected with a database different from the old one
+            if(!String.IsNullOrEmpty(newDatabase) && newDatabase != oldDatabase)
+                new Thread(() => this.AuxBtnAllTablesClick()).Start();
+
+            //set Focus in RichTextBox
+            Force.Focus(this.sqlRchtxtbx.SQLRichTextBox);
+
+            //only lets the user execute if he has connected to a database
             this.EnableWichDependsCon(!String.IsNullOrEmpty(this.mySqlCon.ConnStr));
         }
 
+        protected void AuxBtnAllTablesClick()
+        {
+            try
+            {
+                //while(!this.btnAllTables.CanFocus)
+                //{}
+                while(true)
+                {
+                    try
+                    {
+                        bool canFocus = false;
+                        this.btnAllTables.Invoke(new Action(() => 
+                        {
+                            canFocus = this.btnAllTables.CanFocus;
+                        }));
 
-        //others
+                        if (canFocus)
+                            break;
+                    }
+                    catch(Exception e)
+                    {}
+                }
+                    //OR
+                //for (; ; )
+                //    if (this.btnAllTables.CanFocus)
+                //        break;
+
+                this.btnAllTables.Invoke(new Action(() => this.btnAllTables.PerformClick()));
+            }
+            catch (Exception e)
+            { }
+        }
+
+
+        //allow notification
         protected void allowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.allowNotification)
@@ -445,6 +615,50 @@ namespace DillenManagementStudio
                 this.allowToolStripMenuItem.Text = "Not Allow";
 
             this.allowNotification = !this.allowNotification;
+        }
+
+
+        //SEARCH: FIND and REPLACE
+        protected bool isFind = true;
+
+        protected void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.pnlSearch.Visible && this.isFind)
+                this.pnlSearch.Visible = false;
+            else
+            {
+                this.isFind = true;
+
+                this.pnlSearch.Height = this.btnSeeReplace.Location.Y + this.btnSeeReplace.Height;
+                this.btnSeeReplace.Visible = true;
+
+                this.pnlSearch.Visible = true;
+            }
+        }
+
+        protected void replaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.pnlSearch.Visible && !this.isFind)
+                this.pnlSearch.Visible = false;
+            else
+            {
+                this.isFind = false;
+
+                this.pnlSearch.Height = this.btnReplaceAll.Location.Y + this.btnReplaceAll.Height + 6;
+                this.btnSeeReplace.Visible = false;
+
+                this.pnlSearch.Visible = true;
+            }
+        }
+
+        private void btnSeeReplace_Click(object sender, EventArgs e)
+        {
+            this.replaceToolStripMenuItem.PerformClick();
+        }
+
+        private void btnNotSeeReplace_Click(object sender, EventArgs e)
+        {
+            this.findToolStripMenuItem.PerformClick();
         }
 
 
@@ -492,10 +706,35 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.Redo();
         }
 
+        
+        //DataGridView resources
+        protected void grvSelect_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //if user doubleClicked on a table name from a sp_help TABLE (including btnAllTables)
+            if (e.ColumnIndex == 2 && e.RowIndex >= 0 && String.IsNullOrEmpty((string)this.grvSelect.TopLeftHeaderCell.Value) && this.grvSelect.Columns[e.ColumnIndex].HeaderText == "TABLE_NAME")
+            {
+                try
+                {
+                    //get table name
+                    string tableName = (string)this.grvSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    string code = "select * from " + tableName;
+
+                    //execute
+                    DataTable dataTable = null;
+                    string exception = null;
+                    int qtdLinesChanged = 0;
+                    this.mySqlCon.ExecuteOneSQLCmd(code, true, ref dataTable, ref exception, ref qtdLinesChanged);
+
+                    //put in DataGridView
+                    SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
+                    this.grvSelect.TopLeftHeaderCell.Value = tableName;
+                    //this.lbTableName.Text = tableName;
+                    //this.lbTableName.Visible = true;
+                    this.grvSelect.DataSource = dataTable;
+                }catch(Exception err)
+                { }
+            }
+        }
+
     }
 }
-
-//classes:
-// 1. MyString (not static, extends String + metodos)
-// 2. SqlCommands (not static, extends SqlCommands)
-    //todos os metodos com inicial minuscula

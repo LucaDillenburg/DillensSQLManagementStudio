@@ -1,7 +1,0 @@
- __ Explanation __
-<<*bold>>
-<<_italic>>
-<<bBLUE TEXT>>
-
-
-criar uma tabela no proprio banco do usuario para que ele possa praticar, ver se ele esta praticando oq eh pra ele praticar (btnAutomatic: separar commands)

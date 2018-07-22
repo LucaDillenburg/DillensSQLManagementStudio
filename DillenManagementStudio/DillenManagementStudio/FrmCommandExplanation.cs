@@ -46,6 +46,12 @@ namespace DillenManagementStudio
         {
             InitializeComponent();
 
+            if(!user.IsConnected())
+            {
+                MessageBox.Show("Unicamp VPN was disconnected! This resource is not available anymore!");
+                return;
+            }
+
             this.mySqlConn = mySqlCon;
 
             //name
@@ -394,7 +400,10 @@ namespace DillenManagementStudio
             string code = "select * from " + this.tableName;
             DataTable table = new DataTable();
             string excep = null;
-            this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep);
+            int qtdLinesChanged = 0;
+            this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep, ref qtdLinesChanged);
+
+            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
 
             this.grvSelectTry.DataSource = table;
 
@@ -445,10 +454,11 @@ namespace DillenManagementStudio
                     //2. Execute the command
                     DataTable dataTable = new DataTable();
                     string excep = null;
-                    bool worked = this.mySqlConn.ExecuteOneSQLCmd(allCodes, this.mySqlConn.CommandIsQuery(this.codCmd), ref dataTable, ref excep);
+                    int qtdLinesChanged = 0;
+                    bool worked = this.mySqlConn.ExecuteOneSQLCmd(allCodes, this.mySqlConn.CommandIsQuery(this.codCmd), ref dataTable, ref excep, ref qtdLinesChanged);
 
                     //change label
-                    SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked);
+                    SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked, qtdLinesChanged);
 
                     this.grvSelectTry.DataSource = dataTable;
 

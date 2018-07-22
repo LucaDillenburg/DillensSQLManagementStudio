@@ -37,6 +37,7 @@ namespace DillenManagementStudio
         protected int iDropFunc;
         //other
         protected int iSpHelp;
+        protected int iSelect;
         //nonQuery to select
         protected List<string> nonQueryToSelect = new List<string>();
 
@@ -262,28 +263,86 @@ namespace DillenManagementStudio
 
         protected void GetSqlCommandsFromDb()
         {
-            this.commands = this.user.SqlCommands;
+            if (this.user != null)
+            {
+                this.commands = this.user.SqlCommands;
+                
+                //NON-QUERIES
+                this.iDropTable = this.commands.IndexOf("drop table ");
+                this.iDropProc = this.commands.IndexOf("drop proc ");
+                this.iDropProcedure = this.commands.IndexOf("drop procedure ");
+                this.iDropFunc = this.commands.IndexOf("drop function ");
 
-            //NON-QUERIES
-            this.iDropTable = this.commands.IndexOf("drop table ");
-            this.iDropProc = this.commands.IndexOf("drop proc ");
-            this.iDropProcedure = this.commands.IndexOf("drop procedure ");
-            this.iDropFunc = this.commands.IndexOf("drop function ");
+                //PROCEDURES, FUNCTIONS, TRIGGER (and view)
+                this.iCreateProc = this.commands.IndexOf("create proc ");
+                this.iFirstProcFuncTrigger = this.iCreateProc; //BASIC
+                this.iCreateProcedure = this.commands.IndexOf("create procedure ");
+                this.iCreateFunc = this.commands.IndexOf("create function ");
+                this.iCreateTrigger = this.commands.IndexOf("create trigger ");
+                this.iAlterTrigger = this.commands.IndexOf("alter trigger ");
 
-            //PROCEDURES, FUNCTIONS, TRIGGER (and view)
-            this.iCreateProc = this.commands.IndexOf("create proc ");
-            this.iFirstProcFuncTrigger = this.iCreateProc; //BASIC
-            this.iCreateProcedure = this.commands.IndexOf("create procedure ");
-            this.iCreateFunc = this.commands.IndexOf("create function ");
-            this.iCreateTrigger = this.commands.IndexOf("create trigger ");
-            this.iAlterTrigger = this.commands.IndexOf("alter trigger ");
+                //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
+                this.iCommandExec = this.commands.IndexOf("exec "); //BASIC
 
-            //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
-            this.iCommandExec = this.commands.IndexOf("exec "); //BASIC
+                //QUERIES
+                this.iFirstQuery = this.commands.IndexOf("sp_bindrule "); //BASIC
+                this.iSelect = this.commands.IndexOf("select ");
+                this.iSpHelp = this.commands.IndexOf("sp_help ");
+            }
+            else
+            {
+                this.commands = new List<string>();
 
-            //QUERIES
-            this.iFirstQuery = this.commands.IndexOf("sp_bindrule "); //BASIC
-            this.iSpHelp = this.commands.IndexOf("sp_help ");
+                //INICIALIZAR COMMANDS
+                //NON-QUERIES
+                this.commands.Add("insert into ");
+                this.iDropTable = this.commands.Count; //i
+                this.commands.Add("drop table ");
+                this.commands.Add("alter table ");
+                this.commands.Add("delete from ");
+                this.commands.Add("update ");
+                this.commands.Add("create table ");
+                this.commands.Add("create rule ");
+                this.commands.Add("drop view ");
+                this.iDropProc = this.commands.Count;
+                this.commands.Add("drop proc ");
+                this.iDropProcedure = this.commands.Count;
+                this.commands.Add("drop procedure ");
+                this.iDropFunc = this.commands.Count;
+                this.commands.Add("drop function ");
+                this.commands.Add("drop trigger ");
+
+                //PROCEDURES, FUNCTIONS, TRIGGER (and view)
+                this.iFirstProcFuncTrigger = this.commands.Count; //i BASIC
+                this.iCreateProc = this.commands.Count;
+                this.commands.Add("create proc ");
+                this.iCreateProcedure = this.commands.Count;
+                this.commands.Add("create procedure ");
+                this.commands.Add("alter proc ");
+                this.commands.Add("alter procedure ");
+                this.iCreateFunc = this.commands.Count;
+                this.commands.Add("create function ");
+                this.commands.Add("alter function ");
+                this.iCreateTrigger = this.commands.Count; //i
+                this.commands.Add("create trigger ");
+                this.iAlterTrigger = this.commands.Count; //i
+                this.commands.Add("alter trigger ");
+                this.commands.Add("create view ");
+                this.commands.Add("alter view ");
+
+                //DON'T PUT IT IN THE COMMANDS' QUEUE, BECAUSE WE DONT'T NEED IT
+                this.iCommandExec = this.commands.Count; //i BASIC
+                this.commands.Add("exec ");
+
+                //QUERIES
+                this.iFirstQuery = this.commands.Count; //i BASIC
+                this.commands.Add("sp_bindrule ");
+                this.commands.Add("sp_unbindrule ");
+                this.iSelect = this.commands.Count;
+                this.commands.Add("select ");
+                this.iSpHelp = this.commands.Count;
+                this.commands.Add("sp_help ");
+            }
         }
 
         public void RestartCommands()
@@ -293,7 +352,7 @@ namespace DillenManagementStudio
 
 
         //sql execute user commands
-        public DataTable ExecuteAutomaticSqlCommands(string allCodes, ref Queue<Error> cmdErrors)
+        public DataTable ExecuteAutomaticSqlCommands(string allCodes, ref Queue<Error> cmdErrors, ref int qtdLinesChanged, ref string tableName)
         {
             //separate the whole code in a commands QUEUE
             Queue<int> nSQLCommands = new Queue<int>();
@@ -303,7 +362,7 @@ namespace DillenManagementStudio
             
             cmdErrors = new Queue<Error>();
 
-            if (!this.IsConected())
+            if (!this.IsConnected())
             {
                 //Say that the conection is over
                 cmdErrors.Enqueue(new Error(-1, "", "", "Connection with database is down!", true));
@@ -312,6 +371,8 @@ namespace DillenManagementStudio
 
             //execute each
             DataTable ultimateDataTable = null;
+            qtdLinesChanged = 0;
+            tableName = "";
             for (int iCode = 0; codes.Count > 0; iCode++)
             {
                 int cmdN = nSQLCommands.Dequeue();
@@ -319,15 +380,17 @@ namespace DillenManagementStudio
                 //execute SQL commands
                 DataTable auxDtTable = null; //not any value
                 string excep = null;
+                int currLinesChanged = 0;
                 string currCode = codes.Dequeue();
 
                 bool executeQuery = (nQuery == iCode //if it's the last select
                       || (nQuery < 0 && nNonQuerySelect == iCode)); //if it's the last non-query select and there's no queries
-
+                
                 bool worked = this.ExecuteOneSQLCmd(currCode, 
                     this.CommandIsQuery(cmdN),
                     executeQuery,
-                    cmdN, ref auxDtTable, ref excep);
+                    cmdN, ref auxDtTable, ref excep, ref currLinesChanged,
+                    cmdN == this.iSelect, ref tableName); //tableName
                 //returns true if it worked and false if it didn't work
 
                 if (!worked)
@@ -337,6 +400,8 @@ namespace DillenManagementStudio
                 }
                 else
                 {
+                    qtdLinesChanged += currLinesChanged;
+
                     //if procedure or function was dropped or created, respectively add and remove from this.commands (change iFirstRealFunc if necessary)
                     if (cmdN == iCreateProc || cmdN == iCreateProcedure || cmdN == iCreateFunc || cmdN == iDropProc || cmdN == iDropProcedure || cmdN == iDropFunc)
                         this.AddOrRemoveProfFunc(currCode, cmdN);
@@ -351,12 +416,16 @@ namespace DillenManagementStudio
             return ultimateDataTable;
         }
         
-        public bool ExecuteOneSQLCmd(string code, bool queryExecution, ref DataTable table, ref string exception)
+        public bool ExecuteOneSQLCmd(string code, bool queryExecution, ref DataTable table, ref string exception, ref int qtdLinesChanged)
         {
-            return this.ExecuteOneSQLCmd(code, queryExecution, queryExecution, -1, ref table, ref exception);
+            qtdLinesChanged = 0;
+            string notUsing = null;
+            return this.ExecuteOneSQLCmd(code, queryExecution, queryExecution, -1, ref table, ref exception, ref qtdLinesChanged,
+                false, ref notUsing);
         }
 
-        protected bool ExecuteOneSQLCmd(string code, bool queryExecution, bool executeQuery, int iCommand, ref DataTable table, ref string exception)
+        protected bool ExecuteOneSQLCmd(string code, bool queryExecution, bool executeQuery, int iCommand, ref DataTable table,
+            ref string exception, ref int qtdLinesChanged, bool isSelect, ref string tableName)
         {
             //execute query or nonQuery depending of the parameters
             //if it's a query, show it in the DataGridView 
@@ -370,8 +439,11 @@ namespace DillenManagementStudio
                 {
                     SqlCommand cmdNQ = new SqlCommand(code, this.con);
 
-                    int iResult = cmdNQ.ExecuteNonQuery();
+                    qtdLinesChanged = cmdNQ.ExecuteNonQuery();
                     //iResult value is the number of rows affected by the command.
+
+                    if (qtdLinesChanged < 0)
+                        qtdLinesChanged = 0;
                 }
                 catch (Exception err)
                 {
@@ -399,8 +471,8 @@ namespace DillenManagementStudio
                         indAfterWord = code.Length;
 
                     int length = indAfterWord - firstLetter;
-                    string tableName = code.Substring(firstLetter, length);
-                    code = "Select top(100)* from " + tableName;
+                    string currTableName = code.Substring(firstLetter, length);
+                    code = "Select top(100)* from " + currTableName;
                 }
             }
 
@@ -442,7 +514,12 @@ namespace DillenManagementStudio
                 //I have to do what's in above independing if it was a select or not 
                 //because if it was wrong I'd have to tell the user
                 if (executeQuery)
+                {
                     MySqlConnection.ConstructTable(ds, ref table);
+
+                    if (isSelect)
+                        tableName = code.FirstWord(code.IndexOf(" from ") + 6);
+                }
             }
 
             return true;
@@ -753,7 +830,7 @@ namespace DillenManagementStudio
 
 
         //test conection
-        protected bool IsConected()
+        protected bool IsConnected()
         {
             try
             {
@@ -874,5 +951,6 @@ namespace DillenManagementStudio
         {
             return new MySqlConnection(this);
         }
+
     }
 }

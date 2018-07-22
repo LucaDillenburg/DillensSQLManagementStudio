@@ -19,6 +19,11 @@ namespace DillenManagementStudio
         {
             string connStr = Properties.Settings.Default.BD17188ConnectionString;
             connStr = connStr.Substring(connStr.IndexOf("Data Source"));
+            
+            //SPENDS JUST 5 SECONDS TO KNOW IF DATABASE IS CONNECTED OR NOT
+            if (new System.Net.NetworkInformation.Ping().Send("regulus.cotuca.unicamp.br").Status ==
+                System.Net.NetworkInformation.IPStatus.TimedOut)
+                throw new Exception("Cannot connect with my database!");
 
             this.con = new SqlConnection();
             this.con.ConnectionString = connStr;
@@ -182,7 +187,7 @@ namespace DillenManagementStudio
             if (iResult <= 0)
                 throw new Exception("MyDatabaseOperations.OneMoreExecution(conString) couldn't update!");
         }
-
+        
 
         ///add and delete databases
         //strConn must have the password encrypted already
@@ -244,6 +249,13 @@ namespace DillenManagementStudio
             cmd.Parameters.AddWithValue("@strconn", strConn.Substring(0, strConn.LastIndexOf("Password=")));
 
             cmd.ExecuteNonQuery();
+        }
+
+
+        ///other
+        public bool IsConnected()
+        {
+            return this.con.IsConnected();
         }
 
     }

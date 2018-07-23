@@ -80,7 +80,7 @@ namespace DillenManagementStudio
 
         //method returns the index of a substring from a startIndex if there are even number of single quotation marks before the substring (case insensitive)
         //obs: if there's an odd number of single quotation marks before the substring, it returns -1
-        public static int IndexOfEvenSingQuotMarksAndNothingBefore(this string str, string ministr, int startIndex)
+        public static int IndexOfEvenSingQuotMarksAndNothingBefore(this string str, string ministr, int startIndex = 0)
         {
             //indexOf MINISTR
             int ret = str.IndexOf(ministr, startIndex, StringComparison.CurrentCultureIgnoreCase);
@@ -209,7 +209,7 @@ namespace DillenManagementStudio
         ///indexOf and LastIndexOf List<char>
         // method returns de first indexOf of the list of char from a startIndex
         //
-        public static int IndexOf(this string str, List<char> chars, int startIndex)
+        public static int IndexOf(this string str, List<char> chars, int startIndex = 0)
         {
             return str.IndexOf(chars, startIndex, str.Length);
         }

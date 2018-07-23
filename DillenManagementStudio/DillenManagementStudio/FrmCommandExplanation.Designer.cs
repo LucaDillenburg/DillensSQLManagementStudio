@@ -63,6 +63,7 @@
             this.rchtxtTryCode.Size = new System.Drawing.Size(315, 234);
             this.rchtxtTryCode.TabIndex = 2;
             this.rchtxtTryCode.Text = "";
+            this.rchtxtTryCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmCommandExplanation_KeyDown);
             // 
             // btnExecute
             // 
@@ -184,6 +185,7 @@
             this.Text = "Command Name";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmCommandExplanation_FormClosed);
             this.Shown += new System.EventHandler(this.FrmCommandExplanation_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmCommandExplanation_KeyDown);
             this.Resize += new System.EventHandler(this.FrmCommandExplanation_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();

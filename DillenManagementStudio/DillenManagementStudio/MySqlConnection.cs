@@ -134,12 +134,28 @@ namespace DillenManagementStudio
 
             set
             {
-                string strConn = value;
-                if(!String.IsNullOrEmpty(value))
-                    this.NewConnection(strConn);
+                this.connStr = value;
+                if (!String.IsNullOrEmpty(value))
+                    this.NewConnection(this.connStr);
+                else
+                    this.con = null;
             }
         }
         
+        public SqlConnection Conn
+        {
+            get
+            {
+                return this.con;
+            }
+
+            set
+            {
+                this.con = value;
+                this.connStr = value.ConnectionString;
+            }
+        }
+
         public List<string> ReservedWords
         {
             get
@@ -523,6 +539,15 @@ namespace DillenManagementStudio
             }
 
             return true;
+        }
+
+        public string TableName(string allCodes, int codCmd)
+        {
+            if (codCmd != this.iSelect)
+                return "";
+
+            int startTableName = allCodes.LastIndexOf(" from ") + 6;
+            return allCodes.FirstWord(startTableName);
         }
 
         public static DataTable DataTableFromDs(DataSet ds)

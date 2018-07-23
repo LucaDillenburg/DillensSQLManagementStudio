@@ -45,14 +45,14 @@ namespace DillenManagementStudio
         public FrmCommandExplanation(int codCmd, User user, MySqlConnection mySqlCon)
         {
             InitializeComponent();
+            //set font to TableName's Cell in grvSelect
+            this.grvSelectTry.TopLeftHeaderCell.Style.Font = new Font(new FontFamily("Modern No. 20"), 10.0F, FontStyle.Bold);
 
-            if(!user.IsConnected())
-            {
-                MessageBox.Show("Unicamp VPN was disconnected! This resource is not available anymore!");
-                return;
-            }
+            if (!user.IsConnected())
+                throw new Exception("Unicamp VPN was disconnected! This resource is not available anymore!");
 
             this.mySqlConn = mySqlCon;
+            this.codCmd = codCmd;
 
             //name
             this.command = new CultureInfo("en-US", false).TextInfo.ToTitleCase(user.CommandFromCod(codCmd));
@@ -64,10 +64,10 @@ namespace DillenManagementStudio
                 ref this.textsUserTry);
 
             //INICIALIZE RICHTEXT BOX
-            this.sqlRchtxtbx = new SqlRichTextBox(ref this.rchtxtTryCode, this, mySqlCon, true);
+            this.sqlRchtxtbx = new SqlRichTextBox(ref this.rchtxtTryCode, this, mySqlCon);
         }
 
-        private void FrmCommandExplanation_Shown(object sender, EventArgs e)
+        protected void FrmCommandExplanation_Shown(object sender, EventArgs e)
         {
             int x = 8;
             int y = 49;
@@ -191,9 +191,9 @@ namespace DillenManagementStudio
             }
         }
 
-
+        
         //AJUST
-        private void FrmCommandExplanation_Resize(object sender, EventArgs e)
+        protected void FrmCommandExplanation_Resize(object sender, EventArgs e)
         {
             //title
             this.CentralizeTitle();
@@ -381,47 +381,21 @@ namespace DillenManagementStudio
 
 
         //next/previous buttons
-        private void btnNext_Click(object sender, EventArgs e)
+        protected void btnNext_Click(object sender, EventArgs e)
         {
             this.stage++;
             this.ShowCurrExplanationStage(true);
         }
 
-        private void btnPrevious_Click(object sender, EventArgs e)
+        protected void btnPrevious_Click(object sender, EventArgs e)
         {
             this.stage--;
             this.ShowCurrExplanationStage(true);
         }
 
 
-        //btnHelp
-        private void btnHelp_Click(object sender, EventArgs e)
-        {
-            string code = "select * from " + this.tableName;
-            DataTable table = new DataTable();
-            string excep = null;
-            int qtdLinesChanged = 0;
-            this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep, ref qtdLinesChanged);
-
-            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
-
-            this.grvSelectTry.DataSource = table;
-
-            MessageBox.Show("Hi! I created a table so you can practice what I will teach you!\n\r\n\r" +
-                "The table's name is '" + this.tableName + "' and you can see its fields in the selection...");
-        }
-
-
-        //Form Closed
-        private void FrmCommandExplanation_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //drop table
-            string code = "drop table " + this.tableName;
-            SqlCommand cmd = new SqlCommand(code, this.con);
-            cmd.ExecuteNonQuery();
-        }
-
-        private void btnExecute_Click(object sender, EventArgs e)
+        // EXECUTE
+        protected void btnExecute_Click(object sender, EventArgs e)
         {
             //get allCodes or lines without even quotation marks
             Queue<int> linesNoEvenQuotMarks = new Queue<int>();
@@ -431,7 +405,8 @@ namespace DillenManagementStudio
             {
                 string msg = SqlExecuteProcedures.MessageFromNoEvenQuotMarks(linesNoEvenQuotMarks);
                 MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }else
+            }
+            else
             {
                 //1. See if user is practicing the right command
                 Queue<int> commandsCod = this.mySqlConn.GetCodCommandsFromCode(allCodes);
@@ -456,9 +431,16 @@ namespace DillenManagementStudio
                     string excep = null;
                     int qtdLinesChanged = 0;
                     bool worked = this.mySqlConn.ExecuteOneSQLCmd(allCodes, this.mySqlConn.CommandIsQuery(this.codCmd), ref dataTable, ref excep, ref qtdLinesChanged);
-
+                    
                     //change label
                     SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, worked, qtdLinesChanged);
+
+                    string tableName;
+                    if (worked)
+                        tableName = this.mySqlConn.TableName(allCodes, this.codCmd);
+                    else
+                        tableName = "";
+                    this.grvSelectTry.TopLeftHeaderCell.Value = tableName;
 
                     this.grvSelectTry.DataSource = dataTable;
 
@@ -468,7 +450,45 @@ namespace DillenManagementStudio
                 }
             }
         }
-
         
+
+        //btnHelp
+        protected void btnHelp_Click(object sender, EventArgs e)
+        {
+            string code = "select * from " + this.tableName;
+            DataTable table = new DataTable();
+            string excep = null;
+            int qtdLinesChanged = 0;
+            this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep, ref qtdLinesChanged);
+
+            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
+            this.grvSelectTry.TopLeftHeaderCell.Value = this.tableName;
+            this.grvSelectTry.DataSource = table;
+
+            MessageBox.Show("Hi! I created a table so you can practice what I will teach you!\n\r\n\r" +
+                "The table's name is '" + this.tableName + "' and you can see its fields in the selection...");
+        }
+
+
+        //Form Closed
+        protected void FrmCommandExplanation_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //drop table
+            string code = "drop table " + this.tableName;
+            SqlCommand cmd = new SqlCommand(code, this.con);
+            cmd.ExecuteNonQuery();
+        }
+
+
+        //more resources (things to facilitate)
+        protected void FrmCommandExplanation_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.F5)
+            {
+                this.btnExecute.PerformClick();
+                e.Handled = true;
+            }
+        }
+
     }
 }

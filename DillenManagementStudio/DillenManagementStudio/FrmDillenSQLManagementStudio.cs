@@ -117,6 +117,7 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.SetNewEvents(new System.EventHandler(this.newRchtxtCode_TextChanged),
                 new System.Windows.Forms.PreviewKeyDownEventHandler(this.newRchtxtCode_PreviewKeyDown));
 
+            this.tmrCheckVPNConn.Enabled = true;
             this.ShowChangeDatabaseForm();
         }
 
@@ -134,36 +135,77 @@ namespace DillenManagementStudio
         //other form's methods
         protected void FrmDillenSQLManagementStudio_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
+            if (e.KeyCode == Keys.F5) //F5
                 this.executeToolStripMenuItem.PerformClick();
             else
-            if (e.KeyCode == Keys.S)
+            if (e.KeyCode == Keys.S && e.Control) //ctrl+S
             {
-                if (e.Control)
-                {
-                    if (e.Shift)
-                        this.saveAsToolStripMenuItem.PerformClick();
-                    else
-                        this.saveToolStripMenuItem.PerformClick();
-                }
+                if (e.Shift)
+                    this.saveAsToolStripMenuItem.PerformClick();
+                else
+                    this.saveToolStripMenuItem.PerformClick();
             }
             else
-            if (e.KeyCode == Keys.N && e.Control)
+            if (e.KeyCode == Keys.F && e.Control) //ctrl+F
+                this.findToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.H && e.Control) //ctrl+H
+                this.replaceToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.N && e.Control) //ctrl+N
                 this.newToolStripMenuItem.PerformClick();
             else
-            if (e.KeyCode == Keys.O && e.Control)
+            if (e.KeyCode == Keys.O && e.Control) //ctrl+O
                 this.openToolStripMenuItem.PerformClick();
             else
-            if (e.KeyCode == Keys.F4 && e.Alt)
+            if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
                 this.closeToolStripMenuItem.PerformClick();
             else
-            if (e.KeyCode == Keys.Oemplus && e.Control && this.largerRchtxtFontToolStripMenuItem.Enabled)
+            if (e.KeyCode == Keys.Oemplus && e.Control) //ctrl+[+]
                 this.largerRchtxtFontToolStripMenuItem.PerformClick();
             else
-            if (e.KeyCode == Keys.OemMinus && e.Control && this.smallerRchtxtFontToolStripMenuItem.Enabled)
+            if (e.KeyCode == Keys.OemMinus && e.Control) //ctrl+[-]
                 this.smallerRchtxtFontToolStripMenuItem.PerformClick();
         }
 
+        protected void FrmDillenSQLManagementStudio_KeyDown(object sender, ref KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.F5) //F5
+                this.executeToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.S && e.Control) //ctrl+S
+            {
+                if (e.Shift)
+                    this.saveAsToolStripMenuItem.PerformClick();
+                else
+                    this.saveToolStripMenuItem.PerformClick();
+            }
+            else
+            if (e.KeyCode == Keys.F && e.Control) //ctrl+F
+                this.findToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.H && e.Control) //ctrl+H
+                this.replaceToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.N && e.Control) //ctrl+N
+                this.newToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.O && e.Control) //ctrl+O
+                this.openToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
+                this.closeToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.Oemplus && e.Control) //ctrl+[+]
+                this.largerRchtxtFontToolStripMenuItem.PerformClick();
+            else
+            if (e.KeyCode == Keys.OemMinus && e.Control) //ctrl+[-]
+                this.smallerRchtxtFontToolStripMenuItem.PerformClick();
+            else
+                e.Handled = false;
+        }
+        
         protected void EnableWichDependsCon(bool enable)
         {
             this.btnAllTables.Enabled = enable;
@@ -181,24 +223,32 @@ namespace DillenManagementStudio
         
 
         //VPN Connection
-        private void tmrCheckVPNConn_Tick(object sender, EventArgs e)
+        protected void tmrCheckVPNConn_Tick(object sender, EventArgs e)
         {
-            //if was connected
-            if (this.user != null)
-            {
-                //if user was disconnected
-                if (!this.user.IsConnected())
+            new Thread(new ThreadStart(this.CheckVPNConn)).Start();
+        }
+
+        protected void CheckVPNConn()
+        {
+            this.Invoke((MethodInvoker)delegate {
+                //if was connected
+                if (this.user != null)
                 {
-                    this.user = null;
-                    this.allCommandsSintaxToolStripMenuItem.Enabled = false;
+                    //if user was disconnected
+                    if (!this.user.IsConnected())
+                    {
+                        this.user = null;
+                        this.allCommandsSintaxToolStripMenuItem.Enabled = false;
 
-                    if (this.frmChangeDatabase != null)
-                        this.frmChangeDatabase.User = null;
+                        if (this.frmChangeDatabase != null)
+                            this.frmChangeDatabase.User = null;
 
-                    this.ShowMessageRightPlace("You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!");
+                        this.ShowMessageRightPlace("You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!");
+                    }
                 }
-            }else
-               this.TryConnWithMyDtbs(false);
+                else
+                    this.TryConnWithMyDtbs(false);
+            });
         }
         
         protected void TryConnWithMyDtbs(bool firstTime)
@@ -220,19 +270,21 @@ namespace DillenManagementStudio
                 }
             }
 
-            this.allCommandsSintaxToolStripMenuItem.Enabled = this.user!=null;
-            if (this.user != null)
-            {
-                this.user.InicializeUser();
-                
-                if (!firstTime)
+            this.Invoke((MethodInvoker)delegate {
+                this.allCommandsSintaxToolStripMenuItem.Enabled = this.user != null;
+                if (this.user != null)
                 {
-                    if(this.frmChangeDatabase != null)
-                        this.frmChangeDatabase.User = this.user;
-                    
-                    this.ShowMessageRightPlace("Now you are connected with Unicamp VPN! You can learn more about commands or have your databases saved!");
+                    this.user.InicializeUser();
+
+                    if (!firstTime)
+                    {
+                        if (this.frmChangeDatabase != null)
+                            this.frmChangeDatabase.User = this.user;
+
+                        this.ShowMessageRightPlace("Now you are connected with Unicamp VPN! You can learn more about commands or have your databases saved!");
+                    }
                 }
-            }
+            });
         }
 
         protected void ShowMessageRightPlace(string msg)
@@ -340,7 +392,7 @@ namespace DillenManagementStudio
             return true;
         }
 
-        public void ChangeTitle()
+        protected void ChangeTitle()
         {
             if (String.IsNullOrEmpty(this.fileName))
                 this.lbTitle.Text = TITLE;
@@ -485,7 +537,15 @@ namespace DillenManagementStudio
                         MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                         if (result == DialogResult.Yes)
-                            new FrmCommandExplanation(currErr.CodCommand, this.user, this.mySqlCon).Show();
+                            try
+                            {
+                                new FrmCommandExplanation(currErr.CodCommand, this.user, this.mySqlCon).Show();
+                            }catch(Exception e)
+                            {
+                                this.User = null;
+                                this.allCommandsSintaxToolStripMenuItem.Enabled = false;
+                                MessageBox.Show(e.Message);
+                            }                            
                     }
                 }
             }
@@ -540,6 +600,7 @@ namespace DillenManagementStudio
         }
 
         //show FrmChangeDatabase
+        protected List<string> conStrs;
         protected void changeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.ShowChangeDatabaseForm();
@@ -547,7 +608,7 @@ namespace DillenManagementStudio
 
         protected void ShowChangeDatabaseForm()
         {
-            this.frmChangeDatabase = new FrmChangeDatabase(this);
+            this.frmChangeDatabase = new FrmChangeDatabase(this, this.conStrs);
             string oldDatabase = this.mySqlCon.ConnStr;
             this.frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(oldDatabase);
             this.frmChangeDatabase.ShowDialog();
@@ -555,11 +616,22 @@ namespace DillenManagementStudio
 
         public void ChangeDatabaseName(string databaseName)
         {
-            this.lbDatabase.Text = databaseName;
+            if(databaseName == null)
+            {
+                this.lbDatabase.Text = "Not connected";
+                this.EnableWichDependsCon(false);
+            }
+            else
+            {
+                this.lbDatabase.Text = databaseName;
+                this.EnableWichDependsCon(true);
+            }
         }
 
         protected void ProceduresAfterNewDatabase(string oldDatabase)
         {
+            this.conStrs = this.frmChangeDatabase.ConnectionStrings;
+
             string newDatabase = this.mySqlCon.ConnStr;
             //if connected with a database different from the old one
             if(!String.IsNullOrEmpty(newDatabase) && newDatabase != oldDatabase)
@@ -569,7 +641,8 @@ namespace DillenManagementStudio
             Force.Focus(this.sqlRchtxtbx.SQLRichTextBox);
 
             //only lets the user execute if he has connected to a database
-            this.EnableWichDependsCon(!String.IsNullOrEmpty(this.mySqlCon.ConnStr));
+            //this.EnableWichDependsCon(!String.IsNullOrEmpty(this.mySqlCon.ConnStr));
+            //ITS ON CHANGEDATABASE NOW
         }
 
         protected void AuxBtnAllTablesClick()
@@ -620,11 +693,39 @@ namespace DillenManagementStudio
 
         //SEARCH: FIND and REPLACE
         protected bool isFind = true;
+        protected void btnNext_Click(object sender, EventArgs e)
+        {
+            StringComparison stringComparison = (this.chxIgnoreCase.Checked ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture);
 
+            try
+            {
+                this.sqlRchtxtbx.Find(this.txtFind.Text, stringComparison);
+            }catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        protected void btnReplaceCurr_Click(object sender, EventArgs e)
+        {
+            this.sqlRchtxtbx.Replace(this.txtReplace.Text);
+        }
+
+        protected void btnReplaceAll_Click(object sender, EventArgs e)
+        {
+            StringComparison stringComparison = (this.chxIgnoreCase.Checked ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture);
+            this.pnlSearch.Visible = !this.sqlRchtxtbx.ReplaceAll(this.txtFind.Text, this.txtReplace.Text, stringComparison);
+        }
+        
+
+        //visual or resource
         protected void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.pnlSearch.Visible && this.isFind)
-                this.pnlSearch.Visible = false;
+            //if it's selected something different from txtFind
+            bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 && 
+                this.rchtxtCode.SelectedText != this.txtFind.Text;
+            if (this.pnlSearch.Visible && this.isFind && !selectedSomethingDifferent)
+                this.btnCloseFindReplace.PerformClick();
             else
             {
                 this.isFind = true;
@@ -633,32 +734,81 @@ namespace DillenManagementStudio
                 this.btnSeeReplace.Visible = true;
 
                 this.pnlSearch.Visible = true;
+
+                if (selectedSomethingDifferent)
+                    this.txtFind.Text = this.rchtxtCode.SelectedText;
+
+                Force.Focus(this.txtFind);
             }
         }
 
         protected void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.pnlSearch.Visible && !this.isFind)
-                this.pnlSearch.Visible = false;
+            bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 &&
+                this.rchtxtCode.SelectedText != this.txtFind.Text;
+            if (this.pnlSearch.Visible && !this.isFind && !selectedSomethingDifferent)
+                this.btnCloseFindReplace.PerformClick();
             else
             {
                 this.isFind = false;
 
-                this.pnlSearch.Height = this.btnReplaceAll.Location.Y + this.btnReplaceAll.Height + 6;
+                this.pnlSearch.Height = this.btnNotSeeReplace.Location.Y + this.btnNotSeeReplace.Height;
                 this.btnSeeReplace.Visible = false;
-
+                
                 this.pnlSearch.Visible = true;
+
+                if (selectedSomethingDifferent)
+                    this.txtFind.Text = this.rchtxtCode.SelectedText;
+
+                if (String.IsNullOrEmpty(this.txtFind.Text))
+                    Force.Focus(this.txtFind);
+                else
+                    Force.Focus(this.txtReplace);
             }
         }
 
-        private void btnSeeReplace_Click(object sender, EventArgs e)
+        private void btnCloseFindReplace_Click(object sender, EventArgs e)
+        {
+            this.sqlRchtxtbx.ConsiderNoSelectionBeforeWithSelection();
+            this.sqlRchtxtbx.ChangeBackColorFromLastSearch();
+            this.pnlSearch.Visible = false;
+        }
+        
+        protected void btnSeeReplace_Click(object sender, EventArgs e)
         {
             this.replaceToolStripMenuItem.PerformClick();
         }
 
-        private void btnNotSeeReplace_Click(object sender, EventArgs e)
+        protected void btnNotSeeReplace_Click(object sender, EventArgs e)
         {
             this.findToolStripMenuItem.PerformClick();
+        }
+
+        protected void txtFind_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnNext.PerformClick();
+                e.Handled = true;
+            }
+            else
+                this.FrmDillenSQLManagementStudio_KeyDown(sender, ref e);
+        }
+
+        protected void txtReplace_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnReplaceCurr.PerformClick();
+                e.Handled = true;
+            }
+            else
+                this.FrmDillenSQLManagementStudio_KeyDown(sender, ref e);
+        }
+
+        protected void txtFind_TextChanged(object sender, EventArgs e)
+        {
+            this.sqlRchtxtbx.ConsiderNoSelectionBeforeWithSelection();
         }
 
 
@@ -736,5 +886,6 @@ namespace DillenManagementStudio
             }
         }
 
+        
     }
 }

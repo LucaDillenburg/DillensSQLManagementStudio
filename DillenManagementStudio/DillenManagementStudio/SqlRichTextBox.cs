@@ -37,9 +37,15 @@ namespace DillenManagementStudio
         //if has typed anything
         protected bool hasTyped = false;
 
+        //find and replace
+        protected bool rchtxtHasChangedSinceLastSearch = true;
+        protected Point lastTextSelected = new Point(-1, -1); //x: selectionStart, y: selectionLength
+        protected int lastStartSelection = -1;
+
+
         //CONSTRUCTOR
         public SqlRichTextBox(ref RichTextBox rchtxtCode, Form frmContainsRchtxtCode,
-            MySqlConnection mySqlCon, bool simpleProcedures)
+            MySqlConnection mySqlCon, bool textChangeSimpleProcedures = true, bool findReplaceSimpleProcedures = true)
         {
             this.frmContainsRchtxtCode = frmContainsRchtxtCode;
             this.rchtxtCode = rchtxtCode;
@@ -51,11 +57,17 @@ namespace DillenManagementStudio
             this.lastText = this.rchtxtCode.Text;
             this.lastLines = this.rchtxtCode.Lines;
 
-            if (simpleProcedures)
+            if (textChangeSimpleProcedures)
             {
                 this.rchtxtCode.TextChanged += new System.EventHandler(this.rchtxtCode_TextChanged);
                 this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             }
+
+            if(findReplaceSimpleProcedures)
+            {
+                this.rchtxtCode.Click += new System.EventHandler(this.rchtxtCode_Click);
+                this.rchtxtCode.Enter += new System.EventHandler(this.rchtxtCode_Enter);
+            }            
 
             //ADD THIS.SQLRICHTEXTBOX.RICHTEXTBOX NO FORM
             this.frmContainsRchtxtCode.Controls.Add(this.rchtxtCode);
@@ -335,6 +347,193 @@ namespace DillenManagementStudio
             }
         }
 
+
+        //FIND AND REPLACE
+        public void Find(string searchedText, StringComparison stringComparison)
+        {
+            if (String.IsNullOrEmpty(searchedText))
+                return;
+
+            int cursorStart = this.rchtxtCode.SelectionStart;
+            int cursorLength = this.rchtxtCode.SelectionLength;
+            
+            this.ChangeBackColorFromLastSearch();
+
+            //SEARCHES IN MAXIMIUM THE WHOLE TEXT ONCE
+            int oldLength = searchedText.Length;
+            //real important variables
+            int nextIndex = -1;
+            int startIndex;
+            int cursor;
+            int finalIndex;
+            if (cursorLength <= 0)
+            {
+                startIndex = 0;
+                cursor = this.rchtxtCode.SelectionStart + (this.rchtxtHasChangedSinceLastSearch ? 0 : 1);
+                finalIndex = this.rchtxtCode.Text.Length;
+            }
+            else
+            {
+                startIndex = this.rchtxtCode.SelectionStart;
+                //if there was nothing selected
+                if (this.lastStartSelection < 0)
+                    cursor = this.rchtxtCode.SelectionStart;
+                else
+                    cursor = this.lastStartSelection + 1;
+                finalIndex = this.rchtxtCode.SelectionStart + this.rchtxtCode.SelectionLength;
+            }
+
+            while (true)
+            {
+                int currIndex = this.rchtxtCode.Text.IndexOf(searchedText, startIndex, finalIndex - startIndex, stringComparison);
+
+                if (currIndex == -1)
+                    break;
+
+                if (currIndex >= cursor)
+                {
+                    nextIndex = currIndex;
+                    break;
+                }
+                else
+                if (nextIndex == -1)
+                    nextIndex = currIndex;
+
+                startIndex = currIndex + oldLength;
+            }
+
+            /*
+            //SEARCHES IN MAXIMIUM THE WHOLE TEXT ONCE
+            int start = this.rchtxtCode.SelectionStart + (this.rchtxtHasChangedSinceLastSearch ? 0 : 1);
+            int nextIndex = this.rchtxtCode.Text.IndexOf(this.txtFind.Text, start, stringComparison);
+            
+            if(nextIndex < 0 && this.rchtxtCode.SelectionStart > 0)
+            //app has to search all text again (because he can search for a phrase and be with the cursor in the middle of it)
+                nextIndex = this.rchtxtCode.Text.IndexOf(this.txtFind.Text, stringComparison); */
+
+            if (nextIndex < 0)
+            {
+                this.lastTextSelected = new Point(-1, -1);
+                throw new Exception("The following specified text was not found:\n\r" + searchedText);
+            }
+            else
+            {
+                this.rchtxtCode.SelectionStart = nextIndex;
+                this.rchtxtCode.SelectionLength = searchedText.Length;
+                this.rchtxtCode.SelectionBackColor = Color.Orange;
+
+                this.lastTextSelected = new Point(this.rchtxtCode.SelectionStart, this.rchtxtCode.SelectionLength);
+
+                if (cursorLength > 0)
+                {
+                    this.rchtxtCode.SelectionStart = cursorStart;
+                    this.rchtxtCode.SelectionLength = cursorLength;
+                    this.lastStartSelection = nextIndex;
+                }
+                else
+                    this.rchtxtCode.SelectionLength = 0;
+
+                this.rchtxtHasChangedSinceLastSearch = false;
+            }
+        }
+
+        public void Replace(string textThatWillReplace)
+        {
+            if (this.lastTextSelected.Y >= 0)
+            {
+                //because searched word doesn't stays selected
+                this.rchtxtCode.SelectionStart = this.lastTextSelected.X;
+                this.rchtxtCode.SelectionLength = this.lastTextSelected.Y;
+
+                this.rchtxtCode.SelectedText = textThatWillReplace;
+                this.lastTextSelected.Y = textThatWillReplace.Length;
+                this.ChangeBackColorFromLastSearch();
+            }
+        }
+
+        public bool ReplaceAll(string oldText, string newText, StringComparison stringComparison)
+        {
+            if (!String.IsNullOrEmpty(oldText))
+            {
+                int cursorPos = this.rchtxtCode.SelectionStart;
+                int cursorLength = this.rchtxtCode.SelectionLength;
+
+                //replace all apperances of txtFind.Text with txtReplace.Text
+                int lengthNew = newText.Length;
+                int lengthOld = oldText.Length;
+                int startIndex = (cursorLength > 0 ? cursorPos : 0);
+                int lastIndex = (cursorLength > 0 ? cursorLength + cursorPos : this.rchtxtCode.Text.Length);
+                int qtdReplaced = 0;
+                while (true)
+                {
+                    int currIndex = this.rchtxtCode.Text.IndexOf(oldText, startIndex, lastIndex - startIndex, stringComparison);
+
+                    if (currIndex == -1)
+                        break;
+
+                    this.rchtxtCode.SelectionStart = currIndex;
+                    this.rchtxtCode.SelectionLength = lengthOld;
+                    this.rchtxtCode.SelectedText = newText;
+                    qtdReplaced++;
+
+                    startIndex = currIndex + lengthNew;
+                }
+                
+                if (qtdReplaced <= 0)
+                    throw new Exception("The following specified text was not found:\n\r" + oldText);
+
+                this.rchtxtCode.Focus();
+                this.rchtxtCode.SelectionStart = cursorPos;
+                this.rchtxtCode.SelectionLength = (cursorLength == 0 ? 0 :
+                    cursorLength + qtdReplaced * (lengthNew - lengthOld));
+                return true;
+            }
+            else
+                return false;
+        }
+        //auxiliary
+        public void ChangeBackColorFromLastSearch()
+        {
+            //if there was a selection before
+            if (this.lastTextSelected.Y >= 0)
+            {
+                int selStart = this.rchtxtCode.SelectionStart;
+                int selLength = this.rchtxtCode.SelectionLength;
+
+                //put background color back to normal
+                this.rchtxtCode.SelectionStart = this.lastTextSelected.X;
+                this.rchtxtCode.SelectionLength = this.lastTextSelected.Y;
+                this.rchtxtCode.SelectionBackColor = this.rchtxtCode.BackColor;
+
+                this.rchtxtCode.SelectionStart = selStart;
+                this.rchtxtCode.SelectionLength = selLength;
+            }
+        }
+        //richtextbox events to do Find and Replace
+        protected void rchtxtCode_Click(object sender, EventArgs e)
+        {
+            this.rchtxtHasChangedSinceLastSearch = true;
+
+            if (this.lastTextSelected.Y >= 0)
+            {
+                this.ChangeBackColorFromLastSearch();
+                this.rchtxtCode.SelectionStart = this.lastTextSelected.X;
+                this.rchtxtCode.SelectionLength = this.lastTextSelected.Y;
+                this.lastTextSelected = new Point(-1, -1);
+            }
+        }
+
+        protected void rchtxtCode_Enter(object sender, EventArgs e)
+        {
+            this.rchtxtHasChangedSinceLastSearch = true;
+            this.lastStartSelection = -1;
+            this.ChangeBackColorFromLastSearch();
+        }
+        //other procedures that will be called from main form
+        public void ConsiderNoSelectionBeforeWithSelection()
+        {
+            this.lastStartSelection = -1;
+        }
 
         //RCHTXTCODE SIZE (zoom)
         public bool SetRchtxtCodeSmallerFont()

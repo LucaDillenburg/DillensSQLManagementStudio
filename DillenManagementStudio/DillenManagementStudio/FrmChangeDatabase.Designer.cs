@@ -48,16 +48,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnTryConn = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAddNewDatabase
             // 
             this.btnAddNewDatabase.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAddNewDatabase.Location = new System.Drawing.Point(192, 281);
+            this.btnAddNewDatabase.Location = new System.Drawing.Point(172, 281);
             this.btnAddNewDatabase.Name = "btnAddNewDatabase";
-            this.btnAddNewDatabase.Size = new System.Drawing.Size(143, 23);
+            this.btnAddNewDatabase.Size = new System.Drawing.Size(163, 23);
             this.btnAddNewDatabase.TabIndex = 26;
-            this.btnAddNewDatabase.Text = "Add new database";
+            this.btnAddNewDatabase.Text = "Connect with new database";
             this.btnAddNewDatabase.UseVisualStyleBackColor = true;
             this.btnAddNewDatabase.Click += new System.EventHandler(this.btnAddNewDatabase_Click);
             // 
@@ -218,7 +219,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(351, 281);
+            this.btnCancel.Location = new System.Drawing.Point(346, 281);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(67, 23);
             this.btnCancel.TabIndex = 41;
@@ -230,7 +231,7 @@
             // btnTryConn
             // 
             this.btnTryConn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTryConn.Location = new System.Drawing.Point(8, 309);
+            this.btnTryConn.Location = new System.Drawing.Point(360, 333);
             this.btnTryConn.Name = "btnTryConn";
             this.btnTryConn.Size = new System.Drawing.Size(91, 22);
             this.btnTryConn.TabIndex = 42;
@@ -238,11 +239,23 @@
             this.btnTryConn.UseVisualStyleBackColor = true;
             this.btnTryConn.Click += new System.EventHandler(this.btnTryConn_Click);
             // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisconnect.Location = new System.Drawing.Point(12, 333);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(91, 22);
+            this.btnDisconnect.TabIndex = 43;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
             // FrmChangeDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 340);
+            this.ClientSize = new System.Drawing.Size(463, 366);
+            this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.btnTryConn);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label7);
@@ -294,5 +307,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnTryConn;
+        private System.Windows.Forms.Button btnDisconnect;
     }
 }

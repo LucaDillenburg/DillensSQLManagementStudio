@@ -849,7 +849,7 @@ namespace DillenManagementStudio
         //new Rich Text Box procedures
         protected void newRchtxtCode_TextChanged(object sender, EventArgs e)
         {
-            this.sqlRchtxtbx.rchtxtCode_TextChanged();
+            this.sqlRchtxtbx.rchtxtCode_TextChanged(sender, e);
             if (this.isSaved && !this.rchtxtCode.ReadOnly)
             {
                 this.isSaved = false;
@@ -920,5 +920,6 @@ namespace DillenManagementStudio
             }
         }
 
+        
     }
 }

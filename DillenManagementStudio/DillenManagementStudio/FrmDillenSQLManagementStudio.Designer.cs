@@ -67,6 +67,9 @@ namespace DillenManagementStudio
             this.automaticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.executeNonQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.queryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopOrBeginTryingToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tryToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.lbDatabase = new System.Windows.Forms.Label();
@@ -91,14 +94,8 @@ namespace DillenManagementStudio
             this.txtReplace = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-<<<<<<< HEAD
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopOrBeginTryingToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tryToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-=======
->>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.pnlLoading.SuspendLayout();
@@ -371,6 +368,28 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.queryToolStripMenuItem, "queryToolStripMenuItem");
             this.queryToolStripMenuItem.Click += new System.EventHandler(this.queryToolStripMenuItem_Click);
             // 
+            // stopTryingToConnectWithUnicampVPNToolStripMenuItem
+            // 
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopOrBeginTryingToConnectToolStripMenuItem,
+            this.tryToConnectToolStripMenuItem});
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Name = "stopTryingToConnectWithUnicampVPNToolStripMenuItem";
+            resources.ApplyResources(this.stopTryingToConnectWithUnicampVPNToolStripMenuItem, "stopTryingToConnectWithUnicampVPNToolStripMenuItem");
+            // 
+            // stopOrBeginTryingToConnectToolStripMenuItem
+            // 
+            this.stopOrBeginTryingToConnectToolStripMenuItem.Name = "stopOrBeginTryingToConnectToolStripMenuItem";
+            resources.ApplyResources(this.stopOrBeginTryingToConnectToolStripMenuItem, "stopOrBeginTryingToConnectToolStripMenuItem");
+            this.stopOrBeginTryingToConnectToolStripMenuItem.Click += new System.EventHandler(this.stopOrBeginTryingToConnectToolStripMenuItem_Click);
+            // 
+            // tryToConnectToolStripMenuItem
+            // 
+            this.tryToConnectToolStripMenuItem.Name = "tryToConnectToolStripMenuItem";
+            resources.ApplyResources(this.tryToConnectToolStripMenuItem, "tryToConnectToolStripMenuItem");
+            this.tryToConnectToolStripMenuItem.Click += new System.EventHandler(this.tryToConnectToolStripMenuItem_Click);
+            // 
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.Lavender;
@@ -411,6 +430,7 @@ namespace DillenManagementStudio
             this.rchtxtCode.EnableAutoDragDrop = true;
             resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
             this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.rchtxtCode.HideSelection = false;
             this.rchtxtCode.Name = "rchtxtCode";
             // 
             // pnlLoading
@@ -540,7 +560,6 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-<<<<<<< HEAD
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Black;
@@ -554,30 +573,6 @@ namespace DillenManagementStudio
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
-            // stopTryingToConnectWithUnicampVPNToolStripMenuItem
-            // 
-            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopOrBeginTryingToConnectToolStripMenuItem,
-            this.tryToConnectToolStripMenuItem});
-            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
-            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Name = "stopTryingToConnectWithUnicampVPNToolStripMenuItem";
-            resources.ApplyResources(this.stopTryingToConnectWithUnicampVPNToolStripMenuItem, "stopTryingToConnectWithUnicampVPNToolStripMenuItem");
-            // 
-            // stopOrBeginTryingToConnectToolStripMenuItem
-            // 
-            this.stopOrBeginTryingToConnectToolStripMenuItem.Name = "stopOrBeginTryingToConnectToolStripMenuItem";
-            resources.ApplyResources(this.stopOrBeginTryingToConnectToolStripMenuItem, "stopOrBeginTryingToConnectToolStripMenuItem");
-            this.stopOrBeginTryingToConnectToolStripMenuItem.Click += new System.EventHandler(this.stopOrBeginTryingToConnectToolStripMenuItem_Click);
-            // 
-            // tryToConnectToolStripMenuItem
-            // 
-            this.tryToConnectToolStripMenuItem.Name = "tryToConnectToolStripMenuItem";
-            resources.ApplyResources(this.tryToConnectToolStripMenuItem, "tryToConnectToolStripMenuItem");
-            this.tryToConnectToolStripMenuItem.Click += new System.EventHandler(this.tryToConnectToolStripMenuItem_Click);
-            // 
-=======
->>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");

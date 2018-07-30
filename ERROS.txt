@@ -1,64 +1,23 @@
-tentar nao deixar que selectionlength apareca (talvez ReadOnly)
+tentar nao deixar que selectionlength apareca (deixar visible false em casos extremos: ', ' apagado, paste)
 
    ___ TEXT COLOR ___
-1. 
+1.
 //antes
-<<<<<<< HEAD
-beginstr
-=======
-begin
+select ' asdf asdf'asdf
 
 //depois
-be
+select  asdf asdf'asdf
 
-2. 
+1.
 //antes
-beginstr
+select ' asdf asdf'
 
 //depois
-begin
-str
+select '' asdf asdf'
 
-3.
-//antes
-select 'asdf ljds as'(
->>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
-
-//depois
-begin
-str
-
-4.
-//antes
-select 'asdf ljds as'(
-
-//depois
-<<<<<<< HEAD
-asdf ljds as'(
-
-3.
+2.
 //antes
 'joaozinho'[espaco]
-=======
-'joaozinho'
-
-5.
-//antes
-create function heysa()
-returns table
-as
- return select nome from aluno
-
-//depois
-create function heysa()
-returns s
-as
- return select nome from aluno
-
-6. 
-//antes
-INSERT INTO test VALUES(20, 'Jack', 'Loves to hear violin in the sea.')
->>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
 
 //depois
 'joaozinho'

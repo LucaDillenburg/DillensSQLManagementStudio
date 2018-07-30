@@ -53,12 +53,10 @@ namespace DillenManagementStudio
             int currSelIndex = rchtxt.SelectionStart;
             int currSelLength = rchtxt.SelectionLength;
 
-            rchtxt.SelectionStart = startIndex;
-            rchtxt.SelectionLength = endIndex - startIndex;
+            rchtxt.Select(startIndex, endIndex - startIndex);
             rchtxt.SelectionColor = color;
 
-            rchtxt.SelectionStart = currSelIndex;
-            rchtxt.SelectionLength = currSelLength;
+            rchtxt.Select(currSelIndex, currSelLength);
         }
     }
 
@@ -85,7 +83,7 @@ namespace DillenManagementStudio
     {
         public static bool IsKeyChangeText(this PreviewKeyDownEventArgs e)
         {
-            return e.KeyCode == Keys.D1 || e.KeyCode == Keys.D2 || e.KeyCode == Keys.D3 || e.KeyCode == Keys.D4
+            return !e.Control && !e.Alt && (e.KeyCode == Keys.D1 || e.KeyCode == Keys.D2 || e.KeyCode == Keys.D3 || e.KeyCode == Keys.D4
                 || e.KeyCode == Keys.D5 || e.KeyCode == Keys.D6 || e.KeyCode == Keys.D7 || e.KeyCode == Keys.D8
                 || e.KeyCode == Keys.D9 || e.KeyCode == Keys.D0 || e.KeyCode == Keys.Q || e.KeyCode == Keys.W
                 || e.KeyCode == Keys.E || e.KeyCode == Keys.R || e.KeyCode == Keys.T || e.KeyCode == Keys.Y
@@ -101,7 +99,7 @@ namespace DillenManagementStudio
                 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemOpenBrackets || e.KeyCode == Keys.OemMinus
                 || e.KeyCode == Keys.Oemcomma || e.KeyCode == Keys.OemCloseBrackets || e.KeyCode == Keys.OemBackslash
                 || e.KeyCode == Keys.Oem1 || e.KeyCode == Keys.Oem2 || e.KeyCode == Keys.Oem3 || e.KeyCode == Keys.Oem4
-                || e.KeyCode == Keys.Oem5 || e.KeyCode == Keys.Oem6 || e.KeyCode == Keys.Oem7 || e.KeyCode == Keys.Oem8;
+                || e.KeyCode == Keys.Oem5 || e.KeyCode == Keys.Oem6 || e.KeyCode == Keys.Oem7 || e.KeyCode == Keys.Oem8);
         }
     }
 }

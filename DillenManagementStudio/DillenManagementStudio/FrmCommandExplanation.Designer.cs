@@ -58,6 +58,7 @@
             // rchtxtTryCode
             // 
             this.rchtxtTryCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchtxtTryCode.HideSelection = false;
             this.rchtxtTryCode.Location = new System.Drawing.Point(24, 281);
             this.rchtxtTryCode.Name = "rchtxtTryCode";
             this.rchtxtTryCode.Size = new System.Drawing.Size(315, 234);
@@ -154,7 +155,7 @@
             // 
             // picLoading
             // 
-            this.picLoading.BackColor = System.Drawing.Color.Transparent;
+            this.picLoading.BackColor = System.Drawing.Color.White;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
             this.picLoading.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.picLoading.Location = new System.Drawing.Point(116, 329);
@@ -169,7 +170,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 565);
-            this.Controls.Add(this.rchtxtTryCode);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.lbExecutionResult);

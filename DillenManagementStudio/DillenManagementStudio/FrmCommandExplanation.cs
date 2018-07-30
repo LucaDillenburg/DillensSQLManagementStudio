@@ -455,18 +455,25 @@ namespace DillenManagementStudio
         //btnHelp
         protected void btnHelp_Click(object sender, EventArgs e)
         {
-            string code = "select * from " + this.tableName;
-            DataTable table = new DataTable();
-            string excep = null;
-            int qtdLinesChanged = 0;
-            this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep, ref qtdLinesChanged);
+            try
+            {
+                string code = "select * from " + this.tableName;
+                DataTable table = new DataTable();
+                string excep = null;
+                int qtdLinesChanged = 0;
+                this.mySqlConn.ExecuteOneSQLCmd(code, true, ref table, ref excep, ref qtdLinesChanged);
 
-            SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
-            this.grvSelectTry.TopLeftHeaderCell.Value = this.tableName;
-            this.grvSelectTry.DataSource = table;
+                SqlExecuteProcedures.ChangeExecuteResultLabel(ref this.lbExecutionResult, true, 0);
+                this.grvSelectTry.TopLeftHeaderCell.Value = this.tableName;
+                this.grvSelectTry.DataSource = table;
 
-            MessageBox.Show("Hi! I created a table so you can practice what I will teach you!\n\r\n\r" +
-                "The table's name is '" + this.tableName + "' and you can see its fields in the selection...");
+                MessageBox.Show("Hi! I created a table so you can practice what I will teach you!\n\r\n\r" +
+                    "The table's name is '" + this.tableName + "' and you can see its fields in the selection...");
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show("Someone has dropped the table I created('" + this.tableName + "')!");
+            }
         }
 
 

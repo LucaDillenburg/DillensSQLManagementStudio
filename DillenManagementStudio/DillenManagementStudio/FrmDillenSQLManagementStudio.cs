@@ -119,6 +119,8 @@ namespace DillenManagementStudio
                 new System.Windows.Forms.PreviewKeyDownEventHandler(this.newRchtxtCode_PreviewKeyDown));
 
             this.tmrCheckVPNConn.Enabled = true;
+            this.PutVPNConfigurationTexts();
+
             this.ShowChangeDatabaseForm();
         }
 
@@ -839,6 +841,11 @@ namespace DillenManagementStudio
         {
             this.tmrCheckVPNConn.Enabled = !this.tmrCheckVPNConn.Enabled;
 
+            this.PutVPNConfigurationTexts();
+        }
+
+        protected void PutVPNConfigurationTexts()
+        {
             if (this.tmrCheckVPNConn.Enabled)
                 this.stopOrBeginTryingToConnectToolStripMenuItem.Text = "Stop trying to connect";
             else

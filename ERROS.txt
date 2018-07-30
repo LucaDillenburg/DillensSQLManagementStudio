@@ -1,5 +1,3 @@
 se cola algo e na ultima linha o que foi colado tem evenQuotMarks arrumar ateh o ultimo char q foi colado
 
-deixar font do q eh colado igual ao resto (selectionFont)
-
-tentar nao deixar que selectionlength apareca (deixar visible false em casos extremos: ', ' apagado, paste)
+allow e not allow: on/off notification

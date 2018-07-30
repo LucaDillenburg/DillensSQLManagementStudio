@@ -17,29 +17,32 @@ namespace DillenManagementStudio
         //RICH TEXT BOX
         protected RichTextBox rchtxtCode;
 
-        //commands
+        //to TextChanged
+        //
         protected List<string> reservedWords;
-        //richTextBox color
         protected List<char> specialChars;
         protected int iSingQuot;
-        //richTextBox change
-        protected bool notChangeTxtbxCode = false;
-        protected bool erased = false;
-        //richTextBox color
-        protected string lastText;
-        protected string[] lastLines;
-        //resource of new words
-        protected string lastWord = "";
+        //
         protected int lastCursorStart = 0;
         protected bool isSelected = false;
+        protected string lastText;
+        protected string[] lastLines;
+        //
+        protected Keys keyPressed = new Keys();
+        protected bool notChangeTxtbxCode = false;
+        protected bool erased = false;
+        protected bool pasted = false;
+        //resource of new words
+        protected string lastWord = "";
+        //to set rchtxtCode visible false
+        protected const int QTD_CHARS_CHANGE_TO_SET_VISIBLE_FALSE = 13;
+        protected const bool VISIBLE_TEXT_BOX_FALSE_IF_TOO_MANY_CHANGES = true;
+
         //larger or smaller font
         protected const int MIN_RCHTXT_ZOOM = 1;
         protected const int MAX_RCHTXT_ZOOM = 5;
         protected float rchtxtZoomFactor; //inicialized in SqlRichTextBoxProc()
-
-        //to TextChanged
-        protected Keys keyPressed = new Keys();
-
+        
         //UNDO and REDO
         protected Stack<UndoOrRedoInfo> ctrlZStack = new Stack<UndoOrRedoInfo>();
         protected Stack<UndoOrRedoInfo> ctrlYStack = new Stack<UndoOrRedoInfo>();
@@ -275,14 +278,31 @@ namespace DillenManagementStudio
             {
                 //int indexDif = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index added
                 int indexDif = this.rchtxtCode.SelectionStart - qtdNewChars;
+                if (indexDif < 0)
+                    indexDif = 0;
+                
+                //change pasted Font
+                int selStart = this.rchtxtCode.SelectionStart;
+                int selLength = this.rchtxtCode.SelectionLength;
+                this.rchtxtCode.Select(indexDif, qtdNewChars);
+                this.rchtxtCode.SelectionFont = this.rchtxtCode.Font;
+                this.rchtxtCode.Select(selStart, selLength);
+
                 int firstLine = this.IndexOfLine(indexDif, ref qtdCharsOtherLines);
-                int notUsing = -1;
-                int lastLine = this.IndexOfLine(indexDif + qtdNewChars, ref notUsing);
- 
+                int qtdCharsOtherLines2 = -1;
+                int lastLine = this.IndexOfLine(indexDif + qtdNewChars, ref qtdCharsOtherLines2);
+
+                //if there's too many things to color, set visible false
+                bool lastRchtxtbxVisible = this.rchtxtCode.Visible;
+                if (VISIBLE_TEXT_BOX_FALSE_IF_TOO_MANY_CHANGES && (qtdNewChars >= QTD_CHARS_CHANGE_TO_SET_VISIBLE_FALSE || //if pasted too many thing
+                    (this.rchtxtCode.Text.IndexOf('\'', indexDif, qtdNewChars)>=0 && //if pasted a single quotation mark and there's too many things to color
+                    this.rchtxtCode.Lines[lastLine].Length - (indexDif - qtdCharsOtherLines2) >= QTD_CHARS_CHANGE_TO_SET_VISIBLE_FALSE)))
+                    this.rchtxtCode.Visible = false;
+
                 int indexFirstChar = this.rchtxtCode.Lines[firstLine].LastIndexOf(specialChars, indexDif - qtdCharsOtherLines);
                 if (indexFirstChar < 0)
                     indexFirstChar = 0;
-
+                
                 for (int i = firstLine; i <= lastLine; i++)
                 {
                     string currLine = this.rchtxtCode.Lines[i];
@@ -303,15 +323,31 @@ namespace DillenManagementStudio
                     this.PutWordsRealColorAlsoString(currLine, indexBegin, currLine.Length - 1, currCoutApp, qtdCharsOtherLines);
                     qtdCharsOtherLines += currLine.Length + 1;
                 }
-                
+
+                if (!this.rchtxtCode.Visible)
+                {
+                    //comes back to the original Visibility
+                    this.rchtxtCode.Visible = lastRchtxtbxVisible;
+                    this.rchtxtCode.Focus();
+                }
                 return true;
+            }else
+            //if pasted just one char
+            if (this.pasted && qtdNewChars == 1)
+            {
+                //change pasted Font
+                this.rchtxtCode.SelectionStart--;
+                this.rchtxtCode.SelectionLength = 1;
+                this.rchtxtCode.SelectionFont = this.rchtxtCode.Font;
+                this.rchtxtCode.SelectionStart++;
+                this.rchtxtCode.SelectionLength = 0;
             }
 
             int indexLine = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref qtdCharsOtherLines);
             string line = this.rchtxtCode.Lines[indexLine];
             
             bool erasedSingQuot = false;
-            if (this.isSelected) //erased more than one char
+            if (this.isSelected && qtdNewChars<1) //erased more than one char
             {
                 //VER SE APAGOU SIGLE QUOTATION MARK
                 erasedSingQuot = this.lastText.IndexOf('\'', this.rchtxtCode.SelectionStart, -qtdNewChars) >= 0;
@@ -341,7 +377,20 @@ namespace DillenManagementStudio
                     else
                         startIndex = indexWasSingQuot;
 
+                    //if there's too many things to color, set visible false
+                    bool lastRchtxtbxVisible = this.rchtxtCode.Visible;
+                                                //number of chars PutRealColorAlsoString will change color
+                    if (QTD_CHARS_CHANGE_TO_SET_VISIBLE_FALSE <= line.Length - startIndex)
+                        this.rchtxtCode.Visible = false;
+
                     this.PutWordsRealColorAlsoString(line, startIndex, line.Length - 1, countApp, qtdCharsOtherLines);
+                    
+                    if (!this.rchtxtCode.Visible)
+                    {
+                        //comes back to the original Visibility
+                        this.rchtxtCode.Visible = lastRchtxtbxVisible;
+                        this.rchtxtCode.Focus();
+                    }
                 }
             }
             else
@@ -380,19 +429,19 @@ namespace DillenManagementStudio
                     if(!String.IsNullOrWhiteSpace(line))
                     {
                         char c = 'X';
-                        bool changeWordInTheRight = false;
+                        bool error = false;
                         try
                         {
                             c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
                         }catch(Exception e)
                         {
-                            changeWordInTheRight = true;
+                            error = true;
 
                             //change color of the word in the right
                             this.PutWordRealColorNotString(line, 0, qtdCharsOtherLines);
                         }
                         
-                        if(!changeWordInTheRight)
+                        if(!error)
                         {
                             int equalsNumber = c.EqualsList(specialChars);
                             int countApp = line.CountAppearances('\'', 0, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1);
@@ -400,10 +449,36 @@ namespace DillenManagementStudio
                             //if user has written a single quotation mark
                             if (equalsNumber == iSingQuot && !this.erased)
                             {
+                                int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
+                                int startIndex;
+                                if (countApp % 2 == 0 && indexSingQuot>0)
+                                {
+                                    int indexList = -1;
+                                    startIndex = line.LastIndexOf(specialChars, indexSingQuot - 1, ref indexList);
+                                    if (startIndex < 0)
+                                        startIndex = 0;
+
+                                    if (indexList == iSingQuot)
+                                        countApp--;
+                                } else
+                                    startIndex = indexSingQuot;
+
+                                //if there's too many things to color, set visible false
+                                bool lastRchtxtbxVisible = this.rchtxtCode.Visible;
+                                                    //number of chars PutRealColorAlsoString will change color
+                                if (QTD_CHARS_CHANGE_TO_SET_VISIBLE_FALSE <= line.Length - startIndex)
+                                    this.rchtxtCode.Visible = false;
+
                                 //color single quotation mark
-                                //this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
-                                this.PutWordsRealColorAlsoString(line, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, line.Length - 1,
+                                this.PutWordsRealColorAlsoString(line, startIndex, line.Length - 1,
                                     countApp, qtdCharsOtherLines);
+
+                                if (!this.rchtxtCode.Visible)
+                                {
+                                    //comes back to the original Visibility
+                                    this.rchtxtCode.Visible = lastRchtxtbxVisible;
+                                    this.rchtxtCode.Focus();
+                                }
                             }
                             else
                             {
@@ -458,12 +533,15 @@ namespace DillenManagementStudio
             this.rchtxtCode.ClearUndo();
 
             this.erased = false;
+            this.pasted = false;
             this.notChangeTxtbxCode = false;
             //to TextChanged
             this.keyPressed = e.KeyCode;
             //to BEGIN and END
             this.isSelected = this.rchtxtCode.SelectionLength > 0;
 
+            //Erases selected text before continuing (just if user pressed a key that would overwrite it)
+            //so TextChanged doesn't have to worry about overwrites
             if (this.isSelected && e.IsKeyChangeText() && e.KeyCode != Keys.Back && e.KeyCode != Keys.Delete)
             {
                 //Explanation:
@@ -587,6 +665,9 @@ namespace DillenManagementStudio
             if (e.KeyCode == Keys.Y && e.Control)
                 //redo
                 this.Redo();
+            else
+            if (e.KeyCode == Keys.V && e.Control)
+                this.pasted = true;
             else
             if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 this.erased = true;
@@ -1027,17 +1108,6 @@ namespace DillenManagementStudio
                 startIndex = lastChar + 1;
             }
         }
-
-        /*protected void PutWordRightToCursorRealColorNotString(string line, int qtdCharsOtherLines)
-        {
-            int end = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 2;
-            int firstLetter;
-            if (end >= 0)
-                firstLetter = line.LastIndexOf(specialChars, end) + 1;
-            else
-                firstLetter = 0;
-            this.PutWordRealColorNotString(line, firstLetter, qtdCharsOtherLines);
-        }*/
         
         protected void PutWordRealColorNotString(string line, int firstWordLetter, int qtdCharsOtherLines)
         {

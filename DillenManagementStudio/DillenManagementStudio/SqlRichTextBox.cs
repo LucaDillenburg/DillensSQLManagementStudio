@@ -273,10 +273,15 @@ namespace DillenManagementStudio
             //if something was pasted (more than one char)
             if (qtdNewChars > 1)
             {
-                int indexDif = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index added
+                //int indexDif = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index added
+                int indexDif = this.rchtxtCode.SelectionStart - qtdNewChars;
                 int firstLine = this.IndexOfLine(indexDif, ref qtdCharsOtherLines);
                 int notUsing = -1;
                 int lastLine = this.IndexOfLine(indexDif + qtdNewChars, ref notUsing);
+ 
+                int indexFirstChar = this.rchtxtCode.Lines[firstLine].LastIndexOf(specialChars, indexDif - qtdCharsOtherLines);
+                if (indexFirstChar < 0)
+                    indexFirstChar = 0;
 
                 for (int i = firstLine; i <= lastLine; i++)
                 {
@@ -286,7 +291,7 @@ namespace DillenManagementStudio
                     int currCoutApp;
                     if (i == 0)
                     {
-                        indexBegin = indexDif;
+                        indexBegin = indexFirstChar;
                         currCoutApp = currLine.CountAppearances('\'', 0, indexDif);
                     }
                     else
@@ -295,7 +300,7 @@ namespace DillenManagementStudio
                         currCoutApp = 0;
                     }
 
-                    this.PutWordRealColorAlsoString(currLine, indexBegin, currCoutApp, qtdCharsOtherLines);
+                    this.PutWordsRealColorAlsoString(currLine, indexBegin, currLine.Length - 1, currCoutApp, qtdCharsOtherLines);
                     qtdCharsOtherLines += currLine.Length + 1;
                 }
                 
@@ -304,25 +309,40 @@ namespace DillenManagementStudio
 
             int indexLine = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref qtdCharsOtherLines);
             string line = this.rchtxtCode.Lines[indexLine];
-
-            int countApp = -1;
+            
             bool erasedSingQuot = false;
-            /*if (this.isSelect) //erased more than one char
+            if (this.isSelected) //erased more than one char
             {
-                ARRUMAR A PALAVRA: JUNCAO DA PALAVRA QUE FICOU DO INICIO DA SELECAO COM O 
-                FINAL DA PALAVRA QUE ACABOU A SELECAO????????
-            }*/
+                //VER SE APAGOU SIGLE QUOTATION MARK
+                erasedSingQuot = this.lastText.IndexOf('\'', this.rchtxtCode.SelectionStart, -qtdNewChars) >= 0;
+
+                //ARRUMAR A PALAVRA: JUNCAO DA PALAVRA QUE FICOU DO INICIO DA SELECAO COM O 
+                //FINAL DA PALAVRA QUE ACABOU A SELECAO????????
+            }
 
             if ((qtdNewChars == -1 && this.lastText[this.rchtxtCode.SelectionStart] == '\'') //if just a single quot was erased
                 || erasedSingQuot) //if one or more single quot were erased in just one line and need change
             {
-                int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
-
-                if (countApp < 0)
+                int indexWasSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
+                
+                //if wasn't the last char
+                if(indexWasSingQuot < line.Length)
+                {
                     //count number of ' before the current '
-                    countApp = line.CountAppearances('\'', 0, indexSingQuot);
+                    int countApp = line.CountAppearances('\'', 0, indexWasSingQuot);
 
-                this.PutWordRealColorAlsoString(line, indexSingQuot, countApp, qtdCharsOtherLines);
+                    int startIndex;
+                    if (countApp % 2 == 0)
+                    {
+                        startIndex = line.LastIndexOf(specialChars, indexWasSingQuot);
+                        if (startIndex < 0)
+                            startIndex = 0;
+                    }
+                    else
+                        startIndex = indexWasSingQuot;
+
+                    this.PutWordsRealColorAlsoString(line, startIndex, line.Length - 1, countApp, qtdCharsOtherLines);
+                }
             }
             else
             {
@@ -332,69 +352,101 @@ namespace DillenManagementStudio
 
                 if (this.keyPressed == Keys.Enter)
                 {
-                    //Enter line
-                    this.PutWordRealColor(line, qtdCharsOtherLines);
-
                     //Line before enter
-                    this.rchtxtCode.SelectionStart--;
-                    char c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart];
-                    this.PutWordRealColor(this.rchtxtCode.Lines[indexLine - 1], 
-                    qtdCharsOtherLines - this.rchtxtCode.Lines[indexLine - 1].Length - 1);
-                    this.rchtxtCode.SelectionStart++;
-                }else
-                {
-                    //word left to the cursor
-                    this.PutWordRealColor(line, qtdCharsOtherLines);
-                    
-                    //word right to the cursor
-                    int firstWordLetter;
-                    try
+                    string lineBeforeBegin = this.rchtxtCode.Lines[indexLine - 1];
+                    int indexFirstCharLastWord = lineBeforeBegin.LastIndexOf(specialChars, lineBeforeBegin.Length - 1);
+                    if (indexFirstCharLastWord < 0)
+                        indexFirstCharLastWord = 0;
+                    else
+                        indexFirstCharLastWord++;
+
+                    int countSingleQuotApp = -1;
+                    if (indexFirstCharLastWord < lineBeforeBegin.Length)
                     {
-                        char c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
-                        int equalsNumber = c.EqualsList(specialChars);
+                        countSingleQuotApp = lineBeforeBegin.CountAppearances('\'', 0, indexFirstCharLastWord);
+                        this.PutWordRealColorNotString(lineBeforeBegin, indexFirstCharLastWord, qtdCharsOtherLines - lineBeforeBegin.Length - 1);
+                    }
 
-                        if (equalsNumber >= 0) //if user had written any special char
+                    //Enter line
+                    if (countSingleQuotApp < 0)
+                        countSingleQuotApp = lineBeforeBegin.CountAppearances('\'');
+                    if (countSingleQuotApp % 2 == 0)
+                        this.PutWordRealColorNotString(line, 0, qtdCharsOtherLines);
+                    else
+                        this.PutWordsRealColorAlsoString(line, 0, line.Length-1, countSingleQuotApp, qtdCharsOtherLines);
+                }
+                else
+                {
+                    if(!String.IsNullOrWhiteSpace(line))
+                    {
+                        char c = 'X';
+                        bool changeWordInTheRight = false;
+                        try
                         {
-                            if (equalsNumber == iSingQuot && !this.erased) //single quotation mark
+                            c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
+                        }catch(Exception e)
+                        {
+                            changeWordInTheRight = true;
+
+                            //change color of the word in the right
+                            this.PutWordRealColorNotString(line, 0, qtdCharsOtherLines);
+                        }
+                        
+                        if(!changeWordInTheRight)
+                        {
+                            int equalsNumber = c.EqualsList(specialChars);
+                            int countApp = line.CountAppearances('\'', 0, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1);
+
+                            //if user has written a single quotation mark
+                            if (equalsNumber == iSingQuot && !this.erased)
                             {
-                                int indexSingQuot = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
-
-                                //count number of ' before the current '
-                                bool even = line.CountAppearances('\'', 0, indexSingQuot) % 2 == 0;
-                                //even: put everything in red
-                                //odd: put real word color
-
-                                int endString = 0;
-                                while (endString < line.Length)
-                                {
-                                    endString = line.IndexOf('\'', indexSingQuot + 1);
-                                    if (endString < 0)
-                                        endString = line.Length;
-
-                                    if (even)
-                                        this.rchtxtCode.ChangeTextColor(Color.Red, indexSingQuot + qtdCharsOtherLines, endString + qtdCharsOtherLines);
-                                    else
-                                        this.PutAllWordsRealColorFromIndex(line, indexSingQuot + 1, endString, qtdCharsOtherLines);
-
-                                    even = !even;
-                                    indexSingQuot = endString;
-                                }
+                                //color single quotation mark
+                                //this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
+                                this.PutWordsRealColorAlsoString(line, this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1, line.Length - 1,
+                                    countApp, qtdCharsOtherLines);
                             }
-                            else //any other special char
+                            else
                             {
-                                firstWordLetter = this.rchtxtCode.SelectionStart - qtdCharsOtherLines;
-                                bool isString = false;
-                                this.PutWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
-
-                                if (!isString)
-                                    this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
-                                else
+                                if (countApp % 2 != 0)
+                                    //put last char written in red
                                     this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
+                                else
+                                {
+                                    int startIndexSearchLeftWord;
+                                    if (equalsNumber >= 0)
+                                    {
+                                        //change color of the word in the left of the cursor (following) and in the right
+
+                                        //specialChar
+                                        if(qtdNewChars == 1)
+                                            this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
+
+                                        //right word
+                                        this.PutWordRealColorNotString(line, this.rchtxtCode.SelectionStart, qtdCharsOtherLines);
+
+                                        //help for left word
+                                        startIndexSearchLeftWord = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 2;
+                                    }
+                                    else
+                                        //change color of the word in the left of the cursor (following)
+                                        //help for left word
+                                        startIndexSearchLeftWord = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 1;
+
+                                    if(startIndexSearchLeftWord >= 0)
+                                    {
+                                        //left word
+                                        int indexFirstChar = line.LastIndexOf(specialChars, startIndexSearchLeftWord);
+                                        if (indexFirstChar < 0)
+                                            indexFirstChar = 0;
+                                        else
+                                            indexFirstChar++;
+
+                                        this.PutWordRealColorNotString(line, indexFirstChar, qtdCharsOtherLines);
+                                    }
+                                }
                             }
                         }
                     }
-                    catch (Exception err)
-                    {}
                 }
             }
             
@@ -539,10 +591,7 @@ namespace DillenManagementStudio
             if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 this.erased = true;
             else
-            if (e.KeyCode == Keys.Z && e.Control)
-                this.notChangeTxtbxCode = true;
-            else
-            if (e.KeyCode == Keys.Y && e.Control)
+            if ((e.KeyCode == Keys.Z && e.Control) || (e.KeyCode == Keys.Y && e.Control))
                 this.notChangeTxtbxCode = true;
         }
 
@@ -905,88 +954,81 @@ namespace DillenManagementStudio
             int qtdCharsOtherLines = 0;
             for (int i = 0; i < this.rchtxtCode.Lines.Length; i++)
             {
-                this.PutWordRealColorAlsoString(this.rchtxtCode.Lines[i], 0, 0, qtdCharsOtherLines);
+                this.PutWordsRealColorAlsoString(this.rchtxtCode.Lines[i], 0, this.rchtxtCode.Lines[i].Length - 1, 
+                    0, qtdCharsOtherLines);
                 qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length + 1;
             }
         }
-
-        protected void PutWordRealColorAlsoString(string line, int indexSingQuot, int countApp, int qtdCharsOtherLines)
+                                                                                                    //until start and not counting it
+        protected void PutWordsRealColorAlsoString(string line, int startIndex, int finalIncludedIndex, int countApp, int qtdCharsOtherLines)
         {
-            bool even = countApp % 2 == 0;
-
-            if (indexSingQuot == line.Length)
+            if (startIndex >= line.Length)
                 return;
 
-            int startIndex;
-            if (even)
-            {
-                startIndex = line.LastIndexOf(specialChars, indexSingQuot);
-                if (startIndex < 0)
-                    startIndex = 0;
-            }
-            else
-                startIndex = indexSingQuot;
+            bool even = countApp % 2 == 0;
 
-            int endString = 0;
-            while (endString < line.Length)
+            int finalIncludedIndexPart;
+            bool isFirstTime = true;
+            bool canContinue = false;
+            while (startIndex <= finalIncludedIndex || canContinue)
             {
-                endString = line.IndexOf('\'', startIndex + 1);
+                finalIncludedIndexPart = line.IndexOf('\'', startIndex, finalIncludedIndex - startIndex + 1);
 
-                if (endString < 0)
-                    endString = line.Length;
-                else
-                    endString += (even ? 0 : 1);
+                bool foundSingQuot = finalIncludedIndexPart >= 0;
+                if (finalIncludedIndexPart < 0)
+                    finalIncludedIndexPart = finalIncludedIndex;
 
                 if (even)
-                    this.PutAllWordsRealColorFromIndex(line, startIndex, endString /*+ (endString==line.Length?0:1)*/, qtdCharsOtherLines);
-                else
-                    this.rchtxtCode.ChangeTextColor(Color.Red, startIndex + qtdCharsOtherLines, endString + qtdCharsOtherLines);
-
-                even = !even;
-                startIndex = endString;
-            }
-        }
-
-        protected void PutAllWordsRealColorFromIndex(string line, int startIndex, int endString, int qtdCharsOtherLines)
-        {
-            int proxIndex = line.Length;
-            while (true)
-            {
-                int lastChar = line.IndexOf(specialChars, startIndex, endString);
-                if (lastChar < 0)
                 {
-                    if (endString >= line.Length)
-                        lastChar = line.Length;
-                    else
-                        break;
+                    if (finalIncludedIndexPart - 1 >= 0)
+                        this.PutWordsRealColorNotString(line, startIndex, finalIncludedIndexPart + (foundSingQuot ? -1 : 0), qtdCharsOtherLines);
                 }
                 else
-                    this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, lastChar + qtdCharsOtherLines, lastChar + 1 + qtdCharsOtherLines);
+                    this.rchtxtCode.ChangeTextColor(Color.Red, startIndex + qtdCharsOtherLines - (isFirstTime?0:1),
+                        //because it's endIndex so it isn't included
+                        finalIncludedIndex + 1 + qtdCharsOtherLines);
 
-                this.PutWordRealColor(line, startIndex, lastChar, qtdCharsOtherLines);
+                even = !even; 
+                startIndex = finalIncludedIndexPart + 1;
+                isFirstTime = false;
+                canContinue = finalIncludedIndexPart==finalIncludedIndex && foundSingQuot;
+            }
+        }
+                                                                                //included
+        protected void PutWordsRealColorNotString(string line, int startIndex, int finalIncludedIndex, int qtdCharsOtherLines)
+        {
+            int proxIndex = line.Length;
+            
+            while (true)
+            {
+                int nextStartIndex = line.IndexFirstWord(specialChars, startIndex, finalIncludedIndex);
+                if (nextStartIndex < 0)
+                    break;
+                this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, startIndex, nextStartIndex + 1);
+                startIndex = nextStartIndex;
 
-                if (proxIndex == line.Length)
-                    startIndex = line.IndexOf(specialChars, startIndex, endString);
+                int lastChar;
+                try
+                {                                                        //because it's ENDINDEX (not included)
+                    lastChar = line.IndexOf(specialChars, startIndex + 1, finalIncludedIndex + 1);
+                }catch(Exception e)
+                { break; }
+
+                if (lastChar < 0)
+                    lastChar = finalIncludedIndex;
                 else
-                    startIndex = proxIndex;
+                    lastChar--;
+                
+                this.PutWordRealColorNotString(line, startIndex, lastChar, qtdCharsOtherLines);
 
-                if (startIndex < 0)
+                if (lastChar == finalIncludedIndex)
                     break;
-                startIndex++;
 
-                proxIndex = line.IndexOf(specialChars, startIndex, endString);
-                if (proxIndex > endString)
-                    break;
+                startIndex = lastChar + 1;
             }
         }
 
-        protected void PutWordRealColor(string line, int qtdCharsOtherLines)
-        {
-            bool isString = false;
-            this.PutWordRealColor(line, qtdCharsOtherLines, ref isString);
-        }
-
-        protected void PutWordRealColor(string line, int qtdCharsOtherLines, ref bool isString)
+        /*protected void PutWordRightToCursorRealColorNotString(string line, int qtdCharsOtherLines)
         {
             int end = this.rchtxtCode.SelectionStart - qtdCharsOtherLines - 2;
             int firstLetter;
@@ -994,66 +1036,44 @@ namespace DillenManagementStudio
                 firstLetter = line.LastIndexOf(specialChars, end) + 1;
             else
                 firstLetter = 0;
-            this.PutWordRealColor(line, firstLetter, qtdCharsOtherLines, ref isString);
-        }
-
-        protected void PutWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines)
-        {
-            bool isString = false;
-            this.PutWordRealColor(line, firstWordLetter, qtdCharsOtherLines, ref isString);
-        }
-
-        protected void PutWordRealColor(string line, int firstWordLetter, int qtdCharsOtherLines, ref bool isString)
+            this.PutWordRealColorNotString(line, firstLetter, qtdCharsOtherLines);
+        }*/
+        
+        protected void PutWordRealColorNotString(string line, int firstWordLetter, int qtdCharsOtherLines)
         {
             int lastChar = line.IndexOf(specialChars, firstWordLetter);
             if (lastChar < 0)
                 lastChar = line.Length;
-            this.PutWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
+            this.PutWordRealColorNotString(line, firstWordLetter, lastChar - 1, qtdCharsOtherLines);
         }
 
-        protected void PutWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines)
+        protected void PutWordRealColorNotString(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines)
         {
-            bool isString = false;
-            this.PutWordRealColor(line, firstWordLetter, lastChar, qtdCharsOtherLines, ref isString);
-        }
+            int wordLength = (lastChar - firstWordLetter) + 1;
+            string newWord = line.Substring(firstWordLetter, wordLength);
 
-        protected void PutWordRealColor(string line, int firstWordLetter, int lastChar, int qtdCharsOtherLines, ref bool isString)
-        {
-            int lengthFromSpace = (lastChar - firstWordLetter) + 1;
-            string newWord = line.Substring(firstWordLetter, lengthFromSpace - 1);
-
-            //the new word won't change anything if it's between quotations marks
-            int count = line.CountAppearances('\'', 0, lastChar);
-            isString = count % 2 != 0;
-
-            if (!isString)
-            {
-                //if it's numeric put the number in red
-                if (int.TryParse(newWord, out int res))
-                    this.rchtxtCode.ChangeTextColor(Color.Green, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar);
-                else
-                if (!String.IsNullOrWhiteSpace(newWord))
-                {
-                    bool isResWord = false;
-                    foreach (string resWord in this.reservedWords)
-                    {
-                        if (newWord.Equals(resWord, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            //put the word in a different color
-                            this.rchtxtCode.ChangeTextColor(Color.Blue, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar);
-                            isResWord = true;
-
-                            break;
-                        }
-                    }
-
-                    if (!isResWord)
-                        this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar);
-                }
-            }
+            //if it's numeric put the number in red
+            if (int.TryParse(newWord, out int res))
+                this.rchtxtCode.ChangeTextColor(Color.Green, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar + 1);
             else
-                //put red color on the char of the string
-                this.rchtxtCode.ChangeTextColor(Color.Red, this.rchtxtCode.SelectionStart - 1, this.rchtxtCode.SelectionStart);
+            if (!String.IsNullOrWhiteSpace(newWord))
+            {
+                bool isResWord = false;
+                foreach (string resWord in this.reservedWords)
+                {
+                    if (newWord.Equals(resWord, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        //put the word in a different color
+                        this.rchtxtCode.ChangeTextColor(Color.Blue, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar + 1);
+                        isResWord = true;
+
+                        break;
+                    }
+                }
+
+                if (!isResWord)
+                    this.rchtxtCode.ChangeTextColor(this.rchtxtCode.ForeColor, qtdCharsOtherLines + firstWordLetter, qtdCharsOtherLines + lastChar + 1);
+            }
         }
 
 

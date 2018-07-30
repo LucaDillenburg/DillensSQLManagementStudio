@@ -18,11 +18,11 @@ namespace DillenManagementStudio
         public static int IndexOfFirstMinistrListMultSpacesCI(this string str, List<string> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
         {
             //function will return the index of the first letter of the string that was been search
-                //example: " hi, how           are you? ".IndexOfSupreme("how%are") => 5
-                //          012345678901234567
+            //example: " hi, how           are you? ".IndexOfSupreme("how%are") => 5
+            //          012345678901234567
             //lastLetter: it will return the index of the last letter of the string
-                //example: " hi, how           are you? ".IndexOfSupreme("how%are", lastLetter) => lastLetter = 21
-                //          0123456789012345678901234567
+            //example: " hi, how           are you? ".IndexOfSupreme("how%are", lastLetter) => lastLetter = 21
+            //          0123456789012345678901234567
 
             int ret = str.Length;
             iArrayNumber = -1;
@@ -89,8 +89,8 @@ namespace DillenManagementStudio
                 //if the last caracter of the ministr is an space, search without it
                 if (ministr[ministr.Length - 1] != ' ')
                     return -1;
-                
-                ret = str.IndexOf(ministr.Substring(0, ministr.Length-1), startIndex, StringComparison.CurrentCultureIgnoreCase);
+
+                ret = str.IndexOf(ministr.Substring(0, ministr.Length - 1), startIndex, StringComparison.CurrentCultureIgnoreCase);
                 //if the ministr without the space is in the last part of the string, it continues the function, else it returns -1
                 if (ret < 0 || ret + ministr.Length < str.Length)
                     return -1;
@@ -117,7 +117,7 @@ namespace DillenManagementStudio
 
             if (qtdSingQuotMarks % 2 != 0)
                 return -1;
-            
+
             //FINALLY
             return ret;
         }
@@ -128,11 +128,11 @@ namespace DillenManagementStudio
         public static int IndexOfFirstMinistrListCI(this string str, List<string> ministrs, int startIndex, ref int iArrayNumber, ref int lastLetter)
         {
             //function will return the index of the first letter of the string that was been search
-                //example: " hi, how are you? ".IndexOfSupreme("how are") => 5
-                //          012345678901234567
+            //example: " hi, how are you? ".IndexOfSupreme("how are") => 5
+            //          012345678901234567
             //lastLetter: it will return the index of the last letter of the string
-                //example: " hi, how are you? ".IndexOfSupreme("how are", lastLetter) => lastLetter = 12
-                //          012345678901234567
+            //example: " hi, how are you? ".IndexOfSupreme("how are", lastLetter) => lastLetter = 12
+            //          012345678901234567
 
             int ret = str.Length;
             iArrayNumber = -1;
@@ -140,11 +140,11 @@ namespace DillenManagementStudio
             for (int i = 0; i < ministrs.Count; i++)
             {
                 int currentIndex = str.IndexOfEvenSingQuotMarksAndNothingBefore(ministrs[i], startIndex);
-                
+
                 if (currentIndex >= 0 && currentIndex < ret)
                 {
                     ret = currentIndex;
-                    lastLetter = currentIndex + ministrs[i].Length; 
+                    lastLetter = currentIndex + ministrs[i].Length;
                     iArrayNumber = i;
                 }
             }
@@ -160,11 +160,11 @@ namespace DillenManagementStudio
         {
             string str1; //smaller
             string str2; //larger
-            if(otherStr.Length < str.Length)
+            if (otherStr.Length < str.Length)
             {
                 str1 = otherStr;
                 str2 = str;
-            }else
+            } else
             {
                 str1 = str;
                 str2 = otherStr;
@@ -179,6 +179,28 @@ namespace DillenManagementStudio
                 return -1;
             else
                 return str1.Length;
+        }
+
+        // method returns the index of the first char that is not in the SpecialChars list of char
+        public static int IndexFirstWord(this string str, List<char> specialChars, int startIndex, int lastIncludedIndex)
+        {
+            for (int i = startIndex; i<=lastIncludedIndex; i++)
+            {
+                char c = str[i];
+
+                bool isSpecialChar = false;
+                for (int im = 0; im < specialChars.Count; im++)
+                    if (c == specialChars[im])
+                    {
+                        isSpecialChar = true;
+                        break;
+                    }
+
+                if (!isSpecialChar)
+                    return i;
+            }
+
+            return -1;
         }
 
 
@@ -237,6 +259,15 @@ namespace DillenManagementStudio
         //
         public static int LastIndexOf(this string str, List<char> chars, int endIndex)
         {
+            int index = -1;
+            return str.LastIndexOf(chars, endIndex, ref index);
+        }
+
+        // method returns de lastIndexOf of the list of char
+        //
+        public static int LastIndexOf(this string str, List<char> chars, int endIndex, ref int indexList)
+        {
+            indexList = -1;
             int ret = -1;
 
             for (int i = 0; i < chars.Count; i++)
@@ -244,7 +275,10 @@ namespace DillenManagementStudio
                 int currentIndex = str.LastIndexOf(chars[i], endIndex);
 
                 if (currentIndex > ret)
+                {
+                    indexList = i;
                     ret = currentIndex;
+                }
             }
             
             return ret;

@@ -57,7 +57,7 @@
             this.btnAddNewDatabase.Location = new System.Drawing.Point(172, 281);
             this.btnAddNewDatabase.Name = "btnAddNewDatabase";
             this.btnAddNewDatabase.Size = new System.Drawing.Size(163, 23);
-            this.btnAddNewDatabase.TabIndex = 26;
+            this.btnAddNewDatabase.TabIndex = 8;
             this.btnAddNewDatabase.Text = "Connect with new database";
             this.btnAddNewDatabase.UseVisualStyleBackColor = true;
             this.btnAddNewDatabase.Click += new System.EventHandler(this.btnAddNewDatabase_Click);
@@ -68,7 +68,7 @@
             this.btnSelectDatabase.Location = new System.Drawing.Point(58, 70);
             this.btnSelectDatabase.Name = "btnSelectDatabase";
             this.btnSelectDatabase.Size = new System.Drawing.Size(113, 23);
-            this.btnSelectDatabase.TabIndex = 25;
+            this.btnSelectDatabase.TabIndex = 0;
             this.btnSelectDatabase.Text = "Select database";
             this.btnSelectDatabase.UseVisualStyleBackColor = true;
             this.btnSelectDatabase.Click += new System.EventHandler(this.btnSelectDatabase_Click);
@@ -79,7 +79,7 @@
             this.cbxChsDtBs.Location = new System.Drawing.Point(41, 43);
             this.cbxChsDtBs.Name = "cbxChsDtBs";
             this.cbxChsDtBs.Size = new System.Drawing.Size(397, 21);
-            this.cbxChsDtBs.TabIndex = 24;
+            this.cbxChsDtBs.TabIndex = 1;
             // 
             // lbTitle1
             // 
@@ -117,7 +117,7 @@
             this.txtDataSource.Location = new System.Drawing.Point(142, 168);
             this.txtDataSource.Name = "txtDataSource";
             this.txtDataSource.Size = new System.Drawing.Size(296, 21);
-            this.txtDataSource.TabIndex = 30;
+            this.txtDataSource.TabIndex = 4;
             // 
             // txtInicialCatalog
             // 
@@ -125,7 +125,7 @@
             this.txtInicialCatalog.Location = new System.Drawing.Point(142, 195);
             this.txtInicialCatalog.Name = "txtInicialCatalog";
             this.txtInicialCatalog.Size = new System.Drawing.Size(296, 21);
-            this.txtInicialCatalog.TabIndex = 32;
+            this.txtInicialCatalog.TabIndex = 5;
             // 
             // label4
             // 
@@ -143,7 +143,7 @@
             this.txtUserID.Location = new System.Drawing.Point(142, 222);
             this.txtUserID.Name = "txtUserID";
             this.txtUserID.Size = new System.Drawing.Size(296, 21);
-            this.txtUserID.TabIndex = 34;
+            this.txtUserID.TabIndex = 6;
             // 
             // label5
             // 
@@ -162,7 +162,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(296, 21);
-            this.txtPassword.TabIndex = 36;
+            this.txtPassword.TabIndex = 7;
             // 
             // label6
             // 
@@ -182,6 +182,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(83, 16);
             this.checkBox1.TabIndex = 37;
+            this.checkBox1.TabStop = false;
             this.checkBox1.Text = "See password";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.checkBox1_MouseDown);
@@ -192,7 +193,7 @@
             this.btnDeleteDatabase.Location = new System.Drawing.Point(340, 70);
             this.btnDeleteDatabase.Name = "btnDeleteDatabase";
             this.btnDeleteDatabase.Size = new System.Drawing.Size(98, 23);
-            this.btnDeleteDatabase.TabIndex = 38;
+            this.btnDeleteDatabase.TabIndex = 3;
             this.btnDeleteDatabase.Text = "Delete database";
             this.btnDeleteDatabase.UseVisualStyleBackColor = true;
             this.btnDeleteDatabase.Click += new System.EventHandler(this.btnDeleteDatabase_Click);
@@ -202,7 +203,7 @@
             this.btnUpdateDatabase.Location = new System.Drawing.Point(234, 70);
             this.btnUpdateDatabase.Name = "btnUpdateDatabase";
             this.btnUpdateDatabase.Size = new System.Drawing.Size(101, 23);
-            this.btnUpdateDatabase.TabIndex = 39;
+            this.btnUpdateDatabase.TabIndex = 2;
             this.btnUpdateDatabase.Text = "Update database";
             this.btnUpdateDatabase.UseVisualStyleBackColor = true;
             this.btnUpdateDatabase.Click += new System.EventHandler(this.btnUpdateDatabase_Click);
@@ -222,7 +223,7 @@
             this.btnCancel.Location = new System.Drawing.Point(346, 281);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(67, 23);
-            this.btnCancel.TabIndex = 41;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Visible = false;
@@ -234,7 +235,7 @@
             this.btnTryConn.Location = new System.Drawing.Point(360, 333);
             this.btnTryConn.Name = "btnTryConn";
             this.btnTryConn.Size = new System.Drawing.Size(91, 22);
-            this.btnTryConn.TabIndex = 42;
+            this.btnTryConn.TabIndex = 10;
             this.btnTryConn.Text = "Test connection";
             this.btnTryConn.UseVisualStyleBackColor = true;
             this.btnTryConn.Click += new System.EventHandler(this.btnTryConn_Click);
@@ -245,7 +246,7 @@
             this.btnDisconnect.Location = new System.Drawing.Point(12, 333);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(91, 22);
-            this.btnDisconnect.TabIndex = 43;
+            this.btnDisconnect.TabIndex = 11;
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);

@@ -82,6 +82,7 @@ namespace DillenManagementStudio
             this.tmrCheckVPNConn = new System.Windows.Forms.Timer(this.components);
             this.lbTableName = new System.Windows.Forms.Label();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.btnCloseFindReplace = new System.Windows.Forms.Button();
             this.btnNotSeeReplace = new System.Windows.Forms.Button();
             this.btnSeeReplace = new System.Windows.Forms.Button();
             this.btnReplaceAll = new System.Windows.Forms.Button();
@@ -92,7 +93,6 @@ namespace DillenManagementStudio
             this.txtReplace = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnCloseFindReplace = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
@@ -421,7 +421,6 @@ namespace DillenManagementStudio
             // 
             // rchtxtCode
             // 
-            this.rchtxtCode.AcceptsTab = true;
             this.rchtxtCode.EnableAutoDragDrop = true;
             resources.ApplyResources(this.rchtxtCode, "rchtxtCode");
             this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
@@ -443,6 +442,7 @@ namespace DillenManagementStudio
             this.rchtxtAux.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtAux.Name = "rchtxtAux";
             this.rchtxtAux.ReadOnly = true;
+            this.rchtxtAux.TabStop = false;
             // 
             // tmrCheckVPNConn
             // 
@@ -471,6 +471,13 @@ namespace DillenManagementStudio
             this.pnlSearch.Controls.Add(this.label1);
             resources.ApplyResources(this.pnlSearch, "pnlSearch");
             this.pnlSearch.Name = "pnlSearch";
+            // 
+            // btnCloseFindReplace
+            // 
+            resources.ApplyResources(this.btnCloseFindReplace, "btnCloseFindReplace");
+            this.btnCloseFindReplace.Name = "btnCloseFindReplace";
+            this.btnCloseFindReplace.UseVisualStyleBackColor = true;
+            this.btnCloseFindReplace.Click += new System.EventHandler(this.btnCloseFindReplace_Click);
             // 
             // btnNotSeeReplace
             // 
@@ -537,13 +544,6 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            // 
-            // btnCloseFindReplace
-            // 
-            resources.ApplyResources(this.btnCloseFindReplace, "btnCloseFindReplace");
-            this.btnCloseFindReplace.Name = "btnCloseFindReplace";
-            this.btnCloseFindReplace.UseVisualStyleBackColor = true;
-            this.btnCloseFindReplace.Click += new System.EventHandler(this.btnCloseFindReplace_Click);
             // 
             // FrmDillenSQLManagementStudio
             // 

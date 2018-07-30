@@ -29,6 +29,11 @@ namespace DillenManagementStudio
         //richTextBox color
         protected string lastText;
         protected string[] lastLines;
+        //resource of new words
+        protected string lastWord = "";
+        protected int lastCursorStart = 0;
+        protected bool isEnter = false;
+        protected bool isSelected = false;
         //larger or smaller font
         protected const int MIN_RCHTXT_ZOOM = 1;
         protected const int MAX_RCHTXT_ZOOM = 5;
@@ -63,7 +68,7 @@ namespace DillenManagementStudio
                 this.rchtxtCode.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.rchtxtCode_PreviewKeyDown);
             }
 
-            if(findReplaceSimpleProcedures)
+            if (findReplaceSimpleProcedures)
             {
                 this.rchtxtCode.Click += new System.EventHandler(this.rchtxtCode_Click);
                 this.rchtxtCode.Enter += new System.EventHandler(this.rchtxtCode_Enter);
@@ -111,6 +116,44 @@ namespace DillenManagementStudio
         {
             this.hasTyped = true;
 
+            //help to put END in BEGIN
+            bool cursorPosChanged = this.rchtxtCode.SelectionStart != this.lastCursorStart + 1;
+            if(!this.notChangeTxtbxCode && (!this.isEnter || this.isSelected || cursorPosChanged))
+            {
+                if(this.erased)
+                {
+                    int lengthDeleted = this.lastCursorStart - this.rchtxtCode.SelectionStart;
+                    if (this.lastText.Length - this.rchtxtCode.Text.Length == lengthDeleted && 
+                        this.lastWord.Length - lengthDeleted > 0)
+                        this.lastWord = this.lastWord.Substring(0, this.lastWord.Length - lengthDeleted);
+                    else
+                        this.lastWord = "";
+                }
+                else
+                {
+                    //[if changed cursor position (not only because he wrote another letter)]
+                    if (cursorPosChanged)
+                        this.lastWord = "";
+
+                               //[if something was selected]       //[if something was pasted]
+                    bool eraseWord = this.isSelected || this.rchtxtCode.Text.Length - this.lastText.Length > 1;
+                    char c = '*';
+                    if (!eraseWord)
+                    {
+                        c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
+
+                        //if SPACE, but lastWord.Equals("begin", StringComparison.InvariantCultureIgnoreCase), eraseWord is false
+                        eraseWord = c == ' ' && !this.lastWord.TrimEnd().Equals("begin", StringComparison.InvariantCultureIgnoreCase);
+                    }
+
+                    if (eraseWord)
+                        this.lastWord = "";
+                    else
+                        this.lastWord += c;
+                }
+            }
+
+            this.lastCursorStart = this.rchtxtCode.SelectionStart;
             //if there's nothing written in the richTextBox, there's nothing to do
             if (this.rchtxtCode.Lines.Length == 0 || this.notChangeTxtbxCode)
             {
@@ -121,7 +164,49 @@ namespace DillenManagementStudio
                 return;
             }
 
-            ///put red in strings, green in numbers, blue in reserved words and almost black in the rest
+
+            //PUT END in begin
+            if (this.isEnter)
+                if (this.lastWord.TrimEnd().Equals("begin", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    //if the user wrote "begin" and then just spaces, when he presses [Enter] 
+                    //and the cursor is in front of the "begin":
+                    //  begin
+                    //    [cursor]
+                    //  end
+
+                    bool capslock = this.lastWord[0] == 'B';
+                    
+                    int notUsing = 0;
+                    int currBeginLineIndex = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref notUsing) - 1;
+                    string beginLine = this.rchtxtCode.Lines[currBeginLineIndex];
+
+                    int auxIndex = beginLine.Length - this.lastWord.Length - 1;
+                    if (auxIndex < 0 || beginLine[auxIndex] == ' ')
+                    {
+                        bool skipLine = !String.IsNullOrWhiteSpace(this.rchtxtCode.Lines[currBeginLineIndex + 1]);
+
+                        string spacesBeforeBegin = "";
+                        while (beginLine[spacesBeforeBegin.Length] == ' ')
+                            spacesBeforeBegin += " ";
+
+                        //ajust spaces before between BEGIN/END
+                        this.rchtxtCode.SelectedText = spacesBeforeBegin + "   " + Environment.NewLine;
+
+                        //write END
+                        this.rchtxtCode.SelectedText = spacesBeforeBegin + (capslock ? "END" : "end") + 
+                            (skipLine?"\n":"");
+
+                        //change cursor position to between BEGIN/END
+                        this.rchtxtCode.SelectionStart -= spacesBeforeBegin.Length + 4 + (skipLine?1:0);
+                        this.rchtxtCode.SelectionLength = 0;
+                    }
+
+                    this.lastWord = "";
+                }
+
+
+            ///put red in strings, green in numbers, blue in reserved words and black in the rest
 
             int qtdCharsOtherLines = 0;
             int qtdNewChars = this.rchtxtCode.Text.Length - this.lastText.Length;
@@ -302,49 +387,116 @@ namespace DillenManagementStudio
         {
             this.erased = false;
             this.notChangeTxtbxCode = false;
-            
+
+            //to BEGIN and END
+            this.isEnter = false;
+            this.isSelected = this.rchtxtCode.SelectionLength > 0;
+
             //put spaces when the user presses tab
             if (e.KeyCode == Keys.Tab)
             {
+                int cursorStart = this.rchtxtCode.SelectionStart;
+                int cursorLength = this.rchtxtCode.SelectionLength;
+                bool shift = e.Shift;
 
-                //AcceptsTab
+                if (this.rchtxtCode.SelectionLength > 0)
+                {
+                    int qtdCharsOtherLines = 0;
+                    int firstLine = this.IndexOfLine(cursorStart, ref qtdCharsOtherLines);
+                    int notUsing = 0;
+                    int lastLine = this.IndexOfLine(cursorStart + cursorLength,
+                        ref notUsing);
 
-                //MessageBox.Show("Working on it!");
-                //if nothing is selected and shift is not pressed
-                //put 3 spaces in from of the 
+                    //if something is selected
+                    //if shift isn't pressed
+                    //put 3 spaces in the beginning of each selected lines
+                    //else
+                    //remove maximum 3 of possible spaces in from of the selected lines
+                    int allLength = 0;
+                    for (int i = firstLine; i <= lastLine; i++)
+                    {
+                        if (!String.IsNullOrEmpty(this.rchtxtCode.Lines[i]))
+                        {
+                            if (shift)
+                            {
+                                this.rchtxtCode.SelectionStart = qtdCharsOtherLines;
+                                int length = 0;
+                                while (length < 3)
+                                {
+                                    if (this.rchtxtCode.Text[qtdCharsOtherLines + length] == ' ')
+                                        length++;
+                                    else
+                                        break;
+                                }
 
-                //if something is selected
-                //if shift isn't pressed
-                //put 3 spaces in the beginning of each selected lines
-                //else
-                //remove maximum 3 of possible spaces in from of the selected lines
+                                this.rchtxtCode.SelectionLength = length;
+                                this.rchtxtCode.SelectedText = "";
+                                allLength -= length;
+                            }
+                            else
+                            {
+                                this.rchtxtCode.SelectionStart = qtdCharsOtherLines;
+                                this.rchtxtCode.SelectionLength = 0;
+                                this.rchtxtCode.SelectedText = "   ";
+                                allLength += 3;
+                            }
+                        }
+                        
+                        qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length + 1;
+                    }
 
+                    cursorLength += allLength;
+                } else
+                {
+                    if(shift)
+                    {
+                        //if shift is pressed, erase maximum 3 spaces before cursor start
+                        int length = 0;
+                        while (length < 3)
+                        {
+                            if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - length - 1] == ' ')
+                                length++;
+                            else
+                                break;
+                        }
+
+                        cursorStart -= length;
+                        this.rchtxtCode.SelectionStart = cursorStart;
+                        this.rchtxtCode.SelectionLength = length;
+                        this.rchtxtCode.SelectedText = "";
+                    }
+                    else
+                    {
+                        //if shift is not pressed
+                        //put 3 spaces in from of each line
+                        this.rchtxtCode.SelectionLength = 0;
+                        this.rchtxtCode.SelectedText = "   ";
+
+                        cursorStart += 3;
+                    }
+                }
+
+                this.rchtxtCode.SelectionStart = cursorStart;
+                this.rchtxtCode.SelectionLength = cursorLength;
+
+                //Focus comes back to RichTextBox
+                Force.Focus(this.rchtxtCode);
+
+                //AcceptsTab ??
                 //show the key was already managed
             }
             else
             if (e.KeyCode == Keys.Enter)
-            {
-                //if the user wrote "begin" and then just spaces, when he presses [Enter] 
-                //and the cursor is in front of the "begin":
-                //  begin
-                //    [cursor]
-                //  end
-            }
+                this.isEnter = true;
             else
             if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 this.erased = true;
             else
-            if (e.KeyCode == Keys.Z)
-            {
-                if (e.Control)
-                    this.notChangeTxtbxCode = true;
-            }
+            if (e.KeyCode == Keys.Z && e.Control)
+                this.notChangeTxtbxCode = true;
             else
-            if (e.KeyCode == Keys.Y)
-            {
-                if (e.Control)
-                    this.notChangeTxtbxCode = true;
-            }
+            if (e.KeyCode == Keys.Y && e.Control)
+                this.notChangeTxtbxCode = true;
         }
 
 
@@ -467,13 +619,14 @@ namespace DillenManagementStudio
                 while (true)
                 {
                     int currIndex = this.rchtxtCode.Text.IndexOf(oldText, startIndex, lastIndex - startIndex, stringComparison);
-
+                    
                     if (currIndex == -1)
                         break;
 
                     this.rchtxtCode.SelectionStart = currIndex;
                     this.rchtxtCode.SelectionLength = lengthOld;
                     this.rchtxtCode.SelectedText = newText;
+                    lastIndex += lengthNew - lengthOld;
                     qtdReplaced++;
 
                     startIndex = currIndex + lengthNew;
@@ -534,6 +687,7 @@ namespace DillenManagementStudio
         {
             this.lastStartSelection = -1;
         }
+
 
         //RCHTXTCODE SIZE (zoom)
         public bool SetRchtxtCodeSmallerFont()

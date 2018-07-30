@@ -1,21 +1,34 @@
    ___ TEXT COLOR ___
 1.
 //antes
+begin
+
+//depois
+be
+
+2. 
+//antes
+beginstr
+
+//depois
+begin
+str
+
+3.
+//antes
 select 'asdf ljds as'(
 
 //depois
 asdf ljds as'(
 
-2.
+4.
 //antes
 'joaozinho'[espaco]
 
 //depois
 'joaozinho'
 
-
-
-3.
+5.
 //antes
 create function heysa()
 returns table
@@ -28,7 +41,7 @@ returns s
 as
  return select nome from aluno
 
-4. 
+6. 
 //antes
 INSERT INTO test VALUES(20, 'Jack', 'Loves to hear violin in the sea.')
 

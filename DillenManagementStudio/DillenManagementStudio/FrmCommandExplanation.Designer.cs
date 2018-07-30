@@ -61,7 +61,7 @@
             this.rchtxtTryCode.Location = new System.Drawing.Point(24, 281);
             this.rchtxtTryCode.Name = "rchtxtTryCode";
             this.rchtxtTryCode.Size = new System.Drawing.Size(315, 234);
-            this.rchtxtTryCode.TabIndex = 2;
+            this.rchtxtTryCode.TabIndex = 0;
             this.rchtxtTryCode.Text = "";
             this.rchtxtTryCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmCommandExplanation_KeyDown);
             // 
@@ -71,7 +71,7 @@
             this.btnExecute.Location = new System.Drawing.Point(349, 379);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(78, 50);
-            this.btnExecute.TabIndex = 3;
+            this.btnExecute.TabIndex = 1;
             this.btnExecute.Text = "Execute >>";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
@@ -119,7 +119,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.grvSelectTry.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.grvSelectTry.Size = new System.Drawing.Size(361, 218);
-            this.grvSelectTry.TabIndex = 6;
+            this.grvSelectTry.TabIndex = 3;
             // 
             // lbExecutionResult
             // 
@@ -139,7 +139,7 @@
             this.btnHelp.Location = new System.Drawing.Point(344, 281);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(26, 26);
-            this.btnHelp.TabIndex = 32;
+            this.btnHelp.TabIndex = 2;
             this.btnHelp.Text = "?";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);

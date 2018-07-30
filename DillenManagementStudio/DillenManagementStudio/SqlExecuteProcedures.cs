@@ -8,13 +8,13 @@ using System.Windows.Forms;
 
 namespace DillenManagementStudio
 {
-    public static class SqlExecuteProcedures
+    public class SqlExecuteProcedures
     {
         public static string AllCodes(SqlRichTextBox sqlRchtxtbx, ref Queue<int> linesNoEvenQuotMarks)
         {
             RichTextBox rchtxtCode = sqlRchtxtbx.SQLRichTextBox;
             //or this.rchtxtCode
-            
+
             //put txtCode.Items in a String (with spaces between each line)
             string allCodes = "";
 
@@ -22,11 +22,13 @@ namespace DillenManagementStudio
             if (rchtxtCode.SelectionLength <= 0)
                 for (int i = 0; i < rchtxtCode.Lines.Length; i++)
                 {
+                    string currLine = rchtxtCode.Lines[i];
+
                     //if there're even
-                    if (rchtxtCode.Lines[i].CountAppearances('\'') % 2 != 0)
-                        linesNoEvenQuotMarks.Enqueue(i);
+                    if (SqlExecuteProcedures.RealCodeLine(ref currLine))
+                        allCodes += " " + currLine;
                     else
-                        allCodes += " " + rchtxtCode.Lines[i];
+                        linesNoEvenQuotMarks.Enqueue(i);
                 }
             else
             //there's something selected
@@ -62,14 +64,56 @@ namespace DillenManagementStudio
                         break;
 
                     //if there're even
-                    if (line.CountAppearances('\'') % 2 != 0)
-                        linesNoEvenQuotMarks.Enqueue(i);
-                    else
+                    if (SqlExecuteProcedures.RealCodeLine(ref line))
                         allCodes += " " + line;
+                    else
+                        linesNoEvenQuotMarks.Enqueue(i);
                 }
             }
 
             return allCodes;
+        }
+        //RealCode: returns line until commented part ("--" not between quotation marks)
+        protected static bool RealCodeLine(ref string realCodeLine)
+        {
+            int startIndex = 0;
+            int countQuotMarks = 0;
+            int indexCommented = realCodeLine.Length;
+            bool putRealCodeLine = false;
+
+            while (true)
+            {
+                if (countQuotMarks % 2 == 0)
+                {
+                    indexCommented = realCodeLine.IndexOf("--", startIndex);
+                    if (indexCommented < 0)
+                        indexCommented = realCodeLine.Length;
+                }
+                else
+                    indexCommented = realCodeLine.Length;
+
+                int currIndex = realCodeLine.IndexOf("'", startIndex);
+
+                if (currIndex < 0)
+                    break;
+                
+                if (indexCommented < currIndex)
+                {
+                    realCodeLine = realCodeLine.Substring(0, indexCommented);
+                    putRealCodeLine = true;
+                    break;
+                }
+
+                startIndex = currIndex + 1;
+                countQuotMarks++;
+            }
+
+            bool hasEvenQuotMarks = countQuotMarks%2==0;
+
+            if(hasEvenQuotMarks && !putRealCodeLine)
+                realCodeLine = realCodeLine.Substring(0, indexCommented);
+
+            return hasEvenQuotMarks;
         }
 
         public static string MessageFromNoEvenQuotMarks(Queue<int> linesNoEvenQuotMarks)

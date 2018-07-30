@@ -88,4 +88,59 @@ namespace DillenManagementStudio
             }
         }
     }
+
+    public class UndoOrRedoInfo
+    {
+        protected string text = "";
+        protected int selectionStart = 0;
+        protected int selectionLength = 0;
+
+        public UndoOrRedoInfo(string text, int selectionStart, int selectionLength)
+        {
+            this.text = text;
+            this.selectionStart = selectionStart;
+            this.selectionLength = selectionLength;
+        }
+
+        public string Text
+        {
+            get
+            {
+                return this.text;
+            }
+
+            set
+            {
+                this.text = value;
+            }
+        }
+
+        public int SelectionStart
+        {
+            get
+            {
+                return this.selectionStart;
+            }
+
+            set
+            {
+                this.selectionStart = value;
+            }
+        }
+
+        public int SelectionLength
+        {
+            get
+            {
+                return this.selectionLength;
+            }
+
+            set
+            {
+                this.selectionLength = value;
+            }
+        }
+        
+    }
+    
 }

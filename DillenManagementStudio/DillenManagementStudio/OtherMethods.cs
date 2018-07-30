@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace DillenManagementStudio
 {
-    class Computer
+    public class Computer
     {
         public static string MacAdress
         {
@@ -81,4 +81,27 @@ namespace DillenManagementStudio
 
     }
 
+    public static class PreviewKeyDownEventArgsExtensions
+    {
+        public static bool IsKeyChangeText(this PreviewKeyDownEventArgs e)
+        {
+            return e.KeyCode == Keys.D1 || e.KeyCode == Keys.D2 || e.KeyCode == Keys.D3 || e.KeyCode == Keys.D4
+                || e.KeyCode == Keys.D5 || e.KeyCode == Keys.D6 || e.KeyCode == Keys.D7 || e.KeyCode == Keys.D8
+                || e.KeyCode == Keys.D9 || e.KeyCode == Keys.D0 || e.KeyCode == Keys.Q || e.KeyCode == Keys.W
+                || e.KeyCode == Keys.E || e.KeyCode == Keys.R || e.KeyCode == Keys.T || e.KeyCode == Keys.Y
+                || e.KeyCode == Keys.U || e.KeyCode == Keys.I || e.KeyCode == Keys.O || e.KeyCode == Keys.P
+                || e.KeyCode == Keys.A || e.KeyCode == Keys.S || e.KeyCode == Keys.D || e.KeyCode == Keys.F
+                || e.KeyCode == Keys.G || e.KeyCode == Keys.H || e.KeyCode == Keys.J || e.KeyCode == Keys.K
+                || e.KeyCode == Keys.L || e.KeyCode == Keys.Z || e.KeyCode == Keys.X || e.KeyCode == Keys.C
+                || e.KeyCode == Keys.V || e.KeyCode == Keys.B || e.KeyCode == Keys.N || e.KeyCode == Keys.M
+                || e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space
+                || e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete
+                || e.KeyCode == Keys.Oemtilde || e.KeyCode == Keys.OemSemicolon || e.KeyCode == Keys.OemQuotes
+                || e.KeyCode == Keys.OemQuestion || e.KeyCode == Keys.Oemplus || e.KeyCode == Keys.OemPipe
+                || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.OemOpenBrackets || e.KeyCode == Keys.OemMinus
+                || e.KeyCode == Keys.Oemcomma || e.KeyCode == Keys.OemCloseBrackets || e.KeyCode == Keys.OemBackslash
+                || e.KeyCode == Keys.Oem1 || e.KeyCode == Keys.Oem2 || e.KeyCode == Keys.Oem3 || e.KeyCode == Keys.Oem4
+                || e.KeyCode == Keys.Oem5 || e.KeyCode == Keys.Oem6 || e.KeyCode == Keys.Oem7 || e.KeyCode == Keys.Oem8;
+        }
+    }
 }

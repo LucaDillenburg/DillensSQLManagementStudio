@@ -124,6 +124,24 @@ namespace DillenManagementStudio
             }
         }
 
+        public List<string> AllSqlCommands
+        {
+            get
+            {
+                string code = "select codCmd, name from SqlCommand order by codCmd";
+                SqlCommand cmd = new SqlCommand(code, this.con);
+
+                SqlDataAdapter adapt = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adapt.Fill(ds);
+
+                List<string> sqlCommands = new List<string>();
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    sqlCommands.Add(ds.Tables[0].Rows[i].ItemArray[1].ToString());
+                return sqlCommands;
+            }
+        }
+
 
         ///inicialize methods
         public void InicializeUser()

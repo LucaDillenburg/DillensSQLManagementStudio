@@ -47,7 +47,7 @@ namespace DillenManagementStudio
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,11 +73,9 @@ namespace DillenManagementStudio
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.lbLoading = new System.Windows.Forms.Label();
-            this.picLoading = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.rchtxtCode = new System.Windows.Forms.RichTextBox();
             this.pnlLoading = new System.Windows.Forms.Panel();
+            this.picLoading = new System.Windows.Forms.PictureBox();
             this.rchtxtAux = new System.Windows.Forms.RichTextBox();
             this.tmrCheckVPNConn = new System.Windows.Forms.Timer(this.components);
             this.lbTableName = new System.Windows.Forms.Label();
@@ -93,13 +91,21 @@ namespace DillenManagementStudio
             this.txtReplace = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+<<<<<<< HEAD
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopOrBeginTryingToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tryToConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).BeginInit();
             this.menuStrip.SuspendLayout();
+            this.pnlLoading.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
+            this.pnlSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.pnlLoading.SuspendLayout();
-            this.pnlSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // grvSelect
@@ -144,7 +150,7 @@ namespace DillenManagementStudio
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.saveToolStripMenuItem1,
+            this.saveToolStripMenuItem2,
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
             this.toolStripMenuItem4,
@@ -158,7 +164,8 @@ namespace DillenManagementStudio
             this.largerRchtxtFontToolStripMenuItem,
             this.toolStripMenuItem6,
             this.executeToolStripMenuItem,
-            this.executeAsToolStripMenuItem});
+            this.executeAsToolStripMenuItem,
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem});
             this.menuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.ShowItemToolTips = true;
@@ -224,12 +231,12 @@ namespace DillenManagementStudio
             this.toolStripMenuItem2.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             // 
-            // saveToolStripMenuItem1
+            // saveToolStripMenuItem2
             // 
-            this.saveToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.Control;
-            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            resources.ApplyResources(this.saveToolStripMenuItem1, "saveToolStripMenuItem1");
-            this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem2.ForeColor = System.Drawing.SystemColors.Control;
+            this.saveToolStripMenuItem2.Name = "saveToolStripMenuItem2";
+            resources.ApplyResources(this.saveToolStripMenuItem2, "saveToolStripMenuItem2");
+            this.saveToolStripMenuItem2.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // undoToolStripMenuItem
             // 
@@ -264,6 +271,7 @@ namespace DillenManagementStudio
             this.allCommandsSintaxToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.allCommandsSintaxToolStripMenuItem.Name = "allCommandsSintaxToolStripMenuItem";
             resources.ApplyResources(this.allCommandsSintaxToolStripMenuItem, "allCommandsSintaxToolStripMenuItem");
+            this.allCommandsSintaxToolStripMenuItem.Click += new System.EventHandler(this.allCommandsSintaxToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -398,27 +406,6 @@ namespace DillenManagementStudio
             this.lbLoading.BackColor = System.Drawing.Color.Transparent;
             this.lbLoading.Name = "lbLoading";
             // 
-            // picLoading
-            // 
-            this.picLoading.BackColor = System.Drawing.Color.Transparent;
-            this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
-            resources.ApplyResources(this.picLoading, "picLoading");
-            this.picLoading.Name = "picLoading";
-            this.picLoading.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
-            // 
             // rchtxtCode
             // 
             this.rchtxtCode.EnableAutoDragDrop = true;
@@ -433,6 +420,14 @@ namespace DillenManagementStudio
             this.pnlLoading.Controls.Add(this.lbLoading);
             resources.ApplyResources(this.pnlLoading, "pnlLoading");
             this.pnlLoading.Name = "pnlLoading";
+            // 
+            // picLoading
+            // 
+            this.picLoading.BackColor = System.Drawing.Color.Transparent;
+            this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
+            resources.ApplyResources(this.picLoading, "picLoading");
+            this.picLoading.Name = "picLoading";
+            this.picLoading.TabStop = false;
             // 
             // rchtxtAux
             // 
@@ -545,6 +540,44 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
+<<<<<<< HEAD
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
+            // stopTryingToConnectWithUnicampVPNToolStripMenuItem
+            // 
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopOrBeginTryingToConnectToolStripMenuItem,
+            this.tryToConnectToolStripMenuItem});
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.stopTryingToConnectWithUnicampVPNToolStripMenuItem.Name = "stopTryingToConnectWithUnicampVPNToolStripMenuItem";
+            resources.ApplyResources(this.stopTryingToConnectWithUnicampVPNToolStripMenuItem, "stopTryingToConnectWithUnicampVPNToolStripMenuItem");
+            // 
+            // stopOrBeginTryingToConnectToolStripMenuItem
+            // 
+            this.stopOrBeginTryingToConnectToolStripMenuItem.Name = "stopOrBeginTryingToConnectToolStripMenuItem";
+            resources.ApplyResources(this.stopOrBeginTryingToConnectToolStripMenuItem, "stopOrBeginTryingToConnectToolStripMenuItem");
+            this.stopOrBeginTryingToConnectToolStripMenuItem.Click += new System.EventHandler(this.stopOrBeginTryingToConnectToolStripMenuItem_Click);
+            // 
+            // tryToConnectToolStripMenuItem
+            // 
+            this.tryToConnectToolStripMenuItem.Name = "tryToConnectToolStripMenuItem";
+            resources.ApplyResources(this.tryToConnectToolStripMenuItem, "tryToConnectToolStripMenuItem");
+            this.tryToConnectToolStripMenuItem.Click += new System.EventHandler(this.tryToConnectToolStripMenuItem_Click);
+            // 
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             // FrmDillenSQLManagementStudio
             // 
             resources.ApplyResources(this, "$this");
@@ -574,13 +607,13 @@ namespace DillenManagementStudio
             ((System.ComponentModel.ISupportInitialize)(this.grvSelect)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlLoading.ResumeLayout(false);
             this.pnlLoading.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,7 +660,7 @@ namespace DillenManagementStudio
         private System.Windows.Forms.PictureBox picLoading;
         private System.Windows.Forms.Label lbLoading;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private System.Windows.Forms.RichTextBox rchtxtCode;
@@ -649,6 +682,9 @@ namespace DillenManagementStudio
         private Button btnSeeReplace;
         private Button btnNotSeeReplace;
         private Button btnCloseFindReplace;
+        private ToolStripMenuItem stopTryingToConnectWithUnicampVPNToolStripMenuItem;
+        private ToolStripMenuItem stopOrBeginTryingToConnectToolStripMenuItem;
+        private ToolStripMenuItem tryToConnectToolStripMenuItem;
     }
 }
 

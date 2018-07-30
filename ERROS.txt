@@ -1,6 +1,11 @@
+tentar nao deixar que selectionlength apareca (talvez ReadOnly)
+
    ___ TEXT COLOR ___
-1.
+1. 
 //antes
+<<<<<<< HEAD
+beginstr
+=======
 begin
 
 //depois
@@ -17,15 +22,24 @@ str
 3.
 //antes
 select 'asdf ljds as'(
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
 
 //depois
-asdf ljds as'(
+begin
+str
 
 4.
 //antes
-'joaozinho'[espaco]
+select 'asdf ljds as'(
 
 //depois
+<<<<<<< HEAD
+asdf ljds as'(
+
+3.
+//antes
+'joaozinho'[espaco]
+=======
 'joaozinho'
 
 5.
@@ -44,9 +58,7 @@ as
 6. 
 //antes
 INSERT INTO test VALUES(20, 'Jack', 'Loves to hear violin in the sea.')
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
 
 //depois
-INSERT INTO test(id, name) VALUES(20, 'Jack')
-
-
-se esta selecionado mais de um caracter e aperta qualquer tecla que nao seja [Delete] e [Backspace], ele da pau
+'joaozinho'

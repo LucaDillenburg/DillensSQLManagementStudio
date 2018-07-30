@@ -35,6 +35,7 @@ namespace DillenManagementStudio
 
         //user
         protected User user;
+        protected const string MSG_UNICAMP_VPN_DISCONNECTED = "You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!";
 
         //FrmChangeDatabase (using VPN Connection)
         protected FrmChangeDatabase frmChangeDatabase;
@@ -237,13 +238,12 @@ namespace DillenManagementStudio
                     //if user was disconnected
                     if (!this.user.IsConnected())
                     {
-                        this.user = null;
-                        this.allCommandsSintaxToolStripMenuItem.Enabled = false;
+                        this.User = null;
 
                         if (this.frmChangeDatabase != null)
                             this.frmChangeDatabase.User = null;
 
-                        this.ShowMessageRightPlace("You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!");
+                        this.ShowMessageRightPlace(MSG_UNICAMP_VPN_DISCONNECTED);
                     }
                 }
                 else
@@ -257,7 +257,7 @@ namespace DillenManagementStudio
 
             try
             {
-                this.user = new User();
+                this.User = new User();
             }
             catch (Exception err)
             {
@@ -543,7 +543,6 @@ namespace DillenManagementStudio
                             }catch(Exception e)
                             {
                                 this.User = null;
-                                this.allCommandsSintaxToolStripMenuItem.Enabled = false;
                                 MessageBox.Show(e.Message);
                             }                            
                     }
@@ -583,6 +582,8 @@ namespace DillenManagementStudio
             set
             {
                 this.user = value;
+                
+                this.allCommandsSintaxToolStripMenuItem.Enabled = (value != null);
             }
         }
 
@@ -679,6 +680,21 @@ namespace DillenManagementStudio
         }
 
 
+        //all command sintax
+        protected void allCommandsSintaxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new FrmAllCommands(this.user, this.mySqlCon, this).Show();
+            }
+            catch(Exception err)
+            {
+                this.User = null;
+                MessageBox.Show(MSG_UNICAMP_VPN_DISCONNECTED);
+            }
+        }
+
+
         //allow notification
         protected void allowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -717,7 +733,6 @@ namespace DillenManagementStudio
             this.pnlSearch.Visible = !this.sqlRchtxtbx.ReplaceAll(this.txtFind.Text, this.txtReplace.Text, stringComparison);
         }
         
-
         //visual or resource
         protected void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -767,7 +782,7 @@ namespace DillenManagementStudio
             }
         }
 
-        private void btnCloseFindReplace_Click(object sender, EventArgs e)
+        protected void btnCloseFindReplace_Click(object sender, EventArgs e)
         {
             this.sqlRchtxtbx.ConsiderNoSelectionBeforeWithSelection();
             this.sqlRchtxtbx.ChangeBackColorFromLastSearch();
@@ -809,6 +824,25 @@ namespace DillenManagementStudio
         protected void txtFind_TextChanged(object sender, EventArgs e)
         {
             this.sqlRchtxtbx.ConsiderNoSelectionBeforeWithSelection();
+        }
+
+
+        //Unicamp VPN configuration
+        protected void tryToConnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TryConnWithMyDtbs(false);
+            if (this.user == null)
+                MessageBox.Show("Couldn't connected with Unicamp VPN!");
+        }
+
+        protected void stopOrBeginTryingToConnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.tmrCheckVPNConn.Enabled = !this.tmrCheckVPNConn.Enabled;
+
+            if (this.tmrCheckVPNConn.Enabled)
+                this.stopOrBeginTryingToConnectToolStripMenuItem.Text = "Stop trying to connect";
+            else
+                this.stopOrBeginTryingToConnectToolStripMenuItem.Text = "Start trying to connect";
         }
 
 

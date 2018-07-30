@@ -55,11 +55,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="FrmAllCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAllCommands.Designer.cs">
+      <DependentUpon>FrmAllCommands.cs</DependentUpon>
+    </Compile>
     <Compile Include="MulticolorLabel.cs" />
     <Compile Include="SqlExecuteProcedures.cs" />
     <Compile Include="SqlRichTextBox.cs" />
     <Compile Include="Encryption.cs" />
-    <Compile Include="Error.cs" />
+    <Compile Include="AuxClasses.cs" />
     <Compile Include="FrmDillenSQLManagementStudio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <Compile Include="StringAndCharExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmAllCommands.resx">
+      <DependentUpon>FrmAllCommands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmDillenSQLManagementStudio.en-US.resx">
       <DependentUpon>FrmDillenSQLManagementStudio.cs</DependentUpon>
     </EmbeddedResource>

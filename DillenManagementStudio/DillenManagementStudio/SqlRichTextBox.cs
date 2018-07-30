@@ -24,7 +24,6 @@ namespace DillenManagementStudio
         protected int iSingQuot;
         //richTextBox change
         protected bool notChangeTxtbxCode = false;
-        protected int lastQtdSingQuot = 0;
         protected bool erased = false;
         //richTextBox color
         protected string lastText;
@@ -38,6 +37,14 @@ namespace DillenManagementStudio
         protected const int MIN_RCHTXT_ZOOM = 1;
         protected const int MAX_RCHTXT_ZOOM = 5;
         protected float rchtxtZoomFactor; //inicialized in SqlRichTextBoxProc()
+
+        //UNDO and REDO
+        protected Stack<UndoOrRedoInfo> ctrlZStack = new Stack<UndoOrRedoInfo>();
+        protected Stack<UndoOrRedoInfo> ctrlYStack = new Stack<UndoOrRedoInfo>();
+        protected bool undoingOrRedoing = false;
+        protected bool notPutInUndoOrRedoStack = false;
+        protected bool isSpace = false;
+        protected bool isDelete = false;
 
         //if has typed anything
         protected bool hasTyped = false;
@@ -57,7 +64,7 @@ namespace DillenManagementStudio
             this.specialChars = mySqlCon.SpecialChars;
             this.reservedWords = mySqlCon.ReservedWords;
             this.iSingQuot = mySqlCon.IndexSingQuot;
-    
+
             this.rchtxtZoomFactor = this.rchtxtCode.ZoomFactor;
             this.lastText = this.rchtxtCode.Text;
             this.lastLines = this.rchtxtCode.Lines;
@@ -72,7 +79,12 @@ namespace DillenManagementStudio
             {
                 this.rchtxtCode.Click += new System.EventHandler(this.rchtxtCode_Click);
                 this.rchtxtCode.Enter += new System.EventHandler(this.rchtxtCode_Enter);
-            }            
+            }
+
+            //more attributes configuration
+            this.rchtxtCode.AcceptsTab = false;
+
+            this.PutInCtrlZ();
 
             //ADD THIS.SQLRICHTEXTBOX.RICHTEXTBOX NO FORM
             this.frmContainsRchtxtCode.Controls.Add(this.rchtxtCode);
@@ -114,8 +126,54 @@ namespace DillenManagementStudio
 
         public void rchtxtCode_TextChanged()
         {
+            this.rchtxtCode.ClearUndo();
+
+            if (this.undoingOrRedoing)
+            {
+                //to control the addition of text
+                this.lastLines = this.rchtxtCode.Lines;
+                this.lastText = this.rchtxtCode.Text;
+                return;
+            }
+
+            int selectionStart = this.rchtxtCode.SelectionStart;
+            int selectionLength = this.rchtxtCode.SelectionLength;
+
             this.hasTyped = true;
 
+<<<<<<< HEAD
+            if (!this.notPutInUndoOrRedoStack && this.lastText != this.rchtxtCode.Text && this.ctrlYStack.Count > 0)
+                //if user typed something Ctrl+Y will be null
+                this.ClearCtrlY();
+
+            if (!this.notPutInUndoOrRedoStack)
+            {
+                int differenceLength = this.rchtxtCode.Text.Length - this.lastText.Length;
+                if (differenceLength > 1 || this.isSelected || this.isSpace)
+                    //if something was pasted
+                    this.PutInCtrlZ();
+                else
+                    try
+                    {
+                        if (this.isDelete && this.lastText[this.rchtxtCode.SelectionStart] == ' ')
+                            this.PutInCtrlZ();
+                    }
+                    catch (Exception err)
+                    { }
+            }
+            else
+                this.notPutInUndoOrRedoStack = false;
+
+            //help to put END in BEGIN
+            bool cursorPosChanged = this.rchtxtCode.SelectionStart != this.lastCursorStart + 1;
+            if (!this.notChangeTxtbxCode && (!this.isEnter || this.isSelected || cursorPosChanged))
+            {
+                if (this.erased)
+                {
+                    int lengthDeleted = this.lastCursorStart - this.rchtxtCode.SelectionStart;
+                    if (this.lastText.Length - this.rchtxtCode.Text.Length == lengthDeleted &&
+                        this.lastWord.Length - lengthDeleted > 0 && this.lastWord.Length > 0)
+=======
             //help to put END in BEGIN
             bool cursorPosChanged = this.rchtxtCode.SelectionStart != this.lastCursorStart + 1;
             if(!this.notChangeTxtbxCode && (!this.isEnter || this.isSelected || cursorPosChanged))
@@ -125,6 +183,7 @@ namespace DillenManagementStudio
                     int lengthDeleted = this.lastCursorStart - this.rchtxtCode.SelectionStart;
                     if (this.lastText.Length - this.rchtxtCode.Text.Length == lengthDeleted && 
                         this.lastWord.Length - lengthDeleted > 0)
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                         this.lastWord = this.lastWord.Substring(0, this.lastWord.Length - lengthDeleted);
                     else
                         this.lastWord = "";
@@ -135,15 +194,31 @@ namespace DillenManagementStudio
                     if (cursorPosChanged)
                         this.lastWord = "";
 
+<<<<<<< HEAD
+                    //[if something was selected]       //[if something was pasted]
+=======
                                //[if something was selected]       //[if something was pasted]
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                     bool eraseWord = this.isSelected || this.rchtxtCode.Text.Length - this.lastText.Length > 1;
                     char c = '*';
                     if (!eraseWord)
                     {
+<<<<<<< HEAD
+                        try
+                        {
+                            c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
+
+                            //if SPACE, but lastWord.Equals("begin", StringComparison.InvariantCultureIgnoreCase), eraseWord is false
+                            eraseWord = c == ' ' && !this.lastWord.TrimEnd().Equals("begin", StringComparison.InvariantCultureIgnoreCase);
+                        }
+                        catch (Exception e)
+                        { }
+=======
                         c = this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - 1];
 
                         //if SPACE, but lastWord.Equals("begin", StringComparison.InvariantCultureIgnoreCase), eraseWord is false
                         eraseWord = c == ' ' && !this.lastWord.TrimEnd().Equals("begin", StringComparison.InvariantCultureIgnoreCase);
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                     }
 
                     if (eraseWord)
@@ -160,7 +235,6 @@ namespace DillenManagementStudio
                 //to control the addition of text
                 this.lastLines = this.rchtxtCode.Lines;
                 this.lastText = this.rchtxtCode.Text;
-                this.lastQtdSingQuot = 0;
                 return;
             }
 
@@ -176,11 +250,20 @@ namespace DillenManagementStudio
                     //  end
 
                     bool capslock = this.lastWord[0] == 'B';
+<<<<<<< HEAD
+
+=======
                     
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                     int notUsing = 0;
                     int currBeginLineIndex = this.IndexOfLine(this.rchtxtCode.SelectionStart, ref notUsing) - 1;
                     string beginLine = this.rchtxtCode.Lines[currBeginLineIndex];
 
+<<<<<<< HEAD
+                    this.notPutInUndoOrRedoStack = true;
+
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                     int auxIndex = beginLine.Length - this.lastWord.Length - 1;
                     if (auxIndex < 0 || beginLine[auxIndex] == ' ')
                     {
@@ -192,6 +275,17 @@ namespace DillenManagementStudio
 
                         //ajust spaces before between BEGIN/END
                         this.rchtxtCode.SelectedText = spacesBeforeBegin + "   " + Environment.NewLine;
+<<<<<<< HEAD
+                        selectionStart += spacesBeforeBegin.Length + 3;
+
+                        //write END
+                        this.notPutInUndoOrRedoStack = true;
+                        this.rchtxtCode.SelectedText = spacesBeforeBegin + (capslock ? "END" : "end") +
+                            (skipLine ? "\n" : "");
+
+                        //change cursor position to between BEGIN/END
+                        this.rchtxtCode.SelectionStart -= spacesBeforeBegin.Length + 4 + (skipLine ? 1 : 0);
+=======
 
                         //write END
                         this.rchtxtCode.SelectedText = spacesBeforeBegin + (capslock ? "END" : "end") + 
@@ -199,10 +293,16 @@ namespace DillenManagementStudio
 
                         //change cursor position to between BEGIN/END
                         this.rchtxtCode.SelectionStart -= spacesBeforeBegin.Length + 4 + (skipLine?1:0);
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                         this.rchtxtCode.SelectionLength = 0;
                     }
 
                     this.lastWord = "";
+<<<<<<< HEAD
+
+                    this.PutInCtrlZ();
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                 }
 
 
@@ -242,6 +342,7 @@ namespace DillenManagementStudio
                 this.lastLines = this.rchtxtCode.Lines;
                 this.lastText = this.rchtxtCode.Text;
 
+                this.rchtxtCode.Select(selectionStart, selectionLength);
                 return;
             }
 
@@ -250,50 +351,11 @@ namespace DillenManagementStudio
 
             int countApp = -1;
             bool erasedSingQuot = false;
-            if (qtdNewChars < -1) //erased more than one char
+            /*if (this.isSelect) //erased more than one char
             {
-                //see if user deleted one or more single quotation marks
-                /*int indexStartDeleting = this.rchtxtCode.Text.IndexDiferent(this.lastText); //index deleted
-
-                int qtdCharsOtherStartL = -1;
-                int lineStartedDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting, ref qtdCharsOtherStartL);
-                int qtdCharsOtherEndhL = -1;
-                int lineFinishDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting - qtdNewChars, ref qtdCharsOtherEndhL);*/
-
-                int indexStartDeleting = this.rchtxtCode.SelectionStart;
-                int qtdCharsOtherStartL = qtdCharsOtherLines;
-                int lineStartedDeleting = indexLine;
-
-                int qtdCharsOtherEndL = -1;
-                int lineFinishDeleting = this.IndexOfLine(this.lastLines, indexStartDeleting - qtdNewChars, ref qtdCharsOtherEndL);
-
-                if (lineStartedDeleting == lineFinishDeleting)
-                {
-                    int qtdSingQuotInDeleted = this.lastText.CountAppearances('\'', indexStartDeleting, indexStartDeleting - qtdNewChars);
-                    erasedSingQuot = (qtdSingQuotInDeleted % 2 != 0) && (indexStartDeleting - qtdNewChars < this.lastLines[lineStartedDeleting].Length);
-                    //if the deleted chars had even number of single quotation marks, there's nothing to change
-                }
-                else
-                {
-                    int countL1 = this.lastLines[lineStartedDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdCharsOtherStartL);
-                    bool evenL1 = countL1 % 2 == 0;
-                    int countL2 = this.lastLines[lineFinishDeleting].CountAppearances('\'', 0, indexStartDeleting - qtdNewChars - qtdCharsOtherEndL - 1);
-                    bool evenL2 = countL2 % 2 == 0;
-
-                    if (evenL1 != evenL2)
-                    {
-                        erasedSingQuot = true;
-                        countApp = countL1;
-                    }
-                }
-
-                if (!erasedSingQuot)
-                {
-                    this.lastLines = this.rchtxtCode.Lines;
-                    this.lastText = this.rchtxtCode.Text;
-                    return;
-                }
-            }
+                ARRUMAR A PALAVRA: JUNCAO DA PALAVRA QUE FICOU DO INICIO DA SELECAO COM O 
+                FINAL DA PALAVRA QUE ACABOU A SELECAO????????
+            }*/
 
             if ((qtdNewChars == -1 && this.lastText[this.rchtxtCode.SelectionStart] == '\'') //if just a single quot was erased
                 || erasedSingQuot) //if one or more single quot were erased in just one line and need change
@@ -305,9 +367,6 @@ namespace DillenManagementStudio
                     countApp = line.CountAppearances('\'', 0, indexSingQuot);
 
                 this.PutWordRealColorAlsoString(line, indexSingQuot, countApp, qtdCharsOtherLines);
-
-                this.lastLines = this.rchtxtCode.Lines;
-                this.lastText = this.rchtxtCode.Text;
             }
             else
             {
@@ -316,6 +375,7 @@ namespace DillenManagementStudio
                 {
                     this.lastText = this.rchtxtCode.Text;
                     this.lastLines = this.rchtxtCode.Lines;
+                    this.rchtxtCode.Select(selectionStart, selectionLength);
                     return;
                 }
 
@@ -377,27 +437,103 @@ namespace DillenManagementStudio
                         }
                     }
                 }
-
-                this.lastLines = this.rchtxtCode.Lines;
-                this.lastText = this.rchtxtCode.Text;
             }
+
+            this.lastLines = this.rchtxtCode.Lines;
+            this.lastText = this.rchtxtCode.Text;
+            this.rchtxtCode.Select(selectionStart, selectionLength);
         }
-        
+
         public void rchtxtCode_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            this.rchtxtCode.ClearUndo();
+
             this.erased = false;
             this.notChangeTxtbxCode = false;
+<<<<<<< HEAD
+            //undo and redo
+            this.isSpace = false;
+            this.isDelete = false;
+=======
 
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             //to BEGIN and END
             this.isEnter = false;
             this.isSelected = this.rchtxtCode.SelectionLength > 0;
 
+<<<<<<< HEAD
+            if (this.isSelected && e.IsKeyChangeText() && e.KeyCode != Keys.Back && e.KeyCode != Keys.Delete)
+            {
+                //Explanation:
+                //if something is selected:
+                //Stage 1. Erase selection
+                //Stage 2. color the rest of the text
+
+                //Realization
+                //Stage 1: delete selected text
+                this.notPutInUndoOrRedoStack = true;
+                this.rchtxtCode.SelectedText = "";
+                this.notPutInUndoOrRedoStack = false;
+                //Stage 2: following
+            }
+
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             //put spaces when the user presses tab
             if (e.KeyCode == Keys.Tab)
             {
                 int cursorStart = this.rchtxtCode.SelectionStart;
                 int cursorLength = this.rchtxtCode.SelectionLength;
                 bool shift = e.Shift;
+<<<<<<< HEAD
+
+                if (this.rchtxtCode.SelectionLength > 0)
+                {
+                    int qtdCharsOtherLines = 0;
+                    int firstLine = this.IndexOfLine(cursorStart, ref qtdCharsOtherLines);
+                    int notUsing = 0;
+                    int lastLine = this.IndexOfLine(cursorStart + cursorLength,
+                        ref notUsing);
+
+                    //if something is selected
+                    //if shift isn't pressed
+                    //put 3 spaces in the beginning of each selected lines
+                    //else
+                    //remove maximum 3 of possible spaces in from of the selected lines
+                    int allLength = 0;
+                    for (int i = firstLine; i <= lastLine; i++)
+                    {
+                        if (!String.IsNullOrEmpty(this.rchtxtCode.Lines[i]))
+                        {
+                            if (shift)
+                            {
+                                this.rchtxtCode.SelectionStart = qtdCharsOtherLines;
+                                int length = 0;
+                                while (length < 3)
+                                {
+                                    if (this.rchtxtCode.Text[qtdCharsOtherLines + length] == ' ')
+                                        length++;
+                                    else
+                                        break;
+                                }
+
+                                if (length > 0)
+                                    this.notPutInUndoOrRedoStack = true;
+                                this.rchtxtCode.SelectionLength = length;
+                                this.rchtxtCode.SelectedText = "";
+                                allLength -= length;
+                            }
+                            else
+                            {
+                                this.notPutInUndoOrRedoStack = true;
+                                this.rchtxtCode.SelectionStart = qtdCharsOtherLines;
+                                this.rchtxtCode.SelectionLength = 0;
+                                this.rchtxtCode.SelectedText = "   ";
+                                allLength += 3;
+                            }
+                        }
+
+=======
 
                 if (this.rchtxtCode.SelectionLength > 0)
                 {
@@ -442,10 +578,31 @@ namespace DillenManagementStudio
                             }
                         }
                         
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                         qtdCharsOtherLines += this.rchtxtCode.Lines[i].Length + 1;
                     }
 
                     cursorLength += allLength;
+<<<<<<< HEAD
+
+                    if (allLength != 0)
+                        this.PutInCtrlZ();
+                }
+                else
+                {
+                    if (shift)
+                    {
+                        //if shift is pressed, erase maximum 3 spaces before cursor start
+                        int length = 0;
+                        while (length < 3)
+                        {
+                            if (this.rchtxtCode.Text[this.rchtxtCode.SelectionStart - length - 1] == ' ')
+                                length++;
+                            else
+                                break;
+                        }
+
+=======
                 } else
                 {
                     if(shift)
@@ -460,6 +617,7 @@ namespace DillenManagementStudio
                                 break;
                         }
 
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                         cursorStart -= length;
                         this.rchtxtCode.SelectionStart = cursorStart;
                         this.rchtxtCode.SelectionLength = length;
@@ -469,10 +627,19 @@ namespace DillenManagementStudio
                     {
                         //if shift is not pressed
                         //put 3 spaces in from of each line
+<<<<<<< HEAD
+                        this.notPutInUndoOrRedoStack = true;
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                         this.rchtxtCode.SelectionLength = 0;
                         this.rchtxtCode.SelectedText = "   ";
 
                         cursorStart += 3;
+<<<<<<< HEAD
+
+                        this.PutInCtrlZ();
+=======
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
                     }
                 }
 
@@ -481,20 +648,45 @@ namespace DillenManagementStudio
 
                 //Focus comes back to RichTextBox
                 Force.Focus(this.rchtxtCode);
+<<<<<<< HEAD
+=======
 
                 //AcceptsTab ??
                 //show the key was already managed
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             }
+            else
+            if (e.KeyCode == Keys.Z && e.Control)
+                //undo
+                this.Undo();
+            else
+            if (e.KeyCode == Keys.Y && e.Control)
+                //redo
+                this.Redo();
             else
             if (e.KeyCode == Keys.Enter)
                 this.isEnter = true;
             else
+            if (e.KeyCode == Keys.Space)
+                this.isSpace = true;
+            else
+<<<<<<< HEAD
             if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
+            {
+                if (e.KeyCode == Keys.Back)
+                    this.isDelete = true;
+
                 this.erased = true;
+            }
             else
             if (e.KeyCode == Keys.Z && e.Control)
                 this.notChangeTxtbxCode = true;
             else
+=======
+            if (e.KeyCode == Keys.Z && e.Control)
+                this.notChangeTxtbxCode = true;
+            else
+>>>>>>> df08a32ac94cffa336fd12c37e805470cf89acd7
             if (e.KeyCode == Keys.Y && e.Control)
                 this.notChangeTxtbxCode = true;
         }
@@ -508,7 +700,7 @@ namespace DillenManagementStudio
 
             int cursorStart = this.rchtxtCode.SelectionStart;
             int cursorLength = this.rchtxtCode.SelectionLength;
-            
+
             this.ChangeBackColorFromLastSearch();
 
             //SEARCHES IN MAXIMIUM THE WHOLE TEXT ONCE
@@ -631,7 +823,7 @@ namespace DillenManagementStudio
 
                     startIndex = currIndex + lengthNew;
                 }
-                
+
                 if (qtdReplaced <= 0)
                     throw new Exception("The following specified text was not found:\n\r" + oldText);
 
@@ -700,7 +892,7 @@ namespace DillenManagementStudio
                 this.rchtxtZoomFactor--;
 
             this.rchtxtCode.ZoomFactor = this.rchtxtZoomFactor;
-            
+
             if (this.rchtxtZoomFactor <= MIN_RCHTXT_ZOOM)
                 return false;
             return true;
@@ -716,7 +908,7 @@ namespace DillenManagementStudio
                 this.rchtxtZoomFactor++;
 
             this.rchtxtCode.ZoomFactor = this.rchtxtZoomFactor;
-            
+
             if (this.rchtxtZoomFactor >= MAX_RCHTXT_ZOOM)
                 return false;
             return true;
@@ -729,7 +921,7 @@ namespace DillenManagementStudio
             //visual
             this.rchtxtCode.Visible = false;
             this.rchtxtCode.ReadOnly = true;
-            
+
             //Clear
             this.rchtxtCode.Text = "";
 
@@ -771,16 +963,73 @@ namespace DillenManagementStudio
             writer.Close();*/
         }
 
-        
+
         //UNDO and REDO
         public void Undo()
         {
-            this.rchtxtCode.Undo();
+            if (this.ctrlZStack.Count > 0)
+            {
+                //insert last text on
+                this.ctrlYStack.Push(new UndoOrRedoInfo(this.rchtxtCode.Text, this.rchtxtCode.SelectionStart,
+                    this.rchtxtCode.SelectionLength));
+
+                this.notPutInUndoOrRedoStack = true;
+                UndoOrRedoInfo info = this.ctrlZStack.Pop();
+                while(info.Text == this.rchtxtCode.Text)
+                    info = this.ctrlZStack.Pop();
+
+                this.PutUndoOrRedoInfoOnRchtxtCode(info);
+
+                //this.rchtxtCode.Undo();
+            }
         }
 
         public void Redo()
         {
-            this.rchtxtCode.Redo();
+            if (this.ctrlYStack.Count > 0)
+            {
+                //insert last text on
+                this.PutInCtrlZ();
+
+                this.notPutInUndoOrRedoStack = true;
+                UndoOrRedoInfo info = this.ctrlYStack.Pop();
+                this.PutUndoOrRedoInfoOnRchtxtCode(info);
+
+                //this.rchtxtCode.Redo();
+            }
+        }
+
+        protected void PutUndoOrRedoInfoOnRchtxtCode(UndoOrRedoInfo info)
+        {
+            this.rchtxtCode.Visible = false;
+
+            this.undoingOrRedoing = true;
+
+            float lastZoom = this.rchtxtCode.ZoomFactor;
+            this.rchtxtCode.ZoomFactor = 1;
+            this.rchtxtCode.Text = "";
+            this.undoingOrRedoing = false;
+            this.rchtxtCode.Text = info.Text;
+            this.rchtxtCode.ZoomFactor = lastZoom;
+
+            this.rchtxtCode.SelectionStart = info.SelectionStart;
+            this.rchtxtCode.SelectionLength = info.SelectionLength;
+
+            this.rchtxtCode.Visible = true;
+            this.rchtxtCode.Focus();
+        }
+
+        protected void PutInCtrlZ()
+        {
+            //insert last text on
+            this.ctrlZStack.Push(new UndoOrRedoInfo(this.rchtxtCode.Text, this.rchtxtCode.SelectionStart,
+                this.rchtxtCode.SelectionLength));
+        }
+
+        protected void ClearCtrlY()
+        {
+            //clear ctrl+Y
+            this.ctrlYStack = new Stack<UndoOrRedoInfo>();
         }
 
 
@@ -978,6 +1227,6 @@ namespace DillenManagementStudio
                 }
             }
         }
-        
+
     }
 }

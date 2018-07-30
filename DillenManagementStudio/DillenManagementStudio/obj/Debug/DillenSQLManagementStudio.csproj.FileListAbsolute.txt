@@ -13,3 +13,4 @@ C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementSt
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\en-US\DillenManagementStudio.resources.dll
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
 C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmAllCommands.resources

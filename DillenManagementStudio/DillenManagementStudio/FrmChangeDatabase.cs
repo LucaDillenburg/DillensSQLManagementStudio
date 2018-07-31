@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 //to work with the database
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace DillenManagementStudio
 {
@@ -555,6 +556,12 @@ namespace DillenManagementStudio
         {
             MessageBox.Show(msg);
         }
-        
+
+
+
+        private void btnTryConnUnicamp_Click(object sender, EventArgs e)
+        {
+            new Thread(new ThreadStart(this.frmMain.CheckVPNConnOutOfForm)).Start();
+        }
     }
 }

@@ -41,16 +41,16 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.rchtxtAux = new System.Windows.Forms.RichTextBox();
             this.picLoading = new System.Windows.Forms.PictureBox();
-            this.picTextBackground = new System.Windows.Forms.PictureBox();
+            this.pnlTitle = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTextBackground)).BeginInit();
+            this.pnlTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbTitle
             // 
             this.lbTitle.AutoSize = true;
-            this.lbTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            this.lbTitle.BackColor = System.Drawing.Color.Transparent;
             this.lbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTitle.ForeColor = System.Drawing.SystemColors.Control;
             this.lbTitle.Location = new System.Drawing.Point(209, 7);
@@ -169,20 +169,21 @@
             this.picLoading.TabIndex = 38;
             this.picLoading.TabStop = false;
             // 
-            // picTextBackground
+            // pnlTitle
             // 
-            this.picTextBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
-            this.picTextBackground.Location = new System.Drawing.Point(0, 0);
-            this.picTextBackground.Name = "picTextBackground";
-            this.picTextBackground.Size = new System.Drawing.Size(845, 49);
-            this.picTextBackground.TabIndex = 39;
-            this.picTextBackground.TabStop = false;
+            this.pnlTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            this.pnlTitle.Controls.Add(this.lbTitle);
+            this.pnlTitle.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitle.Name = "pnlTitle";
+            this.pnlTitle.Size = new System.Drawing.Size(845, 49);
+            this.pnlTitle.TabIndex = 40;
             // 
             // FrmCommandExplanation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 565);
+            this.Controls.Add(this.pnlTitle);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.lbExecutionResult);
@@ -190,9 +191,7 @@
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnExecute);
-            this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.rchtxtAux);
-            this.Controls.Add(this.picTextBackground);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(300, 425);
             this.Name = "FrmCommandExplanation";
@@ -204,7 +203,8 @@
             this.Resize += new System.EventHandler(this.FrmCommandExplanation_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTextBackground)).EndInit();
+            this.pnlTitle.ResumeLayout(false);
+            this.pnlTitle.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,6 +222,6 @@
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.RichTextBox rchtxtAux;
         private System.Windows.Forms.PictureBox picLoading;
-        private System.Windows.Forms.PictureBox picTextBackground;
+        private System.Windows.Forms.Panel pnlTitle;
     }
 }

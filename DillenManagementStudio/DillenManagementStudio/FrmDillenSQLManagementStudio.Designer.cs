@@ -156,8 +156,8 @@ namespace DillenManagementStudio
             this.executeToolStripMenuItem,
             this.executeAsToolStripMenuItem,
             this.stopTryingToConnectWithUnicampVPNToolStripMenuItem});
-            this.menuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip.Name = "menuStrip";
+            this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip.ShowItemToolTips = true;
             this.menuStrip.TabStop = true;
             // 
@@ -381,10 +381,10 @@ namespace DillenManagementStudio
             // 
             // btnReplaceAll
             // 
-            this.btnReplaceAll.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.btnReplaceAll.FlatAppearance.BorderSize = 2;
-            this.btnReplaceAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Yellow;
-            this.btnReplaceAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
+            this.btnReplaceAll.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnReplaceAll.FlatAppearance.BorderSize = 0;
+            this.btnReplaceAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnReplaceAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
             this.btnReplaceAll.Name = "btnReplaceAll";
             this.btnReplaceAll.UseVisualStyleBackColor = true;

@@ -261,5 +261,17 @@
   <ItemGroup>
     <None Include="Resources\cancel-music.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud-computing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud-computing %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\try again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

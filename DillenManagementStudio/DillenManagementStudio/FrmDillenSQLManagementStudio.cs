@@ -36,7 +36,7 @@ namespace DillenManagementStudio
 
         //user
         protected User user;
-        protected const string MSG_UNICAMP_VPN_DISCONNECTED = "You were disconnected to the Unicamp VPN! " +
+        protected const string MSG_UNICAMP_VPN_DISCONNECTED = "You were disconnected to the Unicamp's VPN! " +
             "If you want to learn more about commands or have your databases saved, connect it again!";
 
         //FrmChangeDatabase (using VPN Connection)
@@ -124,7 +124,7 @@ namespace DillenManagementStudio
             //Show Splash
             FrmSplash frmSplash = new FrmSplash();
             frmSplash.Show();
-            frmSplash.FormClosed += (s, args) => this.AuxSplashClosed();
+            frmSplash.FormClosed += (s, args) => this.AuxSplashClosed(frmSplash);
 
             this.TryConnWithMyDtbs(true);
             
@@ -141,8 +141,9 @@ namespace DillenManagementStudio
             frmSplash.CanClose(this.user != null);
         }
 
-        protected void AuxSplashClosed()
+        protected void AuxSplashClosed(FrmSplash frmSplash)
         {
+            frmSplash.Dispose();
             this.ShowInTaskbar = true;
             this.Opacity = 1;
             this.ShowChangeDatabaseForm(true);
@@ -262,6 +263,26 @@ namespace DillenManagementStudio
             new Thread(new ThreadStart(this.CheckVPNConn)).Start();
         }
 
+        public void CheckVPNConnOutOfForm()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                object lastUser = this.user;
+                bool lastEnabled = this.tmrCheckVPNConn.Enabled;
+                this.tmrCheckVPNConn.Enabled = false;
+                this.CheckVPNConn();
+
+                //if user wasn't told if could or couldn't connect
+                if (lastUser != null && this.user != null)
+                    this.ShowMessageRightPlace("You are still connected with Unicamp's VPN!");
+                else
+                if (lastUser == null && this.user == null)
+                    this.ShowMessageRightPlace("Couldn't connect with Unicamp's VPN!");
+
+                this.tmrCheckVPNConn.Enabled = lastEnabled;
+            });
+        }
+
         protected void CheckVPNConn()
         {
             this.Invoke((MethodInvoker)delegate {
@@ -296,10 +317,10 @@ namespace DillenManagementStudio
             {
                 /*if (firstTime)
                 {
-                    //MessageBox.Show("Be sure you are connected with Unicamp VPN! Connect and restart the program!");
+                    //MessageBox.Show("Be sure you are connected with Unicamp's VPN! Connect and restart the program!");
                     //this.Close();
                     //return;
-                    MessageBox.Show("You are not connected with Unicamp VPN... If you want to learn more about commands or have your databases saved, connect it!");
+                    MessageBox.Show("You are not connected with Unicamp's VPN... If you want to learn more about commands or have your databases saved, connect it!");
                 }*/
             }
 
@@ -314,7 +335,7 @@ namespace DillenManagementStudio
                         if (this.frmChangeDatabase != null)
                             this.frmChangeDatabase.User = this.user;
 
-                        this.ShowMessageRightPlace("Now you are connected with Unicamp VPN! You can learn more about commands or have your databases saved!");
+                        this.ShowMessageRightPlace("Now you are connected with Unicamp's VPN! You can learn more about commands or have your databases saved!");
                     }
                 }
             });
@@ -902,9 +923,14 @@ namespace DillenManagementStudio
         //Unicamp VPN configuration
         protected void tryToConnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.TryConnWithMyDtbs(false);
-            if (this.user == null)
-                MessageBox.Show("Couldn't connected with Unicamp VPN!");
+            if (this.user != null)
+                MessageBox.Show("You are already connected wih Unicamp's VPN...");
+            else
+            {
+                this.TryConnWithMyDtbs(false);
+                if (this.user == null)
+                    MessageBox.Show("Couldn't connected with Unicamp's VPN!");
+            }
         }
 
         protected void stopOrBeginTryingToConnectToolStripMenuItem_Click(object sender, EventArgs e)

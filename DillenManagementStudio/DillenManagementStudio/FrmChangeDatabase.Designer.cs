@@ -49,6 +49,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnTryConn = new System.Windows.Forms.Button();
             this.btnDisconnect = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnTryConnUnicamp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAddNewDatabase
@@ -232,7 +234,7 @@
             // btnTryConn
             // 
             this.btnTryConn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTryConn.Location = new System.Drawing.Point(360, 333);
+            this.btnTryConn.Location = new System.Drawing.Point(10, 336);
             this.btnTryConn.Name = "btnTryConn";
             this.btnTryConn.Size = new System.Drawing.Size(91, 22);
             this.btnTryConn.TabIndex = 10;
@@ -243,7 +245,7 @@
             // btnDisconnect
             // 
             this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.Location = new System.Drawing.Point(12, 333);
+            this.btnDisconnect.Location = new System.Drawing.Point(111, 336);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(91, 22);
             this.btnDisconnect.TabIndex = 11;
@@ -251,11 +253,35 @@
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(267, 342);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(163, 12);
+            this.label1.TabIndex = 41;
+            this.label1.Text = "Check connection with Unicamp VPN:";
+            // 
+            // btnTryConnUnicamp
+            // 
+            this.btnTryConnUnicamp.BackgroundImage = global::DillenManagementStudio.Properties.Resources.reload;
+            this.btnTryConnUnicamp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnTryConnUnicamp.Location = new System.Drawing.Point(428, 335);
+            this.btnTryConnUnicamp.Name = "btnTryConnUnicamp";
+            this.btnTryConnUnicamp.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnTryConnUnicamp.Size = new System.Drawing.Size(25, 25);
+            this.btnTryConnUnicamp.TabIndex = 42;
+            this.btnTryConnUnicamp.UseVisualStyleBackColor = true;
+            this.btnTryConnUnicamp.Click += new System.EventHandler(this.btnTryConnUnicamp_Click);
+            // 
             // FrmChangeDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 366);
+            this.Controls.Add(this.btnTryConnUnicamp);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.btnTryConn);
             this.Controls.Add(this.btnCancel);
@@ -312,5 +338,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnTryConn;
         private System.Windows.Forms.Button btnDisconnect;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnTryConnUnicamp;
     }
 }

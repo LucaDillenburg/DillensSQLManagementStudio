@@ -195,7 +195,7 @@ namespace DillenManagementStudio
         {
             //title
             this.CentralizeTitle();
-            this.picTextBackground.Width = this.Width;
+            this.pnlTitle.Width = this.Width;
 
             //explanation
             this.AjustMulticolorLabel();

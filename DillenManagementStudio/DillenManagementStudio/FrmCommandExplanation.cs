@@ -65,16 +65,14 @@ namespace DillenManagementStudio
 
             //INICIALIZE RICHTEXT BOX
             this.sqlRchtxtbx = new SqlRichTextBox(ref this.rchtxtTryCode, this, mySqlCon);
+
+            //Inicialize MulticolorLabel
+            this.multicolorLabel = new MulticolorLabel(new Point(0, 0), 0, 0, this, new Font(new FontFamily("Courier New"), 12.0F),
+                Color.Black, SystemColors.Control);
         }
 
         protected void FrmCommandExplanation_Shown(object sender, EventArgs e)
         {
-            int x = 8;
-            int y = 49;
-            this.multicolorLabel = new MulticolorLabel(new Point(x, y), this.Width - 2*x - FORM_MORE_WIDTH_PIXELS, this.rchtxtAux.Location.Y - y - x,
-                this, new Font(new FontFamily("Courier New"), 12.0F),
-                Color.Black, SystemColors.Control);
-
             this.CreateTableToUserTry();
 
             //put strings in the right way
@@ -197,6 +195,7 @@ namespace DillenManagementStudio
         {
             //title
             this.CentralizeTitle();
+            this.picTextBackground.Width = this.Width;
 
             //explanation
             this.AjustMulticolorLabel();
@@ -214,8 +213,9 @@ namespace DillenManagementStudio
         protected void AjustMulticolorLabel()
         {
             int x = (int)Math.Round(0.012*(this.Width-FORM_MORE_WIDTH_PIXELS)); //1.2%
-            int y = 49;
+            int y = 59;
             this.multicolorLabel.X = x;
+            this.multicolorLabel.Y = y;
             this.multicolorLabel.Width = this.Width - 2 * x - FORM_MORE_WIDTH_PIXELS;
             this.multicolorLabel.Height = this.rchtxtAux.Location.Y - y -
                 (int)Math.Round(0.012 * (this.Width - FORM_MORE_HEIGHT_PIXELS));
@@ -496,6 +496,6 @@ namespace DillenManagementStudio
                 e.Handled = true;
             }
         }
-
+        
     }
 }

@@ -41,15 +41,19 @@
             this.btnHelp = new System.Windows.Forms.Button();
             this.rchtxtAux = new System.Windows.Forms.RichTextBox();
             this.picLoading = new System.Windows.Forms.PictureBox();
+            this.picTextBackground = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTextBackground)).BeginInit();
             this.SuspendLayout();
             // 
             // lbTitle
             // 
             this.lbTitle.AutoSize = true;
+            this.lbTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
             this.lbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitle.Location = new System.Drawing.Point(209, 9);
+            this.lbTitle.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbTitle.Location = new System.Drawing.Point(209, 7);
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(400, 31);
             this.lbTitle.TabIndex = 0;
@@ -149,7 +153,7 @@
             // 
             this.rchtxtAux.Location = new System.Drawing.Point(24, 281);
             this.rchtxtAux.Name = "rchtxtAux";
-            this.rchtxtAux.Size = new System.Drawing.Size(249, 161);
+            this.rchtxtAux.Size = new System.Drawing.Size(314, 234);
             this.rchtxtAux.TabIndex = 33;
             this.rchtxtAux.Text = "";
             // 
@@ -158,12 +162,21 @@
             this.picLoading.BackColor = System.Drawing.Color.White;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
             this.picLoading.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picLoading.Location = new System.Drawing.Point(116, 329);
+            this.picLoading.Location = new System.Drawing.Point(143, 363);
             this.picLoading.Name = "picLoading";
             this.picLoading.Size = new System.Drawing.Size(66, 66);
             this.picLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLoading.TabIndex = 38;
             this.picLoading.TabStop = false;
+            // 
+            // picTextBackground
+            // 
+            this.picTextBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
+            this.picTextBackground.Location = new System.Drawing.Point(0, 0);
+            this.picTextBackground.Name = "picTextBackground";
+            this.picTextBackground.Size = new System.Drawing.Size(845, 49);
+            this.picTextBackground.TabIndex = 39;
+            this.picTextBackground.TabStop = false;
             // 
             // FrmCommandExplanation
             // 
@@ -179,7 +192,9 @@
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.rchtxtAux);
+            this.Controls.Add(this.picTextBackground);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(300, 425);
             this.Name = "FrmCommandExplanation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Command Name";
@@ -189,6 +204,7 @@
             this.Resize += new System.EventHandler(this.FrmCommandExplanation_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grvSelectTry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picTextBackground)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +222,6 @@
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.RichTextBox rchtxtAux;
         private System.Windows.Forms.PictureBox picLoading;
+        private System.Windows.Forms.PictureBox picTextBackground;
     }
 }

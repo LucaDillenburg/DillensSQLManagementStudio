@@ -199,7 +199,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnAllTables.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="btnAllProcFunc.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -226,7 +226,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnAllProcFunc.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="lbExecutionResult.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -270,212 +270,161 @@
   <data name="menuStrip.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9.75pt</value>
   </data>
+  <data name="newToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+N</value>
+  </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="openToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+O</value>
+  </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 6</value>
+    <value>223, 6</value>
+  </data>
+  <data name="saveToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+S</value>
   </data>
   <data name="saveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="saveToolStripMenuItem.Text" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="saveAsToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Shift+S</value>
+  </data>
   <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save as</value>
+    <value>Save as       </value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 6</value>
+    <value>223, 6</value>
+  </data>
+  <data name="closeToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Alt+F4</value>
   </data>
   <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
+    <value>226, 22</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 24</value>
+    <value>39, 25</value>
   </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="toolStripMenuItem2.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 24</value>
-  </data>
-  <data name="toolStripMenuItem2.Text" xml:space="preserve">
-    <value>|</value>
-  </data>
   <data name="saveToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 24</value>
+    <value>28, 25</value>
   </data>
-  <data name="saveToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Save</value>
+  <data name="saveToolStripMenuItem2.ToolTipText" xml:space="preserve">
+    <value>Save (Ctrl + S)</value>
   </data>
   <data name="undoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 24</value>
+    <value>28, 25</value>
   </data>
-  <data name="undoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Undo</value>
+  <data name="undoToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Undo (Ctrl + Z)</value>
   </data>
   <data name="redoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 24</value>
+    <value>28, 25</value>
   </data>
-  <data name="redoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Redo</value>
-  </data>
-  <data name="toolStripMenuItem4.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 24</value>
-  </data>
-  <data name="toolStripMenuItem4.Text" xml:space="preserve">
-    <value>|</value>
+  <data name="redoToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Redo (Ctrl + Y)</value>
   </data>
   <data name="changeDatabaseToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9.75pt</value>
   </data>
   <data name="changeDatabaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+    <value>122, 25</value>
   </data>
   <data name="changeDatabaseToolStripMenuItem.Text" xml:space="preserve">
     <value>Change database</value>
   </data>
   <data name="allCommandsSintaxToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 24</value>
+    <value>139, 25</value>
   </data>
   <data name="allCommandsSintaxToolStripMenuItem.Text" xml:space="preserve">
     <value>All commands sintax</value>
   </data>
-  <data name="toolStripMenuItem1.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="allowToolStripMenuItem.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
   </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 24</value>
-  </data>
-  <data name="toolStripMenuItem1.Text" xml:space="preserve">
-    <value>|</value>
+  <data name="allowToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Allow or not notifications</value>
   </data>
   <data name="allowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 24</value>
+    <value>117, 25</value>
   </data>
   <data name="allowToolStripMenuItem.Text" xml:space="preserve">
-    <value>Not Allow</value>
+    <value>Notifications</value>
   </data>
-  <data name="findToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="findToolStripMenuItem.Text" xml:space="preserve">
-    <value>Find</value>
-  </data>
-  <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
-    <value>Replace</value>
+  <data name="allowToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Allow or not notifications from Executions</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 24</value>
+    <value>42, 25</value>
   </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="toolStripMenuItem5.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="toolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 24</value>
-  </data>
-  <data name="toolStripMenuItem5.Text" xml:space="preserve">
-    <value>|</value>
+  <data name="smallerRchtxtFontToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
   </data>
   <data name="smallerRchtxtFontToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 24</value>
+    <value>36, 25</value>
   </data>
   <data name="smallerRchtxtFontToolStripMenuItem.Text" xml:space="preserve">
     <value> - </value>
   </data>
+  <data name="smallerRchtxtFontToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Set larger font (Ctrl+[+])</value>
+  </data>
+  <data name="largerRchtxtFontToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
   <data name="largerRchtxtFontToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
+    <value>33, 25</value>
   </data>
   <data name="largerRchtxtFontToolStripMenuItem.Text" xml:space="preserve">
     <value>+</value>
   </data>
-  <data name="toolStripMenuItem6.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 24</value>
-  </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>|</value>
+  <data name="largerRchtxtFontToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Set smaller font (Ctrl+[-])</value>
   </data>
   <data name="executeToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 11.25pt, style=Bold, Italic</value>
+    <value>Segoe UI, 11.25pt, style=Bold</value>
   </data>
   <data name="executeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 24</value>
+    <value>100, 25</value>
   </data>
   <data name="executeToolStripMenuItem.Text" xml:space="preserve">
     <value>EXECUTE</value>
   </data>
-  <data name="automaticToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 22</value>
-  </data>
-  <data name="automaticToolStripMenuItem.Text" xml:space="preserve">
-    <value>Automatic</value>
-  </data>
-  <data name="executeNonQueryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 22</value>
-  </data>
-  <data name="executeNonQueryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Non-Query</value>
-  </data>
-  <data name="queryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 22</value>
-  </data>
-  <data name="queryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Query</value>
+  <data name="executeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Execute (F5)</value>
   </data>
   <data name="executeAsToolStripMenuItem.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
+    <value>Yes</value>
   </data>
   <data name="executeAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
-  </data>
-  <data name="executeAsToolStripMenuItem.Text" xml:space="preserve">
-    <value>^</value>
-  </data>
-  <data name="stopOrBeginTryingToConnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 22</value>
-  </data>
-  <data name="stopOrBeginTryingToConnectToolStripMenuItem.Text" xml:space="preserve">
-    <value>Stop trying to connect</value>
-  </data>
-  <data name="tryToConnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>205, 22</value>
-  </data>
-  <data name="tryToConnectToolStripMenuItem.Text" xml:space="preserve">
-    <value>Try to connect</value>
+    <value>28, 25</value>
   </data>
   <data name="stopTryingToConnectWithUnicampVPNToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 24</value>
+    <value>181, 25</value>
   </data>
   <data name="stopTryingToConnectWithUnicampVPNToolStripMenuItem.Text" xml:space="preserve">
     <value>Unicamp VPN configuration</value>
@@ -490,7 +439,7 @@
     <value>2, 38, 2, 2</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1370, 64</value>
+    <value>1370, 65</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -507,74 +456,50 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="btnClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="findToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+F</value>
   </data>
-  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1320, 7</value>
+  <data name="findToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 22</value>
   </data>
-  <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 25</value>
+  <data name="findToolStripMenuItem.Text" xml:space="preserve">
+    <value>Find</value>
   </data>
-  <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="replaceToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+H</value>
   </data>
-  <data name="btnClose.Text" xml:space="preserve">
-    <value>X</value>
+  <data name="replaceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 22</value>
   </data>
-  <data name="&gt;&gt;btnClose.Name" xml:space="preserve">
-    <value>btnClose</value>
+  <data name="replaceToolStripMenuItem.Text" xml:space="preserve">
+    <value>Replace      </value>
   </data>
-  <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="stopOrBeginTryingToConnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>205, 22</value>
   </data>
-  <data name="&gt;&gt;btnClose.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="stopOrBeginTryingToConnectToolStripMenuItem.Text" xml:space="preserve">
+    <value>Start trying to connect</value>
   </data>
-  <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="tryToConnectToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>205, 22</value>
   </data>
-  <data name="btnMinimize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnMinimize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1272, 7</value>
-  </data>
-  <data name="btnMinimize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 25</value>
-  </data>
-  <data name="btnMinimize.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="btnMinimize.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="&gt;&gt;btnMinimize.Name" xml:space="preserve">
-    <value>btnMinimize</value>
-  </data>
-  <data name="&gt;&gt;btnMinimize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnMinimize.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnMinimize.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="tryToConnectToolStripMenuItem.Text" xml:space="preserve">
+    <value>Try to connect</value>
   </data>
   <data name="lbDatabase.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lbDatabase.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt, style=Italic</value>
+    <value>Microsoft Sans Serif, 9.75pt, style=Italic</value>
   </data>
   <data name="lbDatabase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lbDatabase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 700</value>
+    <value>26, 703</value>
   </data>
   <data name="lbDatabase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>86, 15</value>
+    <value>95, 16</value>
   </data>
   <data name="lbDatabase.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
@@ -592,7 +517,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbDatabase.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
@@ -600,11 +525,17 @@
   <data name="openFileDialog.Filter" xml:space="preserve">
     <value>SQL files (.sql)|*.sql</value>
   </data>
+  <data name="openFileDialog.Title" xml:space="preserve">
+    <value>Open</value>
+  </data>
   <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>258, 17</value>
   </metadata>
   <data name="saveFileDialog.Filter" xml:space="preserve">
     <value>SQL files (.sql)|*.sql</value>
+  </data>
+  <data name="saveFileDialog.Title" xml:space="preserve">
+    <value>Save as</value>
   </data>
   <data name="lbLoading.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -666,21 +597,6 @@
   <data name="&gt;&gt;rchtxtCode.Type" xml:space="preserve">
     <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="picLoading.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="picLoading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>34, 19</value>
-  </data>
-  <data name="picLoading.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 66</value>
-  </data>
-  <data name="picLoading.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="picLoading.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
-  </data>
   <data name="&gt;&gt;picLoading.Name" xml:space="preserve">
     <value>picLoading</value>
   </data>
@@ -712,7 +628,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pnlLoading.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="rchtxtAux.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt, style=Bold</value>
@@ -784,22 +700,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbTableName.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="btnCloseFindReplace.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnCloseFindReplace.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 7</value>
-  </data>
-  <data name="btnCloseFindReplace.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="btnCloseFindReplace.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="btnCloseFindReplace.Text" xml:space="preserve">
-    <value>X</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;btnCloseFindReplace.Name" xml:space="preserve">
     <value>btnCloseFindReplace</value>
@@ -813,6 +714,150 @@
   <data name="&gt;&gt;btnCloseFindReplace.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;btnNotSeeReplace.Name" xml:space="preserve">
+    <value>btnNotSeeReplace</value>
+  </data>
+  <data name="&gt;&gt;btnNotSeeReplace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnNotSeeReplace.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnNotSeeReplace.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnSeeReplace.Name" xml:space="preserve">
+    <value>btnSeeReplace</value>
+  </data>
+  <data name="&gt;&gt;btnSeeReplace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSeeReplace.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnSeeReplace.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceAll.Name" xml:space="preserve">
+    <value>btnReplaceAll</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceAll.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceAll.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chxIgnoreCase.Name" xml:space="preserve">
+    <value>chxIgnoreCase</value>
+  </data>
+  <data name="&gt;&gt;chxIgnoreCase.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chxIgnoreCase.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;chxIgnoreCase.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Name" xml:space="preserve">
+    <value>btnReplaceCurr</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Name" xml:space="preserve">
+    <value>btnNext</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnNext.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtFind.Name" xml:space="preserve">
+    <value>txtFind</value>
+  </data>
+  <data name="&gt;&gt;txtFind.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtFind.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;txtFind.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txtReplace.Name" xml:space="preserve">
+    <value>txtReplace</value>
+  </data>
+  <data name="&gt;&gt;txtReplace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtReplace.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;txtReplace.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>764, 66</value>
+  </data>
+  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>388, 134</value>
+  </data>
+  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="btnNotSeeReplace.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -820,7 +865,7 @@
     <value>-1, 123</value>
   </data>
   <data name="btnNotSeeReplace.Size" type="System.Drawing.Size, System.Drawing">
-    <value>398, 10</value>
+    <value>392, 10</value>
   </data>
   <data name="btnNotSeeReplace.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -844,7 +889,7 @@
     <value>-1, 55</value>
   </data>
   <data name="btnSeeReplace.Size" type="System.Drawing.Size, System.Drawing">
-    <value>394, 10</value>
+    <value>390, 10</value>
   </data>
   <data name="btnSeeReplace.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -861,11 +906,17 @@
   <data name="&gt;&gt;btnSeeReplace.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="btnReplaceAll.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnReplaceAll.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Lucida Bright, 8.25pt</value>
+  </data>
   <data name="btnReplaceAll.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnReplaceAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>275, 95</value>
+    <value>268, 95</value>
   </data>
   <data name="btnReplaceAll.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -891,14 +942,17 @@
   <data name="chxIgnoreCase.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="chxIgnoreCase.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Lucida Bright, 8.25pt</value>
+  </data>
   <data name="chxIgnoreCase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="chxIgnoreCase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>224, 29</value>
+    <value>250, 31</value>
   </data>
   <data name="chxIgnoreCase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 17</value>
+    <value>90, 18</value>
   </data>
   <data name="chxIgnoreCase.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -917,60 +971,6 @@
   </data>
   <data name="&gt;&gt;chxIgnoreCase.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="btnReplaceCurr.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnReplaceCurr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 67</value>
-  </data>
-  <data name="btnReplaceCurr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 23</value>
-  </data>
-  <data name="btnReplaceCurr.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="btnReplaceCurr.Text" xml:space="preserve">
-    <value>Replace</value>
-  </data>
-  <data name="&gt;&gt;btnReplaceCurr.Name" xml:space="preserve">
-    <value>btnReplaceCurr</value>
-  </data>
-  <data name="&gt;&gt;btnReplaceCurr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnReplaceCurr.Parent" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;btnReplaceCurr.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="btnNext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnNext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 7</value>
-  </data>
-  <data name="btnNext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 23</value>
-  </data>
-  <data name="btnNext.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="btnNext.Text" xml:space="preserve">
-    <value>-&gt;</value>
-  </data>
-  <data name="&gt;&gt;btnNext.Name" xml:space="preserve">
-    <value>btnNext</value>
-  </data>
-  <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;btnNext.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="txtFind.Font" type="System.Drawing.Font, System.Drawing">
     <value>Modern No. 20, 8.999999pt</value>
@@ -1024,16 +1024,16 @@
     <value>True</value>
   </data>
   <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Modern No. 20, 11.249999pt, style=Bold</value>
+    <value>Lucida Bright, 9.75pt, style=Bold</value>
   </data>
   <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 68</value>
+    <value>12, 70</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 17</value>
+    <value>64, 15</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>45</value>
@@ -1057,16 +1057,16 @@
     <value>True</value>
   </data>
   <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Modern No. 20, 11.249999pt, style=Bold</value>
+    <value>Lucida Bright, 9.75pt, style=Bold</value>
   </data>
   <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 9</value>
+    <value>12, 11</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 17</value>
+    <value>41, 15</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>44</value>
@@ -1086,28 +1086,184 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>764, 66</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>543, 17</value>
+  </metadata>
+  <data name="btnMinimize.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
   </data>
-  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>394, 134</value>
+  <data name="btnMinimize.ImageLocation" xml:space="preserve">
+    <value />
   </data>
-  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
+  <data name="btnMinimize.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="btnMinimize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1280, 0</value>
   </data>
-  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
-    <value>pnlSearch</value>
+  <data name="btnMinimize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 26</value>
   </data>
-  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btnMinimize.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
   </data>
-  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnMinimize.Name" xml:space="preserve">
+    <value>btnMinimize</value>
+  </data>
+  <data name="&gt;&gt;btnMinimize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnMinimize.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;btnMinimize.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnClose.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="btnClose.ImageLocation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1325, 0</value>
+  </data>
+  <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 26</value>
+  </data>
+  <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Name" xml:space="preserve">
+    <value>btnClose</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnCloseFindReplace.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnCloseFindReplace.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnCloseFindReplace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 7</value>
+  </data>
+  <data name="btnCloseFindReplace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnCloseFindReplace.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;btnCloseFindReplace.Name" xml:space="preserve">
+    <value>btnCloseFindReplace</value>
+  </data>
+  <data name="&gt;&gt;btnCloseFindReplace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCloseFindReplace.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnCloseFindReplace.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>543, 17</value>
+  </metadata>
+  <data name="btnReplaceCurr.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnReplaceCurr.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnReplaceCurr.Location" type="System.Drawing.Point, System.Drawing">
+    <value>313, 66</value>
+  </data>
+  <data name="btnReplaceCurr.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 23</value>
+  </data>
+  <data name="btnReplaceCurr.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnReplaceCurr.ToolTip" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Name" xml:space="preserve">
+    <value>btnReplaceCurr</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnReplaceCurr.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnNext.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnNext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnNext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>313, 7</value>
+  </data>
+  <data name="btnNext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 23</value>
+  </data>
+  <data name="btnNext.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="btnNext.ToolTip" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Name" xml:space="preserve">
+    <value>btnNext</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;btnNext.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="picLoading.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picLoading.Location" type="System.Drawing.Point, System.Drawing">
+    <value>34, 19</value>
+  </data>
+  <data name="picLoading.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 66</value>
+  </data>
+  <data name="picLoading.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="picLoading.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;picLoading.Name" xml:space="preserve">
+    <value>picLoading</value>
+  </data>
+  <data name="&gt;&gt;picLoading.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;picLoading.Parent" xml:space="preserve">
+    <value>pnlLoading</value>
+  </data>
+  <data name="&gt;&gt;picLoading.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="pictureBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -1132,7 +1288,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1184,11 +1340,29 @@
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="automaticToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="automaticToolStripMenuItem.Text" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="executeNonQueryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="executeNonQueryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Non-Query</value>
+  </data>
+  <data name="queryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="queryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Query</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>37</value>
+    <value>38</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -1234,6 +1408,9 @@
         OP9ZVFP/bWhn/zUwL/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
@@ -1289,36 +1466,6 @@
   <data name="&gt;&gt;closeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
-    <value>toolStripMenuItem2</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;saveToolStripMenuItem2.Name" xml:space="preserve">
-    <value>saveToolStripMenuItem2</value>
-  </data>
-  <data name="&gt;&gt;saveToolStripMenuItem2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;undoToolStripMenuItem.Name" xml:space="preserve">
-    <value>undoToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;undoToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;redoToolStripMenuItem.Name" xml:space="preserve">
-    <value>redoToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;redoToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">
-    <value>toolStripMenuItem4</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;changeDatabaseToolStripMenuItem.Name" xml:space="preserve">
     <value>changeDatabaseToolStripMenuItem</value>
   </data>
@@ -1329,18 +1476,6 @@
     <value>allCommandsSintaxToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;allCommandsSintaxToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
-    <value>toolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;allowToolStripMenuItem.Name" xml:space="preserve">
-    <value>allowToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;allowToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">
@@ -1361,12 +1496,6 @@
   <data name="&gt;&gt;replaceToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem5.Name" xml:space="preserve">
-    <value>toolStripMenuItem5</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;smallerRchtxtFontToolStripMenuItem.Name" xml:space="preserve">
     <value>smallerRchtxtFontToolStripMenuItem</value>
   </data>
@@ -1377,42 +1506,6 @@
     <value>largerRchtxtFontToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;largerRchtxtFontToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem6.Name" xml:space="preserve">
-    <value>toolStripMenuItem6</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;executeToolStripMenuItem.Name" xml:space="preserve">
-    <value>executeToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;executeToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;executeAsToolStripMenuItem.Name" xml:space="preserve">
-    <value>executeAsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;executeAsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;automaticToolStripMenuItem.Name" xml:space="preserve">
-    <value>automaticToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;automaticToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;executeNonQueryToolStripMenuItem.Name" xml:space="preserve">
-    <value>executeNonQueryToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;executeNonQueryToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;queryToolStripMenuItem.Name" xml:space="preserve">
-    <value>queryToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;queryToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;stopTryingToConnectWithUnicampVPNToolStripMenuItem.Name" xml:space="preserve">
@@ -1450,6 +1543,66 @@
   </data>
   <data name="&gt;&gt;tmrCheckVPNConn.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveToolStripMenuItem2.Name" xml:space="preserve">
+    <value>saveToolStripMenuItem2</value>
+  </data>
+  <data name="&gt;&gt;saveToolStripMenuItem2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;undoToolStripMenuItem.Name" xml:space="preserve">
+    <value>undoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;undoToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;redoToolStripMenuItem.Name" xml:space="preserve">
+    <value>redoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;redoToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;allowToolStripMenuItem.Name" xml:space="preserve">
+    <value>allowToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;allowToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;executeToolStripMenuItem.Name" xml:space="preserve">
+    <value>executeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;executeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;executeAsToolStripMenuItem.Name" xml:space="preserve">
+    <value>executeAsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;executeAsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;automaticToolStripMenuItem.Name" xml:space="preserve">
+    <value>automaticToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;automaticToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;executeNonQueryToolStripMenuItem.Name" xml:space="preserve">
+    <value>executeNonQueryToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;executeNonQueryToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;queryToolStripMenuItem.Name" xml:space="preserve">
+    <value>queryToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;queryToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FrmDillenSQLManagementStudio</value>

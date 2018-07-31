@@ -55,19 +55,18 @@ namespace DillenManagementStudio
         {
             //user: to get all commands
             this.user = us;
-
+            
             //replace multiple spaces with a single space where it's not an string
             RegexOptions options = RegexOptions.None;
             this.regex = new Regex("[ ]{2,}", options);
-
+            
             //Non Query To Select
             nonQueryToSelect.Add("insert into ");
             nonQueryToSelect.Add("update ");
             nonQueryToSelect.Add("alter table ");
             nonQueryToSelect.Add("create table ");
             nonQueryToSelect.Add("delete from ");
-
-
+            
             //special chars
             specialChars.Add(' ');
             iSingQuot = specialChars.Count;
@@ -88,6 +87,10 @@ namespace DillenManagementStudio
             reservedWords.Add("delete");
             reservedWords.Add("from");
 
+            reservedWords.Add("and");
+            reservedWords.Add("or");
+            reservedWords.Add("between");
+
             reservedWords.Add("table");
             reservedWords.Add("create");
             reservedWords.Add("drop");
@@ -102,7 +105,15 @@ namespace DillenManagementStudio
             reservedWords.Add("function");
             reservedWords.Add("trigger");
             reservedWords.Add("exec");
-
+            
+            reservedWords.Add("add");
+            reservedWords.Add("column");
+            reservedWords.Add("constraint");
+            reservedWords.Add("references");
+            reservedWords.Add("foreign");
+            reservedWords.Add("primary");
+            reservedWords.Add("key");
+            
             reservedWords.Add("where");
             reservedWords.Add("from");
             reservedWords.Add("values");
@@ -121,6 +132,34 @@ namespace DillenManagementStudio
             //reservedWords.Add("delete");
             reservedWords.Add("after");
             reservedWords.Add("with");
+
+            reservedWords.Add("bigint");
+            reservedWords.Add("bit");
+            reservedWords.Add("decimal");
+            reservedWords.Add("int");
+            reservedWords.Add("money");
+            reservedWords.Add("numeric");
+            reservedWords.Add("smallint");
+            reservedWords.Add("smallmoney");
+            reservedWords.Add("tinyint");
+            reservedWords.Add("float");
+            reservedWords.Add("real");
+            reservedWords.Add("date");
+            reservedWords.Add("datetime");
+            reservedWords.Add("datetime2");
+            reservedWords.Add("datetimeoffset");
+            reservedWords.Add("smalldatetime");
+            reservedWords.Add("time");
+            reservedWords.Add("char");
+            reservedWords.Add("text");
+            reservedWords.Add("varchar");
+            reservedWords.Add("nchar");
+            reservedWords.Add("ntext");
+            reservedWords.Add("nvarchar");
+            reservedWords.Add("binary");
+            reservedWords.Add("image");
+            reservedWords.Add("varbinary");
+            reservedWords.Add("cursor");
         }
         
 

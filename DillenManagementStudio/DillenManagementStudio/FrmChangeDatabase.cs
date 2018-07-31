@@ -25,9 +25,12 @@ namespace DillenManagementStudio
         //update
         protected bool updating = false;
 
+        //to inicialize
+        protected bool firstTime;
+
 
         //inicialize
-        public FrmChangeDatabase(FrmDillenSQLManagementStudio mainForm, List<string> conStrs = null)
+        public FrmChangeDatabase(FrmDillenSQLManagementStudio mainForm, bool firstTime, List<string> conStrs = null)
         {
             InitializeComponent();
 
@@ -45,6 +48,15 @@ namespace DillenManagementStudio
                 this.PutConStrInCbx();
             }
             this.User = mainForm.User;
+
+            this.firstTime = firstTime;
+        }
+
+        protected void FrmChangeDatabase_Shown(object sender, EventArgs e)
+        {
+            //if VPN Unicamp is not connected and cbx is empty
+            if (this.firstTime && this.user == null && this.cbxChsDtBs.Items.Count <= 0)
+                MessageBox.Show("You are not connected with Unicamp VPN... If you want to learn more about commands or have your databases saved, connect it!");
         }
 
         public User User
@@ -543,7 +555,6 @@ namespace DillenManagementStudio
         {
             MessageBox.Show(msg);
         }
-
         
     }
 }

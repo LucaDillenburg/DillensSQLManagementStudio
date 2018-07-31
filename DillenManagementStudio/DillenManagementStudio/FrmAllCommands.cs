@@ -38,7 +38,7 @@ namespace DillenManagementStudio
 
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             for (int i = 0; i < auxCommandList.Count; i++)
-                commandList[i] = textInfo.ToTitleCase(auxCommandList[i]);
+                commandList.Add(textInfo.ToTitleCase(auxCommandList[i]));
             
             int height = FIRST_LABEL;
             int y = FIRST_LABEL;
@@ -74,6 +74,9 @@ namespace DillenManagementStudio
             }
 
             this.Height = height + 80;
+
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
         }
 
         protected Label PutNewLabel(string command, int x, int y, int index)

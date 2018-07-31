@@ -22,6 +22,7 @@ namespace DillenManagementStudio
 
         //RICH TEXT BOX
         protected SqlRichTextBox sqlRchtxtbx;
+        protected bool showedDialog = false;
 
         //general
         protected const string TITLE = "Dillen's SQL Management Studio (Dillenburg's Product)";
@@ -35,11 +36,12 @@ namespace DillenManagementStudio
 
         //user
         protected User user;
-        protected const string MSG_UNICAMP_VPN_DISCONNECTED = "You were disconnected to the Unicamp VPN! If you want to learn more about commands or have your databases saved, connect it again!";
+        protected const string MSG_UNICAMP_VPN_DISCONNECTED = "You were disconnected to the Unicamp VPN! " +
+            "If you want to learn more about commands or have your databases saved, connect it again!";
 
         //FrmChangeDatabase (using VPN Connection)
         protected FrmChangeDatabase frmChangeDatabase;
-
+        
 
         //form iniciate and finish
         public FrmDillenSQLManagementStudio()
@@ -48,6 +50,9 @@ namespace DillenManagementStudio
 
             //ajust form
             this.AjustForm();
+
+            //VPN Configuration Text
+            this.PutVPNConfigurationTexts();
 
             //set font to TableName's Cell in grvSelect
             this.grvSelect.TopLeftHeaderCell.Style.Font = new Font(new FontFamily("Modern No. 20"), 10.0F, FontStyle.Bold);
@@ -58,6 +63,14 @@ namespace DillenManagementStudio
 
         protected void AjustForm()
         {
+            ///Put separators on menuStrip
+            this.menuStrip.Items.Insert(1, new ToolStripSeparator());
+            this.menuStrip.Items.Insert(5, new ToolStripSeparator());
+            this.menuStrip.Items.Insert(8, new ToolStripSeparator());
+            this.menuStrip.Items.Insert(11, new ToolStripSeparator());
+            this.menuStrip.Items.Insert(14, new ToolStripSeparator());
+
+
             ///Size
             //Form
             this.Width = Screen.PrimaryScreen.WorkingArea.Width;
@@ -91,9 +104,8 @@ namespace DillenManagementStudio
             this.btnAllProcFunc.Location = new Point(this.btnAllTables.Location.X - this.btnAllProcFunc.Width - 10,
                 this.btnAllTables.Location.Y);
             // Close and Minimize
-            int distanceBetweenBtns = 12;
-            this.btnClose.Location = new Point(this.Width - this.btnClose.Width - distanceBetweenBtns, this.btnClose.Location.Y);
-            this.btnMinimize.Location = new Point(this.btnClose.Location.X - this.btnMinimize.Width - distanceBetweenBtns, this.btnClose.Location.Y);
+            this.btnClose.Location = new Point(this.Width - this.btnClose.Width, this.btnClose.Location.Y);
+            this.btnMinimize.Location = new Point(this.btnClose.Location.X - this.btnMinimize.Width, this.btnClose.Location.Y);
             // Label Database
             x = (int)Math.Round(0.019 * (this.Width)); //1.9%
             y = (int)Math.Round(1.054 * (this.Height - this.menuStrip.Height)); //105.4%
@@ -101,15 +113,21 @@ namespace DillenManagementStudio
             this.pnlSearch.Location = new Point(this.rchtxtCode.Location.X + this.rchtxtCode.Width + 2,
                 this.pnlSearch.Location.Y);
 
-
             //MessageBox.Show("Width: " + (((float)this.lbDatabase.Location.X) / ((float)this.Width))*100 + "%" ); //1.9%
             //MessageBox.Show("Height: " + (((float)this.lbDatabase.Location.Y) / ((float)this.Height - this.menuStrip.Height))*100 + "%"); //105.4%
         }
 
         protected void FrmDillenSQLManagementStudio_Load(object sender, EventArgs e)
         {
-            this.TryConnWithMyDtbs(true);
+            this.Opacity = 0;
 
+            //Show Splash
+            FrmSplash frmSplash = new FrmSplash();
+            frmSplash.Show();
+            frmSplash.FormClosed += (s, args) => this.AuxSplashClosed();
+
+            this.TryConnWithMyDtbs(true);
+            
             //mySQLConnection
             this.mySqlCon = new MySqlConnection(this.user);
 
@@ -117,11 +135,17 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx = new SqlRichTextBox(ref this.rchtxtCode, this, this.mySqlCon, false);
             this.sqlRchtxtbx.SetNewEvents(new System.EventHandler(this.newRchtxtCode_TextChanged),
                 new System.Windows.Forms.PreviewKeyDownEventHandler(this.newRchtxtCode_PreviewKeyDown));
+            this.sqlRchtxtbx.SQLRichTextBox.KeyPress += new KeyPressEventHandler(this.newRchtxtCode_KeyPress);
 
-            this.tmrCheckVPNConn.Enabled = true;
-            this.PutVPNConfigurationTexts();
+            //splash can close
+            frmSplash.CanClose(this.user != null);
+        }
 
-            this.ShowChangeDatabaseForm();
+        protected void AuxSplashClosed()
+        {
+            this.ShowInTaskbar = true;
+            this.Opacity = 1;
+            this.ShowChangeDatabaseForm(true);
         }
 
         protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -133,11 +157,13 @@ namespace DillenManagementStudio
             catch (Exception err)
             { }
         }
-        
+
 
         //other form's methods
         protected void FrmDillenSQLManagementStudio_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            this.showedDialog = false; 
+
             if (e.KeyCode == Keys.F5) //F5
                 this.executeToolStripMenuItem.PerformClick();
             else
@@ -223,7 +249,12 @@ namespace DillenManagementStudio
             if (this.AskUserWantsToSaveIfNeeded())
                 this.Close();
         }
-        
+
+        protected void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
 
         //VPN Connection
         protected void tmrCheckVPNConn_Tick(object sender, EventArgs e)
@@ -263,13 +294,13 @@ namespace DillenManagementStudio
             }
             catch (Exception err)
             {
-                if (firstTime)
+                /*if (firstTime)
                 {
                     //MessageBox.Show("Be sure you are connected with Unicamp VPN! Connect and restart the program!");
                     //this.Close();
                     //return;
                     MessageBox.Show("You are not connected with Unicamp VPN... If you want to learn more about commands or have your databases saved, connect it!");
-                }
+                }*/
             }
 
             this.Invoke((MethodInvoker)delegate {
@@ -301,7 +332,10 @@ namespace DillenManagementStudio
         //FILE MENU
         protected void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.showedDialog = true;
+
             //choose file
+            this.saveFileDialog.Title = "New file";
             DialogResult result = this.saveFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -321,6 +355,8 @@ namespace DillenManagementStudio
 
         protected void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.showedDialog = true;
+
             //show dialog
             DialogResult result = this.openFileDialog.ShowDialog();
 
@@ -343,6 +379,8 @@ namespace DillenManagementStudio
 
         protected void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.showedDialog = true;
+
             if (!this.isSaved)
             {
                 if (String.IsNullOrEmpty(this.fileName))
@@ -358,6 +396,9 @@ namespace DillenManagementStudio
 
         protected void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.showedDialog = true;
+
+            this.saveFileDialog.Title = "Save as";
             DialogResult result = this.saveFileDialog.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -400,6 +441,8 @@ namespace DillenManagementStudio
                 this.lbTitle.Text = TITLE;
             else
                 this.lbTitle.Text = this.fileName + (this.isSaved ? "" : "*") + " - " + TITLE;
+
+            this.saveToolStripMenuItem2.Enabled = !this.isSaved;
         }
 
 
@@ -606,14 +649,17 @@ namespace DillenManagementStudio
         protected List<string> conStrs;
         protected void changeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ShowChangeDatabaseForm();
+            this.ShowChangeDatabaseForm(false);
         }
 
-        protected void ShowChangeDatabaseForm()
+        protected void ShowChangeDatabaseForm(bool firstTime)
         {
-            this.frmChangeDatabase = new FrmChangeDatabase(this, this.conStrs);
             string oldDatabase = this.mySqlCon.ConnStr;
-            this.frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(oldDatabase);
+            bool lastTmrEnabled = this.tmrCheckVPNConn.Enabled;
+            this.frmChangeDatabase = new FrmChangeDatabase(this, firstTime, this.conStrs);
+            if (!this.tmrCheckVPNConn.Enabled)
+                this.tmrCheckVPNConn.Enabled = true;
+            this.frmChangeDatabase.FormClosed += (s, arg) => this.ProceduresAfterNewDatabase(oldDatabase, lastTmrEnabled);
             this.frmChangeDatabase.ShowDialog();
         }
 
@@ -631,8 +677,11 @@ namespace DillenManagementStudio
             }
         }
 
-        protected void ProceduresAfterNewDatabase(string oldDatabase)
+        protected void ProceduresAfterNewDatabase(string oldDatabase, bool lastTmrEnabled)
         {
+            if (!lastTmrEnabled)
+                this.tmrCheckVPNConn.Enabled = lastTmrEnabled;
+
             this.conStrs = this.frmChangeDatabase.ConnectionStrings;
 
             string newDatabase = this.mySqlCon.ConnStr;
@@ -645,7 +694,7 @@ namespace DillenManagementStudio
 
             //only lets the user execute if he has connected to a database
             //this.EnableWichDependsCon(!String.IsNullOrEmpty(this.mySqlCon.ConnStr));
-            //ITS ON CHANGEDATABASE NOW
+            //(ITS ON CHANGEDATABASE NOW)
         }
 
         protected void AuxBtnAllTablesClick()
@@ -696,16 +745,16 @@ namespace DillenManagementStudio
             }
         }
 
-
+        
         //allow notification
         protected void allowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.allowNotification)
-                this.allowToolStripMenuItem.Text = "Allow";
-            else
-                this.allowToolStripMenuItem.Text = "Not Allow";
-
             this.allowNotification = !this.allowNotification;
+
+            if (this.allowNotification)
+                this.allowToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_on3;
+            else
+                this.allowToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_off1;
         }
 
 
@@ -732,7 +781,17 @@ namespace DillenManagementStudio
         protected void btnReplaceAll_Click(object sender, EventArgs e)
         {
             StringComparison stringComparison = (this.chxIgnoreCase.Checked ? StringComparison.InvariantCultureIgnoreCase : StringComparison.CurrentCulture);
-            this.pnlSearch.Visible = !this.sqlRchtxtbx.ReplaceAll(this.txtFind.Text, this.txtReplace.Text, stringComparison);
+
+            try
+            {
+                int qtdReplaced = this.sqlRchtxtbx.ReplaceAll(this.txtFind.Text, this.txtReplace.Text, stringComparison);
+                this.pnlSearch.Visible = qtdReplaced < 0;
+                if (qtdReplaced >= 0)
+                    MessageBox.Show(qtdReplaced + " occurrence replaced.");
+            }catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
         }
         
         //visual or resource
@@ -750,12 +809,13 @@ namespace DillenManagementStudio
                 this.pnlSearch.Height = this.btnSeeReplace.Location.Y + this.btnSeeReplace.Height;
                 this.btnSeeReplace.Visible = true;
 
+                this.pnlSearch.BringToFront();
                 this.pnlSearch.Visible = true;
 
                 if (selectedSomethingDifferent)
                     this.txtFind.Text = this.rchtxtCode.SelectedText;
 
-                Force.Focus(this.txtFind);
+                this.txtFind.Focus();
             }
         }
 
@@ -771,16 +831,17 @@ namespace DillenManagementStudio
 
                 this.pnlSearch.Height = this.btnNotSeeReplace.Location.Y + this.btnNotSeeReplace.Height;
                 this.btnSeeReplace.Visible = false;
-                
+
+                this.pnlSearch.BringToFront();
                 this.pnlSearch.Visible = true;
 
                 if (selectedSomethingDifferent)
                     this.txtFind.Text = this.rchtxtCode.SelectedText;
 
                 if (String.IsNullOrEmpty(this.txtFind.Text))
-                    Force.Focus(this.txtFind);
+                    this.txtFind.Focus();
                 else
-                    Force.Focus(this.txtReplace);
+                    this.txtReplace.Focus();
             }
         }
 
@@ -800,7 +861,7 @@ namespace DillenManagementStudio
         {
             this.findToolStripMenuItem.PerformClick();
         }
-
+        
         protected void txtFind_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -810,6 +871,15 @@ namespace DillenManagementStudio
             }
             else
                 this.FrmDillenSQLManagementStudio_KeyDown(sender, ref e);
+
+            this.preventCtrlH = e.Control && e.KeyCode == Keys.H;
+        }
+
+        protected bool preventCtrlH = false;
+        protected void txtFind_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (this.preventCtrlH)
+                e.Handled = true;
         }
 
         protected void txtReplace_KeyDown(object sender, KeyEventArgs e)
@@ -871,6 +941,12 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.rchtxtCode_PreviewKeyDown(sender, e);
         }
 
+        protected void newRchtxtCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (this.showedDialog)
+                e.Handled = true;
+        }
+
 
         //richtextbox Size
         protected void smallerRchtxtFontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -927,6 +1003,28 @@ namespace DillenManagementStudio
             }
         }
 
+
+        //btnClose and btnMinimize mouse events
+        protected void btnClose_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnClose.Image = global::DillenManagementStudio.Properties.Resources.btnClose_Hover1;
+        }
+
+        protected void btnClose_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnClose.Image = global::DillenManagementStudio.Properties.Resources.btnClose__1_;
+        }
+
+        protected void btnMinimize_MouseEnter(object sender, EventArgs e)
+        {
+            this.btnMinimize.Image = global::DillenManagementStudio.Properties.Resources.btnMinimize_Hover;
+        }
+
+        protected void btnMinimize_MouseLeave(object sender, EventArgs e)
+        {
+            this.btnMinimize.Image = global::DillenManagementStudio.Properties.Resources.btnMinimize;
+        }
         
+
     }
 }

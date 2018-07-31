@@ -1,3 +1,0 @@
-se cola algo e na ultima linha o que foi colado tem evenQuotMarks arrumar ateh o ultimo char q foi colado
-
-allow e not allow: on/off notification

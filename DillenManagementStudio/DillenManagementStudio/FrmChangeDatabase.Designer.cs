@@ -277,11 +277,14 @@
             this.Controls.Add(this.btnSelectDatabase);
             this.Controls.Add(this.cbxChsDtBs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(479, 405);
+            this.MinimumSize = new System.Drawing.Size(479, 405);
             this.Name = "FrmChangeDatabase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Choose your database";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmChangeDatabase_FormClosing);
             this.Load += new System.EventHandler(this.FrmChangeDatabase_Load);
+            this.Shown += new System.EventHandler(this.FrmChangeDatabase_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

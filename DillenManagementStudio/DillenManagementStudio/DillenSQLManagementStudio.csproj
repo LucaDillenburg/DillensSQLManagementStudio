@@ -61,6 +61,12 @@
     <Compile Include="FrmAllCommands.Designer.cs">
       <DependentUpon>FrmAllCommands.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSplash.Designer.cs">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
+    </Compile>
     <Compile Include="MulticolorLabel.cs" />
     <Compile Include="SqlExecuteProcedures.cs" />
     <Compile Include="SqlRichTextBox.cs" />
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCommandExplanation.resx">
       <DependentUpon>FrmCommandExplanation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSplash.resx">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -164,6 +173,93 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Loading_icon1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moreIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch %28on%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on OK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-angle-pointing-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimize %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose Hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnMinimize Hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnMinimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose Hover1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel-music.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

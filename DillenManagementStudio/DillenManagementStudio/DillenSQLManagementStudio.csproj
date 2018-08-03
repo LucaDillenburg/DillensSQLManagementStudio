@@ -99,6 +99,9 @@
     <EmbeddedResource Include="FrmAllCommands.resx">
       <DependentUpon>FrmAllCommands.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmDillenSQLManagementStudio.az-Latn.resx">
+      <DependentUpon>FrmDillenSQLManagementStudio.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmDillenSQLManagementStudio.en-US.resx">
       <DependentUpon>FrmDillenSQLManagementStudio.cs</DependentUpon>
     </EmbeddedResource>

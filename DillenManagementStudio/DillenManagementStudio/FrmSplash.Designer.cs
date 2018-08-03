@@ -41,15 +41,10 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            resources.ApplyResources(this.label1, "label1");
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Modern No. 20", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(96, 60);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(424, 100);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "     Dillen\'s SQL\r\nManagement Studio";
             // 
             // tmr
             // 
@@ -58,26 +53,17 @@
             // 
             // lbStage
             // 
-            this.lbStage.AutoSize = true;
+            resources.ApplyResources(this.lbStage, "lbStage");
             this.lbStage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
-            this.lbStage.Font = new System.Drawing.Font("Lucida Bright", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbStage.ForeColor = System.Drawing.Color.Transparent;
-            this.lbStage.Location = new System.Drawing.Point(3, 8);
             this.lbStage.Name = "lbStage";
-            this.lbStage.Size = new System.Drawing.Size(194, 14);
-            this.lbStage.TabIndex = 2;
-            this.lbStage.Text = "Trying to connect to Unicamp VPN";
             // 
             // picLoading
             // 
             this.picLoading.BackColor = System.Drawing.Color.Transparent;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
-            this.picLoading.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picLoading.Location = new System.Drawing.Point(202, 5);
+            resources.ApplyResources(this.picLoading, "picLoading");
             this.picLoading.Name = "picLoading";
-            this.picLoading.Size = new System.Drawing.Size(18, 18);
-            this.picLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLoading.TabIndex = 38;
             this.picLoading.TabStop = false;
             // 
             // panel1
@@ -85,24 +71,18 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
             this.panel1.Controls.Add(this.lbStage);
             this.panel1.Controls.Add(this.picLoading);
-            this.panel1.Location = new System.Drawing.Point(-1, 193);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(620, 28);
-            this.panel1.TabIndex = 39;
             // 
             // FrmSplash
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(618, 221);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmSplash";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmSplash";
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCommandExplanation));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCommandExplanation));
             this.lbTitle = new System.Windows.Forms.Label();
             this.rchtxtTryCode = new System.Windows.Forms.RichTextBox();
             this.btnExecute = new System.Windows.Forms.Button();
@@ -49,55 +49,36 @@
             // 
             // lbTitle
             // 
-            this.lbTitle.AutoSize = true;
+            resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lbTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.lbTitle.Location = new System.Drawing.Point(209, 7);
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(400, 31);
-            this.lbTitle.TabIndex = 0;
-            this.lbTitle.Text = "Part of Command Explanation";
             // 
             // rchtxtTryCode
             // 
-            this.rchtxtTryCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.rchtxtTryCode, "rchtxtTryCode");
             this.rchtxtTryCode.HideSelection = false;
-            this.rchtxtTryCode.Location = new System.Drawing.Point(24, 281);
             this.rchtxtTryCode.Name = "rchtxtTryCode";
-            this.rchtxtTryCode.Size = new System.Drawing.Size(315, 234);
-            this.rchtxtTryCode.TabIndex = 0;
-            this.rchtxtTryCode.Text = "";
             this.rchtxtTryCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmCommandExplanation_KeyDown);
             // 
             // btnExecute
             // 
-            this.btnExecute.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExecute.Location = new System.Drawing.Point(349, 379);
+            resources.ApplyResources(this.btnExecute, "btnExecute");
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(78, 50);
-            this.btnExecute.TabIndex = 1;
-            this.btnExecute.Text = "Execute >>";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(12, 530);
+            resources.ApplyResources(this.btnPrevious, "btnPrevious");
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(64, 23);
-            this.btnPrevious.TabIndex = 4;
-            this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(754, 530);
+            resources.ApplyResources(this.btnNext, "btnNext");
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(64, 23);
-            this.btnNext.TabIndex = 5;
-            this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
@@ -112,7 +93,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.grvSelectTry.DefaultCellStyle = dataGridViewCellStyle1;
-            this.grvSelectTry.Location = new System.Drawing.Point(438, 297);
+            resources.ApplyResources(this.grvSelectTry, "grvSelectTry");
             this.grvSelectTry.Name = "grvSelectTry";
             this.grvSelectTry.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -123,66 +104,44 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.grvSelectTry.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.grvSelectTry.Size = new System.Drawing.Size(361, 218);
-            this.grvSelectTry.TabIndex = 3;
             // 
             // lbExecutionResult
             // 
-            this.lbExecutionResult.AutoSize = true;
-            this.lbExecutionResult.Font = new System.Drawing.Font("Modern No. 20", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.lbExecutionResult, "lbExecutionResult");
             this.lbExecutionResult.ForeColor = System.Drawing.Color.Green;
-            this.lbExecutionResult.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lbExecutionResult.Location = new System.Drawing.Point(438, 279);
             this.lbExecutionResult.Name = "lbExecutionResult";
-            this.lbExecutionResult.Size = new System.Drawing.Size(138, 15);
-            this.lbExecutionResult.TabIndex = 31;
-            this.lbExecutionResult.Text = "Succesfully executed!";
-            this.lbExecutionResult.Visible = false;
             // 
             // btnHelp
             // 
-            this.btnHelp.Location = new System.Drawing.Point(344, 281);
+            resources.ApplyResources(this.btnHelp, "btnHelp");
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(26, 26);
-            this.btnHelp.TabIndex = 2;
-            this.btnHelp.Text = "?";
             this.btnHelp.UseVisualStyleBackColor = true;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // rchtxtAux
             // 
-            this.rchtxtAux.Location = new System.Drawing.Point(24, 281);
+            resources.ApplyResources(this.rchtxtAux, "rchtxtAux");
             this.rchtxtAux.Name = "rchtxtAux";
-            this.rchtxtAux.Size = new System.Drawing.Size(314, 234);
-            this.rchtxtAux.TabIndex = 33;
-            this.rchtxtAux.Text = "";
             // 
             // picLoading
             // 
             this.picLoading.BackColor = System.Drawing.Color.White;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
-            this.picLoading.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picLoading.Location = new System.Drawing.Point(143, 363);
+            resources.ApplyResources(this.picLoading, "picLoading");
             this.picLoading.Name = "picLoading";
-            this.picLoading.Size = new System.Drawing.Size(66, 66);
-            this.picLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLoading.TabIndex = 38;
             this.picLoading.TabStop = false;
             // 
             // pnlTitle
             // 
             this.pnlTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
             this.pnlTitle.Controls.Add(this.lbTitle);
-            this.pnlTitle.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.pnlTitle, "pnlTitle");
             this.pnlTitle.Name = "pnlTitle";
-            this.pnlTitle.Size = new System.Drawing.Size(845, 49);
-            this.pnlTitle.TabIndex = 40;
             // 
             // FrmCommandExplanation
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 565);
             this.Controls.Add(this.pnlTitle);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnHelp);
@@ -192,11 +151,7 @@
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.rchtxtAux);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(300, 425);
             this.Name = "FrmCommandExplanation";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Command Name";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmCommandExplanation_FormClosed);
             this.Shown += new System.EventHandler(this.FrmCommandExplanation_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmCommandExplanation_KeyDown);

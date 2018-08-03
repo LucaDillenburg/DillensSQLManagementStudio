@@ -117,132 +117,143 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="grvSelect.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbTitle.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnAllTables.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnAllProcFunc.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbExecutionResult.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbDatabase.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbLoading.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rchtxtCode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="picLoading.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlLoading.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rchtxtAux.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbTableName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCloseFindReplace.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnNotSeeReplace.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSeeReplace.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnReplaceAll.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chxIgnoreCase.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtFind.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtReplace.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlSearch.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="picExecute.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="executeAsToolStripMenuItem.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="picMenuMainSeparator.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="editToolStripMenuItem.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Modern No. 20, 36pt, style=Bold</value>
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        /9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/2wBD
+        AAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0M
+        DgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM
+        DAwMDAwMDAwMDAwMDAz/wAARCAAXABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQF
+        BgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAk
+        M2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWG
+        h4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx
+        8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQA
+        AQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5
+        OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmq
+        srO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5
+        h+EnxEX47eHZtY0XR9J8P6HYb4RrYuDDJcAcHcANskIIwN8bYP3dhIx9Kfse/GvTfFXwQbwtfXVnDrvg
+        u8u3uL0PGt1aBmPlMgGQ/wDr2IkJf5g2QM7j+WHgL4U+FfDWneKtJufEkPhvxBePFe+FtR1TWbnTdKuY
+        HBVmEkQxvCMPvDh4grbQSpyvCvx41TwV8c9T0iHxBb62xkGn2euRSGFL1Fb92ZWhZTID0Jzlu/XIzo5l
+        TqYieFtJSj3TSei1TtZ729U+zKlhpRpqpdWfnr1/y/LufQf7R3iPTPhd+0D4o0O7vJtatbeZLiAQW1u6
+        27zAyyjY+VQb2KjaASsa7skA0V1n7M37NV18UNR8TXq+IJIZo5LYXV+mnTTHULh0aWTKrgKULgZ5JJIJ
+        JWiu7UxPPNE0nw3p9zeWK2tnfWuqXoW6tmsYtsTuFxkGMKQCSMjeSQWxg7a8z+L3wW8L2uuf2h4Za4vJ
+        CEnFv5CpbwR8BWZ3ZX8wuQMKhBDgllwVoopborqfbPwN1WP4I/AXwvH/AGpdTya0st7JvhDxqxYKcE5b
+        JIJOezJ1O6iiito7GJ//2Q==
+</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 60</value>
+  <data name="pictureBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>424, 100</value>
+  <data name="btnClose.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="btnMinimize.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>     Dillen's SQL
-Management Studio</value>
+  <data name="pnlMenu.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="pnlEdit.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="pictureBox5.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="pictureBox4.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="pnlFile.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <metadata name="tmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="lbStage.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="tryToConnectToolStripMenuItem.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="lbStage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Lucida Bright, 8.25pt</value>
+  <data name="stopOrBeginTryingToConnectToolStripMenuItem.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="lbStage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 8</value>
+  <data name="pnlVPNConfiguration.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="lbStage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 14</value>
-  </data>
-  <data name="lbStage.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbStage.Text" xml:space="preserve">
-    <value>Trying to connect to Unicamp VPN</value>
-  </data>
-  <data name="&gt;&gt;lbStage.Name" xml:space="preserve">
-    <value>lbStage</value>
-  </data>
-  <data name="&gt;&gt;lbStage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbStage.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;lbStage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="picLoading.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="picLoading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 5</value>
-  </data>
-  <data name="picLoading.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 18</value>
-  </data>
-  <data name="picLoading.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>StretchImage</value>
-  </data>
-  <data name="picLoading.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
-  </data>
-  <data name="&gt;&gt;picLoading.Name" xml:space="preserve">
-    <value>picLoading</value>
-  </data>
-  <data name="&gt;&gt;picLoading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;picLoading.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;picLoading.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-1, 193</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 28</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en-US</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>618, 221</value>
+  <data name="pnlExecuteAs.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -283,22 +294,7 @@ Management Studio</value>
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>FrmSplash</value>
-  </data>
-  <data name="&gt;&gt;tmr.Name" xml:space="preserve">
-    <value>tmr</value>
-  </data>
-  <data name="&gt;&gt;tmr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmSplash</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

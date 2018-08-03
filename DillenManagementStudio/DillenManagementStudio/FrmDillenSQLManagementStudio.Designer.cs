@@ -118,10 +118,11 @@ namespace DillenManagementStudio
             // 
             // grvSelect
             // 
-            this.grvSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.grvSelect, "grvSelect");
+            this.grvSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grvSelect.Name = "grvSelect";
             this.grvSelect.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.grvSelect, resources.GetString("grvSelect.ToolTip"));
             this.grvSelect.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvSelect_CellContentDoubleClick);
             // 
             // lbTitle
@@ -130,11 +131,13 @@ namespace DillenManagementStudio
             this.lbTitle.BackColor = System.Drawing.Color.Transparent;
             this.lbTitle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lbTitle.Name = "lbTitle";
+            this.toolTip1.SetToolTip(this.lbTitle, resources.GetString("lbTitle.ToolTip"));
             // 
             // btnAllTables
             // 
             resources.ApplyResources(this.btnAllTables, "btnAllTables");
             this.btnAllTables.Name = "btnAllTables";
+            this.toolTip1.SetToolTip(this.btnAllTables, resources.GetString("btnAllTables.ToolTip"));
             this.btnAllTables.UseVisualStyleBackColor = true;
             this.btnAllTables.Click += new System.EventHandler(this.btnAllTables_Click);
             // 
@@ -142,6 +145,7 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.btnAllProcFunc, "btnAllProcFunc");
             this.btnAllProcFunc.Name = "btnAllProcFunc";
+            this.toolTip1.SetToolTip(this.btnAllProcFunc, resources.GetString("btnAllProcFunc.ToolTip"));
             this.btnAllProcFunc.UseVisualStyleBackColor = true;
             this.btnAllProcFunc.Click += new System.EventHandler(this.btnAllProcFunc_Click);
             // 
@@ -150,11 +154,13 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.lbExecutionResult, "lbExecutionResult");
             this.lbExecutionResult.ForeColor = System.Drawing.Color.Green;
             this.lbExecutionResult.Name = "lbExecutionResult";
+            this.toolTip1.SetToolTip(this.lbExecutionResult, resources.GetString("lbExecutionResult.ToolTip"));
             // 
             // lbDatabase
             // 
             resources.ApplyResources(this.lbDatabase, "lbDatabase");
             this.lbDatabase.Name = "lbDatabase";
+            this.toolTip1.SetToolTip(this.lbDatabase, resources.GetString("lbDatabase.ToolTip"));
             // 
             // openFileDialog
             // 
@@ -170,6 +176,7 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.lbLoading, "lbLoading");
             this.lbLoading.BackColor = System.Drawing.Color.Transparent;
             this.lbLoading.Name = "lbLoading";
+            this.toolTip1.SetToolTip(this.lbLoading, resources.GetString("lbLoading.ToolTip"));
             // 
             // rchtxtCode
             // 
@@ -177,32 +184,36 @@ namespace DillenManagementStudio
             this.rchtxtCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtCode.HideSelection = false;
             this.rchtxtCode.Name = "rchtxtCode";
+            this.toolTip1.SetToolTip(this.rchtxtCode, resources.GetString("rchtxtCode.ToolTip"));
             // 
             // pnlLoading
             // 
+            resources.ApplyResources(this.pnlLoading, "pnlLoading");
             this.pnlLoading.BackColor = System.Drawing.SystemColors.Control;
             this.pnlLoading.Controls.Add(this.picLoading);
             this.pnlLoading.Controls.Add(this.lbLoading);
-            resources.ApplyResources(this.pnlLoading, "pnlLoading");
             this.pnlLoading.Name = "pnlLoading";
+            this.toolTip1.SetToolTip(this.pnlLoading, resources.GetString("pnlLoading.ToolTip"));
             // 
             // picLoading
             // 
+            resources.ApplyResources(this.picLoading, "picLoading");
             this.picLoading.BackColor = System.Drawing.Color.Transparent;
             this.picLoading.Image = global::DillenManagementStudio.Properties.Resources.Loading_icon1;
-            resources.ApplyResources(this.picLoading, "picLoading");
             this.picLoading.Name = "picLoading";
             this.picLoading.TabStop = false;
+            this.toolTip1.SetToolTip(this.picLoading, resources.GetString("picLoading.ToolTip"));
             // 
             // rchtxtAux
             // 
             this.rchtxtAux.AcceptsTab = true;
-            this.rchtxtAux.EnableAutoDragDrop = true;
             resources.ApplyResources(this.rchtxtAux, "rchtxtAux");
+            this.rchtxtAux.EnableAutoDragDrop = true;
             this.rchtxtAux.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.rchtxtAux.Name = "rchtxtAux";
             this.rchtxtAux.ReadOnly = true;
             this.rchtxtAux.TabStop = false;
+            this.toolTip1.SetToolTip(this.rchtxtAux, resources.GetString("rchtxtAux.ToolTip"));
             // 
             // tmrCheckVPNConn
             // 
@@ -213,9 +224,11 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.lbTableName, "lbTableName");
             this.lbTableName.Name = "lbTableName";
+            this.toolTip1.SetToolTip(this.lbTableName, resources.GetString("lbTableName.ToolTip"));
             // 
             // pnlSearch
             // 
+            resources.ApplyResources(this.pnlSearch, "pnlSearch");
             this.pnlSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(180)))));
             this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlSearch.Controls.Add(this.btnCloseFindReplace);
@@ -229,14 +242,15 @@ namespace DillenManagementStudio
             this.pnlSearch.Controls.Add(this.txtReplace);
             this.pnlSearch.Controls.Add(this.label2);
             this.pnlSearch.Controls.Add(this.label1);
-            resources.ApplyResources(this.pnlSearch, "pnlSearch");
             this.pnlSearch.Name = "pnlSearch";
+            this.toolTip1.SetToolTip(this.pnlSearch, resources.GetString("pnlSearch.ToolTip"));
             // 
             // btnCloseFindReplace
             // 
-            this.btnCloseFindReplace.BackgroundImage = global::DillenManagementStudio.Properties.Resources.cancel_music;
             resources.ApplyResources(this.btnCloseFindReplace, "btnCloseFindReplace");
+            this.btnCloseFindReplace.BackgroundImage = global::DillenManagementStudio.Properties.Resources.cancel_music;
             this.btnCloseFindReplace.Name = "btnCloseFindReplace";
+            this.toolTip1.SetToolTip(this.btnCloseFindReplace, resources.GetString("btnCloseFindReplace.ToolTip"));
             this.btnCloseFindReplace.UseVisualStyleBackColor = true;
             this.btnCloseFindReplace.Click += new System.EventHandler(this.btnCloseFindReplace_Click);
             // 
@@ -244,6 +258,7 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.btnNotSeeReplace, "btnNotSeeReplace");
             this.btnNotSeeReplace.Name = "btnNotSeeReplace";
+            this.toolTip1.SetToolTip(this.btnNotSeeReplace, resources.GetString("btnNotSeeReplace.ToolTip"));
             this.btnNotSeeReplace.UseVisualStyleBackColor = true;
             this.btnNotSeeReplace.Click += new System.EventHandler(this.btnNotSeeReplace_Click);
             // 
@@ -251,17 +266,19 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.btnSeeReplace, "btnSeeReplace");
             this.btnSeeReplace.Name = "btnSeeReplace";
+            this.toolTip1.SetToolTip(this.btnSeeReplace, resources.GetString("btnSeeReplace.ToolTip"));
             this.btnSeeReplace.UseVisualStyleBackColor = true;
             this.btnSeeReplace.Click += new System.EventHandler(this.btnSeeReplace_Click);
             // 
             // btnReplaceAll
             // 
+            resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
             this.btnReplaceAll.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnReplaceAll.FlatAppearance.BorderSize = 0;
             this.btnReplaceAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnReplaceAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.btnReplaceAll, "btnReplaceAll");
             this.btnReplaceAll.Name = "btnReplaceAll";
+            this.toolTip1.SetToolTip(this.btnReplaceAll, resources.GetString("btnReplaceAll.ToolTip"));
             this.btnReplaceAll.UseVisualStyleBackColor = true;
             this.btnReplaceAll.Click += new System.EventHandler(this.btnReplaceAll_Click);
             // 
@@ -272,12 +289,13 @@ namespace DillenManagementStudio
             this.chxIgnoreCase.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chxIgnoreCase.ForeColor = System.Drawing.Color.Black;
             this.chxIgnoreCase.Name = "chxIgnoreCase";
+            this.toolTip1.SetToolTip(this.chxIgnoreCase, resources.GetString("chxIgnoreCase.ToolTip"));
             this.chxIgnoreCase.UseVisualStyleBackColor = true;
             // 
             // btnReplaceCurr
             // 
-            this.btnReplaceCurr.BackgroundImage = global::DillenManagementStudio.Properties.Resources.arrow_angle_pointing_down;
             resources.ApplyResources(this.btnReplaceCurr, "btnReplaceCurr");
+            this.btnReplaceCurr.BackgroundImage = global::DillenManagementStudio.Properties.Resources.arrow_angle_pointing_down;
             this.btnReplaceCurr.Name = "btnReplaceCurr";
             this.toolTip1.SetToolTip(this.btnReplaceCurr, resources.GetString("btnReplaceCurr.ToolTip"));
             this.btnReplaceCurr.UseVisualStyleBackColor = true;
@@ -285,8 +303,8 @@ namespace DillenManagementStudio
             // 
             // btnNext
             // 
-            this.btnNext.BackgroundImage = global::DillenManagementStudio.Properties.Resources.next;
             resources.ApplyResources(this.btnNext, "btnNext");
+            this.btnNext.BackgroundImage = global::DillenManagementStudio.Properties.Resources.next;
             this.btnNext.Name = "btnNext";
             this.toolTip1.SetToolTip(this.btnNext, resources.GetString("btnNext.ToolTip"));
             this.btnNext.UseVisualStyleBackColor = true;
@@ -296,6 +314,7 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.txtFind, "txtFind");
             this.txtFind.Name = "txtFind";
+            this.toolTip1.SetToolTip(this.txtFind, resources.GetString("txtFind.ToolTip"));
             this.txtFind.TextChanged += new System.EventHandler(this.txtFind_TextChanged);
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFind_KeyDown);
             this.txtFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFind_KeyPress);
@@ -304,6 +323,7 @@ namespace DillenManagementStudio
             // 
             resources.ApplyResources(this.txtReplace, "txtReplace");
             this.txtReplace.Name = "txtReplace";
+            this.toolTip1.SetToolTip(this.txtReplace, resources.GetString("txtReplace.ToolTip"));
             this.txtReplace.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtReplace_KeyDown);
             // 
             // label2
@@ -311,20 +331,22 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.label2, "label2");
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Name = "label2";
+            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // vpnConfigurationToolStripMenuItem
             // 
+            resources.ApplyResources(this.vpnConfigurationToolStripMenuItem, "vpnConfigurationToolStripMenuItem");
             this.vpnConfigurationToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.vpnConfigurationToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.vpnConfigurationToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
             this.vpnConfigurationToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.vpnConfigurationToolStripMenuItem, "vpnConfigurationToolStripMenuItem");
             this.vpnConfigurationToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.vpnConfigurationToolStripMenuItem.Name = "vpnConfigurationToolStripMenuItem";
             this.vpnConfigurationToolStripMenuItem.Tag = "4";
@@ -336,13 +358,13 @@ namespace DillenManagementStudio
             // 
             // executeToolStripMenuItem
             // 
+            resources.ApplyResources(this.executeToolStripMenuItem, "executeToolStripMenuItem");
             this.executeToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.executeToolStripMenuItem.Controls.Add(this.picExecute);
             this.executeToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.executeToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.executeToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.executeToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.executeToolStripMenuItem, "executeToolStripMenuItem");
             this.executeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
             this.toolTip1.SetToolTip(this.executeToolStripMenuItem, resources.GetString("executeToolStripMenuItem.ToolTip"));
@@ -352,22 +374,23 @@ namespace DillenManagementStudio
             // 
             // picExecute
             // 
+            resources.ApplyResources(this.picExecute, "picExecute");
             this.picExecute.BackColor = System.Drawing.Color.Transparent;
             this.picExecute.BackgroundImage = global::DillenManagementStudio.Properties.Resources.play_btn;
-            resources.ApplyResources(this.picExecute, "picExecute");
             this.picExecute.Name = "picExecute";
             this.picExecute.TabStop = false;
+            this.toolTip1.SetToolTip(this.picExecute, resources.GetString("picExecute.ToolTip"));
             this.picExecute.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             this.picExecute.MouseEnter += new System.EventHandler(this.notShowMoreToolStripMenuItem_MouseEnter);
             // 
             // largerRchtxtFontToolStripMenuItem
             // 
+            resources.ApplyResources(this.largerRchtxtFontToolStripMenuItem, "largerRchtxtFontToolStripMenuItem");
             this.largerRchtxtFontToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.largerRchtxtFontToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.largerRchtxtFontToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.largerRchtxtFontToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.largerRchtxtFontToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.largerRchtxtFontToolStripMenuItem, "largerRchtxtFontToolStripMenuItem");
             this.largerRchtxtFontToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.largerRchtxtFontToolStripMenuItem.Name = "largerRchtxtFontToolStripMenuItem";
             this.toolTip1.SetToolTip(this.largerRchtxtFontToolStripMenuItem, resources.GetString("largerRchtxtFontToolStripMenuItem.ToolTip"));
@@ -377,12 +400,12 @@ namespace DillenManagementStudio
             // 
             // smallerRchtxtFontToolStripMenuItem
             // 
+            resources.ApplyResources(this.smallerRchtxtFontToolStripMenuItem, "smallerRchtxtFontToolStripMenuItem");
             this.smallerRchtxtFontToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.smallerRchtxtFontToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.smallerRchtxtFontToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.smallerRchtxtFontToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.smallerRchtxtFontToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.smallerRchtxtFontToolStripMenuItem, "smallerRchtxtFontToolStripMenuItem");
             this.smallerRchtxtFontToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.smallerRchtxtFontToolStripMenuItem.Name = "smallerRchtxtFontToolStripMenuItem";
             this.toolTip1.SetToolTip(this.smallerRchtxtFontToolStripMenuItem, resources.GetString("smallerRchtxtFontToolStripMenuItem.ToolTip"));
@@ -392,12 +415,12 @@ namespace DillenManagementStudio
             // 
             // allowOrNotNotificationsToolStripMenuItem
             // 
+            resources.ApplyResources(this.allowOrNotNotificationsToolStripMenuItem, "allowOrNotNotificationsToolStripMenuItem");
             this.allowOrNotNotificationsToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.allowOrNotNotificationsToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.allowOrNotNotificationsToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.allowOrNotNotificationsToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.allowOrNotNotificationsToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.allowOrNotNotificationsToolStripMenuItem, "allowOrNotNotificationsToolStripMenuItem");
             this.allowOrNotNotificationsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.allowOrNotNotificationsToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_on4;
             this.allowOrNotNotificationsToolStripMenuItem.Name = "allowOrNotNotificationsToolStripMenuItem";
@@ -409,12 +432,12 @@ namespace DillenManagementStudio
             // 
             // allCommandsSyntaxToolStripMenuItem
             // 
+            resources.ApplyResources(this.allCommandsSyntaxToolStripMenuItem, "allCommandsSyntaxToolStripMenuItem");
             this.allCommandsSyntaxToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.allCommandsSyntaxToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.allCommandsSyntaxToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.allCommandsSyntaxToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.allCommandsSyntaxToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.allCommandsSyntaxToolStripMenuItem, "allCommandsSyntaxToolStripMenuItem");
             this.allCommandsSyntaxToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.allCommandsSyntaxToolStripMenuItem.Name = "allCommandsSyntaxToolStripMenuItem";
             this.toolTip1.SetToolTip(this.allCommandsSyntaxToolStripMenuItem, resources.GetString("allCommandsSyntaxToolStripMenuItem.ToolTip"));
@@ -424,12 +447,12 @@ namespace DillenManagementStudio
             // 
             // changeDatabaseToolStripMenuItem
             // 
+            resources.ApplyResources(this.changeDatabaseToolStripMenuItem, "changeDatabaseToolStripMenuItem");
             this.changeDatabaseToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.changeDatabaseToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.changeDatabaseToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.changeDatabaseToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.changeDatabaseToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.changeDatabaseToolStripMenuItem, "changeDatabaseToolStripMenuItem");
             this.changeDatabaseToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.changeDatabaseToolStripMenuItem.Name = "changeDatabaseToolStripMenuItem";
             this.toolTip1.SetToolTip(this.changeDatabaseToolStripMenuItem, resources.GetString("changeDatabaseToolStripMenuItem.ToolTip"));
@@ -439,9 +462,9 @@ namespace DillenManagementStudio
             // 
             // redoToolStripMenuItem
             // 
+            resources.ApplyResources(this.redoToolStripMenuItem, "redoToolStripMenuItem");
             this.redoToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.redoToolStripMenuItem.BackgroundImage = global::DillenManagementStudio.Properties.Resources.redo;
-            resources.ApplyResources(this.redoToolStripMenuItem, "redoToolStripMenuItem");
             this.redoToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.redoToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.redoToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
@@ -455,9 +478,9 @@ namespace DillenManagementStudio
             // 
             // undoToolStripMenuItem
             // 
+            resources.ApplyResources(this.undoToolStripMenuItem, "undoToolStripMenuItem");
             this.undoToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.undoToolStripMenuItem.BackgroundImage = global::DillenManagementStudio.Properties.Resources.undo;
-            resources.ApplyResources(this.undoToolStripMenuItem, "undoToolStripMenuItem");
             this.undoToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.undoToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.undoToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
@@ -471,9 +494,9 @@ namespace DillenManagementStudio
             // 
             // saveToolStripMenuItem2
             // 
+            resources.ApplyResources(this.saveToolStripMenuItem2, "saveToolStripMenuItem2");
             this.saveToolStripMenuItem2.BackColor = System.Drawing.Color.Transparent;
             this.saveToolStripMenuItem2.BackgroundImage = global::DillenManagementStudio.Properties.Resources.saveIcon;
-            resources.ApplyResources(this.saveToolStripMenuItem2, "saveToolStripMenuItem2");
             this.saveToolStripMenuItem2.FlatAppearance.BorderSize = 0;
             this.saveToolStripMenuItem2.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
             this.saveToolStripMenuItem2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(117)))));
@@ -487,11 +510,11 @@ namespace DillenManagementStudio
             // 
             // fileToolStripMenuItem
             // 
+            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.fileToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.fileToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
             this.fileToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Tag = "1";
@@ -503,12 +526,12 @@ namespace DillenManagementStudio
             // 
             // replaceToolStripMenuItem
             // 
+            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.replaceToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.replaceToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.replaceToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.replaceToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.replaceToolStripMenuItem, "replaceToolStripMenuItem");
             this.replaceToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
             this.toolTip1.SetToolTip(this.replaceToolStripMenuItem, resources.GetString("replaceToolStripMenuItem.ToolTip"));
@@ -517,12 +540,12 @@ namespace DillenManagementStudio
             // 
             // findToolStripMenuItem
             // 
+            resources.ApplyResources(this.findToolStripMenuItem, "findToolStripMenuItem");
             this.findToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.findToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.findToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.findToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.findToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.findToolStripMenuItem, "findToolStripMenuItem");
             this.findToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
             this.toolTip1.SetToolTip(this.findToolStripMenuItem, resources.GetString("findToolStripMenuItem.ToolTip"));
@@ -531,12 +554,12 @@ namespace DillenManagementStudio
             // 
             // closeToolStripMenuItem
             // 
+            resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.closeToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.closeToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.closeToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.closeToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.toolTip1.SetToolTip(this.closeToolStripMenuItem, resources.GetString("closeToolStripMenuItem.ToolTip"));
@@ -545,12 +568,12 @@ namespace DillenManagementStudio
             // 
             // saveAsToolStripMenuItem
             // 
+            resources.ApplyResources(this.saveAsToolStripMenuItem, "saveAsToolStripMenuItem");
             this.saveAsToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.saveAsToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.saveAsToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.saveAsToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.saveAsToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.saveAsToolStripMenuItem, "saveAsToolStripMenuItem");
             this.saveAsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.toolTip1.SetToolTip(this.saveAsToolStripMenuItem, resources.GetString("saveAsToolStripMenuItem.ToolTip"));
@@ -559,12 +582,12 @@ namespace DillenManagementStudio
             // 
             // saveToolStripMenuItem
             // 
+            resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
             this.saveToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.saveToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.saveToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.saveToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.saveToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.saveToolStripMenuItem, "saveToolStripMenuItem");
             this.saveToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.toolTip1.SetToolTip(this.saveToolStripMenuItem, resources.GetString("saveToolStripMenuItem.ToolTip"));
@@ -573,12 +596,12 @@ namespace DillenManagementStudio
             // 
             // openFileToolStripMenuItem
             // 
+            resources.ApplyResources(this.openFileToolStripMenuItem, "openFileToolStripMenuItem");
             this.openFileToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.openFileToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.openFileToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.openFileToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.openFileToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.openFileToolStripMenuItem, "openFileToolStripMenuItem");
             this.openFileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.toolTip1.SetToolTip(this.openFileToolStripMenuItem, resources.GetString("openFileToolStripMenuItem.ToolTip"));
@@ -587,12 +610,12 @@ namespace DillenManagementStudio
             // 
             // newFileToolStripMenuItem
             // 
+            resources.ApplyResources(this.newFileToolStripMenuItem, "newFileToolStripMenuItem");
             this.newFileToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.newFileToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.newFileToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.newFileToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.newFileToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.newFileToolStripMenuItem, "newFileToolStripMenuItem");
             this.newFileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.newFileToolStripMenuItem.Name = "newFileToolStripMenuItem";
             this.toolTip1.SetToolTip(this.newFileToolStripMenuItem, resources.GetString("newFileToolStripMenuItem.ToolTip"));
@@ -601,12 +624,12 @@ namespace DillenManagementStudio
             // 
             // queryToolStripMenuItem
             // 
+            resources.ApplyResources(this.queryToolStripMenuItem, "queryToolStripMenuItem");
             this.queryToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.queryToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.queryToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.queryToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.queryToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.queryToolStripMenuItem, "queryToolStripMenuItem");
             this.queryToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.queryToolStripMenuItem.Name = "queryToolStripMenuItem";
             this.toolTip1.SetToolTip(this.queryToolStripMenuItem, resources.GetString("queryToolStripMenuItem.ToolTip"));
@@ -615,12 +638,12 @@ namespace DillenManagementStudio
             // 
             // executeNonQueryToolStripMenuItem
             // 
+            resources.ApplyResources(this.executeNonQueryToolStripMenuItem, "executeNonQueryToolStripMenuItem");
             this.executeNonQueryToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.executeNonQueryToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.executeNonQueryToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.executeNonQueryToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.executeNonQueryToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.executeNonQueryToolStripMenuItem, "executeNonQueryToolStripMenuItem");
             this.executeNonQueryToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.executeNonQueryToolStripMenuItem.Name = "executeNonQueryToolStripMenuItem";
             this.toolTip1.SetToolTip(this.executeNonQueryToolStripMenuItem, resources.GetString("executeNonQueryToolStripMenuItem.ToolTip"));
@@ -629,12 +652,12 @@ namespace DillenManagementStudio
             // 
             // automaticToolStripMenuItem
             // 
+            resources.ApplyResources(this.automaticToolStripMenuItem, "automaticToolStripMenuItem");
             this.automaticToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.automaticToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.automaticToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.automaticToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.automaticToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.automaticToolStripMenuItem, "automaticToolStripMenuItem");
             this.automaticToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.automaticToolStripMenuItem.Name = "automaticToolStripMenuItem";
             this.toolTip1.SetToolTip(this.automaticToolStripMenuItem, resources.GetString("automaticToolStripMenuItem.ToolTip"));
@@ -643,6 +666,7 @@ namespace DillenManagementStudio
             // 
             // pnlMenu
             // 
+            resources.ApplyResources(this.pnlMenu, "pnlMenu");
             this.pnlMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(41)))), ((int)(((byte)(45)))));
             this.pnlMenu.Controls.Add(this.vpnConfigurationToolStripMenuItem);
             this.pnlMenu.Controls.Add(this.executeAsToolStripMenuItem);
@@ -663,20 +687,21 @@ namespace DillenManagementStudio
             this.pnlMenu.Controls.Add(this.btnMinimize);
             this.pnlMenu.Controls.Add(this.lbTitle);
             this.pnlMenu.ForeColor = System.Drawing.SystemColors.Control;
-            resources.ApplyResources(this.pnlMenu, "pnlMenu");
             this.pnlMenu.Name = "pnlMenu";
+            this.toolTip1.SetToolTip(this.pnlMenu, resources.GetString("pnlMenu.ToolTip"));
             // 
             // executeAsToolStripMenuItem
             // 
+            resources.ApplyResources(this.executeAsToolStripMenuItem, "executeAsToolStripMenuItem");
             this.executeAsToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.executeAsToolStripMenuItem.BackgroundImage = global::DillenManagementStudio.Properties.Resources.moreIcon;
-            resources.ApplyResources(this.executeAsToolStripMenuItem, "executeAsToolStripMenuItem");
             this.executeAsToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.executeAsToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
             this.executeAsToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
             this.executeAsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.executeAsToolStripMenuItem.Name = "executeAsToolStripMenuItem";
             this.executeAsToolStripMenuItem.Tag = "3";
+            this.toolTip1.SetToolTip(this.executeAsToolStripMenuItem, resources.GetString("executeAsToolStripMenuItem.ToolTip"));
             this.executeAsToolStripMenuItem.UseVisualStyleBackColor = false;
             this.executeAsToolStripMenuItem.Click += new System.EventHandler(this.showMoreToolStripMenuItem_Click);
             this.executeAsToolStripMenuItem.MouseEnter += new System.EventHandler(this.moreToShowToolStripMenuItem_MouseEnter);
@@ -684,21 +709,23 @@ namespace DillenManagementStudio
             // 
             // picMenuMainSeparator
             // 
-            this.picMenuMainSeparator.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.picMenuMainSeparator, "picMenuMainSeparator");
+            this.picMenuMainSeparator.BackColor = System.Drawing.Color.Black;
             this.picMenuMainSeparator.Name = "picMenuMainSeparator";
             this.picMenuMainSeparator.TabStop = false;
+            this.toolTip1.SetToolTip(this.picMenuMainSeparator, resources.GetString("picMenuMainSeparator.ToolTip"));
             // 
             // editToolStripMenuItem
             // 
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.editToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.editToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
             this.editToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(64)))), ((int)(((byte)(70)))));
-            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Tag = "2";
+            this.toolTip1.SetToolTip(this.editToolStripMenuItem, resources.GetString("editToolStripMenuItem.ToolTip"));
             this.editToolStripMenuItem.UseVisualStyleBackColor = false;
             this.editToolStripMenuItem.Click += new System.EventHandler(this.showMoreToolStripMenuItem_Click);
             this.editToolStripMenuItem.MouseEnter += new System.EventHandler(this.moreToShowToolStripMenuItem_MouseEnter);
@@ -709,41 +736,46 @@ namespace DillenManagementStudio
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox1, resources.GetString("pictureBox1.ToolTip"));
             // 
             // btnClose
             // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.btnClose, "btnClose");
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.Image = global::DillenManagementStudio.Properties.Resources.btnClose__1_;
             this.btnClose.Name = "btnClose";
             this.btnClose.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnClose, resources.GetString("btnClose.ToolTip"));
             this.btnClose.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
             this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
             // 
             // btnMinimize
             // 
-            this.btnMinimize.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.btnMinimize, "btnMinimize");
+            this.btnMinimize.BackColor = System.Drawing.Color.Transparent;
             this.btnMinimize.Image = global::DillenManagementStudio.Properties.Resources.btnMinimize;
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnMinimize, resources.GetString("btnMinimize.ToolTip"));
             this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             this.btnMinimize.MouseEnter += new System.EventHandler(this.btnMinimize_MouseEnter);
             this.btnMinimize.MouseLeave += new System.EventHandler(this.btnMinimize_MouseLeave);
             // 
             // pnlEdit
             // 
-            this.pnlEdit.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.pnlEdit, "pnlEdit");
+            this.pnlEdit.BackColor = System.Drawing.Color.White;
             this.pnlEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlEdit.Controls.Add(this.replaceToolStripMenuItem);
             this.pnlEdit.Controls.Add(this.findToolStripMenuItem);
             this.pnlEdit.Name = "pnlEdit";
             this.pnlEdit.Tag = "2";
+            this.toolTip1.SetToolTip(this.pnlEdit, resources.GetString("pnlEdit.ToolTip"));
             // 
             // pnlFile
             // 
+            resources.ApplyResources(this.pnlFile, "pnlFile");
             this.pnlFile.BackColor = System.Drawing.Color.White;
             this.pnlFile.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFile.Controls.Add(this.closeToolStripMenuItem);
@@ -753,70 +785,76 @@ namespace DillenManagementStudio
             this.pnlFile.Controls.Add(this.pictureBox4);
             this.pnlFile.Controls.Add(this.openFileToolStripMenuItem);
             this.pnlFile.Controls.Add(this.newFileToolStripMenuItem);
-            resources.ApplyResources(this.pnlFile, "pnlFile");
             this.pnlFile.Name = "pnlFile";
             this.pnlFile.Tag = "1";
+            this.toolTip1.SetToolTip(this.pnlFile, resources.GetString("pnlFile.ToolTip"));
             // 
             // pictureBox5
             // 
-            this.pictureBox5.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.pictureBox5, "pictureBox5");
+            this.pictureBox5.BackColor = System.Drawing.Color.Black;
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox5, resources.GetString("pictureBox5.ToolTip"));
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.pictureBox4, "pictureBox4");
+            this.pictureBox4.BackColor = System.Drawing.Color.Black;
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox4, resources.GetString("pictureBox4.ToolTip"));
             // 
             // pnlVPNConfiguration
             // 
-            this.pnlVPNConfiguration.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.pnlVPNConfiguration, "pnlVPNConfiguration");
+            this.pnlVPNConfiguration.BackColor = System.Drawing.Color.White;
             this.pnlVPNConfiguration.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlVPNConfiguration.Controls.Add(this.tryToConnectToolStripMenuItem);
             this.pnlVPNConfiguration.Controls.Add(this.stopOrBeginTryingToConnectToolStripMenuItem);
             this.pnlVPNConfiguration.Name = "pnlVPNConfiguration";
             this.pnlVPNConfiguration.Tag = "4";
+            this.toolTip1.SetToolTip(this.pnlVPNConfiguration, resources.GetString("pnlVPNConfiguration.ToolTip"));
             // 
             // tryToConnectToolStripMenuItem
             // 
+            resources.ApplyResources(this.tryToConnectToolStripMenuItem, "tryToConnectToolStripMenuItem");
             this.tryToConnectToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.tryToConnectToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.tryToConnectToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.tryToConnectToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.tryToConnectToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.tryToConnectToolStripMenuItem, "tryToConnectToolStripMenuItem");
             this.tryToConnectToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tryToConnectToolStripMenuItem.Name = "tryToConnectToolStripMenuItem";
+            this.toolTip1.SetToolTip(this.tryToConnectToolStripMenuItem, resources.GetString("tryToConnectToolStripMenuItem.ToolTip"));
             this.tryToConnectToolStripMenuItem.UseVisualStyleBackColor = false;
             this.tryToConnectToolStripMenuItem.Click += new System.EventHandler(this.tryToConnectToolStripMenuItem_Click);
             // 
             // stopOrBeginTryingToConnectToolStripMenuItem
             // 
+            resources.ApplyResources(this.stopOrBeginTryingToConnectToolStripMenuItem, "stopOrBeginTryingToConnectToolStripMenuItem");
             this.stopOrBeginTryingToConnectToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.stopOrBeginTryingToConnectToolStripMenuItem.FlatAppearance.BorderSize = 0;
             this.stopOrBeginTryingToConnectToolStripMenuItem.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.stopOrBeginTryingToConnectToolStripMenuItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(166)))), ((int)(((byte)(233)))));
             this.stopOrBeginTryingToConnectToolStripMenuItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(215)))), ((int)(((byte)(243)))));
-            resources.ApplyResources(this.stopOrBeginTryingToConnectToolStripMenuItem, "stopOrBeginTryingToConnectToolStripMenuItem");
             this.stopOrBeginTryingToConnectToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.stopOrBeginTryingToConnectToolStripMenuItem.Name = "stopOrBeginTryingToConnectToolStripMenuItem";
+            this.toolTip1.SetToolTip(this.stopOrBeginTryingToConnectToolStripMenuItem, resources.GetString("stopOrBeginTryingToConnectToolStripMenuItem.ToolTip"));
             this.stopOrBeginTryingToConnectToolStripMenuItem.UseVisualStyleBackColor = false;
             this.stopOrBeginTryingToConnectToolStripMenuItem.Click += new System.EventHandler(this.stopOrBeginTryingToConnectToolStripMenuItem_Click);
             // 
             // pnlExecuteAs
             // 
-            this.pnlExecuteAs.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.pnlExecuteAs, "pnlExecuteAs");
+            this.pnlExecuteAs.BackColor = System.Drawing.Color.White;
             this.pnlExecuteAs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlExecuteAs.Controls.Add(this.queryToolStripMenuItem);
             this.pnlExecuteAs.Controls.Add(this.executeNonQueryToolStripMenuItem);
             this.pnlExecuteAs.Controls.Add(this.automaticToolStripMenuItem);
             this.pnlExecuteAs.Name = "pnlExecuteAs";
             this.pnlExecuteAs.Tag = "3";
+            this.toolTip1.SetToolTip(this.pnlExecuteAs, resources.GetString("pnlExecuteAs.ToolTip"));
             // 
             // FrmDillenSQLManagementStudio
             // 
@@ -841,6 +879,7 @@ namespace DillenManagementStudio
             this.KeyPreview = true;
             this.Name = "FrmDillenSQLManagementStudio";
             this.ShowInTaskbar = false;
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.FrmDillenSQLManagementStudio_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.FrmDillenSQLManagementStudio_PreviewKeyDown);

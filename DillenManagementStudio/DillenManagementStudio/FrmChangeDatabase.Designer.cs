@@ -55,231 +55,140 @@
             // 
             // btnAddNewDatabase
             // 
-            this.btnAddNewDatabase.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnAddNewDatabase.Location = new System.Drawing.Point(172, 281);
+            resources.ApplyResources(this.btnAddNewDatabase, "btnAddNewDatabase");
             this.btnAddNewDatabase.Name = "btnAddNewDatabase";
-            this.btnAddNewDatabase.Size = new System.Drawing.Size(163, 23);
-            this.btnAddNewDatabase.TabIndex = 8;
-            this.btnAddNewDatabase.Text = "Connect with new database";
             this.btnAddNewDatabase.UseVisualStyleBackColor = true;
             this.btnAddNewDatabase.Click += new System.EventHandler(this.btnAddNewDatabase_Click);
             // 
             // btnSelectDatabase
             // 
-            this.btnSelectDatabase.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSelectDatabase.Location = new System.Drawing.Point(58, 70);
+            resources.ApplyResources(this.btnSelectDatabase, "btnSelectDatabase");
             this.btnSelectDatabase.Name = "btnSelectDatabase";
-            this.btnSelectDatabase.Size = new System.Drawing.Size(113, 23);
-            this.btnSelectDatabase.TabIndex = 0;
-            this.btnSelectDatabase.Text = "Select database";
             this.btnSelectDatabase.UseVisualStyleBackColor = true;
             this.btnSelectDatabase.Click += new System.EventHandler(this.btnSelectDatabase_Click);
             // 
             // cbxChsDtBs
             // 
             this.cbxChsDtBs.FormattingEnabled = true;
-            this.cbxChsDtBs.Location = new System.Drawing.Point(41, 43);
+            resources.ApplyResources(this.cbxChsDtBs, "cbxChsDtBs");
             this.cbxChsDtBs.Name = "cbxChsDtBs";
-            this.cbxChsDtBs.Size = new System.Drawing.Size(397, 21);
-            this.cbxChsDtBs.TabIndex = 1;
             // 
             // lbTitle1
             // 
-            this.lbTitle1.AutoSize = true;
-            this.lbTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTitle1.Location = new System.Drawing.Point(12, 12);
+            resources.ApplyResources(this.lbTitle1, "lbTitle1");
             this.lbTitle1.Name = "lbTitle1";
-            this.lbTitle1.Size = new System.Drawing.Size(363, 20);
-            this.lbTitle1.TabIndex = 27;
-            this.lbTitle1.Text = "Choose an database you have already used:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 134);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(363, 20);
-            this.label2.TabIndex = 28;
-            this.label2.Text = "Choose an database you have already used:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(41, 168);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 18);
-            this.label3.TabIndex = 29;
-            this.label3.Text = "Data Source:";
             // 
             // txtDataSource
             // 
-            this.txtDataSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDataSource.Location = new System.Drawing.Point(142, 168);
+            resources.ApplyResources(this.txtDataSource, "txtDataSource");
             this.txtDataSource.Name = "txtDataSource";
-            this.txtDataSource.Size = new System.Drawing.Size(296, 21);
-            this.txtDataSource.TabIndex = 4;
             // 
             // txtInicialCatalog
             // 
-            this.txtInicialCatalog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInicialCatalog.Location = new System.Drawing.Point(142, 195);
+            resources.ApplyResources(this.txtInicialCatalog, "txtInicialCatalog");
             this.txtInicialCatalog.Name = "txtInicialCatalog";
-            this.txtInicialCatalog.Size = new System.Drawing.Size(296, 21);
-            this.txtInicialCatalog.TabIndex = 5;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(41, 196);
+            resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 18);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "Initial Catalog:";
             // 
             // txtUserID
             // 
-            this.txtUserID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserID.Location = new System.Drawing.Point(142, 222);
+            resources.ApplyResources(this.txtUserID, "txtUserID");
             this.txtUserID.Name = "txtUserID";
-            this.txtUserID.Size = new System.Drawing.Size(296, 21);
-            this.txtUserID.TabIndex = 6;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(41, 223);
+            resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 18);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "User ID:";
             // 
             // txtPassword
             // 
-            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(142, 250);
+            resources.ApplyResources(this.txtPassword, "txtPassword");
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(296, 21);
-            this.txtPassword.TabIndex = 7;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(41, 250);
+            resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 18);
-            this.label6.TabIndex = 35;
-            this.label6.Text = "Password:";
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(49, 269);
+            resources.ApplyResources(this.checkBox1, "checkBox1");
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(83, 16);
-            this.checkBox1.TabIndex = 37;
             this.checkBox1.TabStop = false;
-            this.checkBox1.Text = "See password";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.checkBox1_MouseDown);
             this.checkBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.checkBox1_MouseUp);
             // 
             // btnDeleteDatabase
             // 
-            this.btnDeleteDatabase.Location = new System.Drawing.Point(340, 70);
+            resources.ApplyResources(this.btnDeleteDatabase, "btnDeleteDatabase");
             this.btnDeleteDatabase.Name = "btnDeleteDatabase";
-            this.btnDeleteDatabase.Size = new System.Drawing.Size(98, 23);
-            this.btnDeleteDatabase.TabIndex = 3;
-            this.btnDeleteDatabase.Text = "Delete database";
             this.btnDeleteDatabase.UseVisualStyleBackColor = true;
             this.btnDeleteDatabase.Click += new System.EventHandler(this.btnDeleteDatabase_Click);
             // 
             // btnUpdateDatabase
             // 
-            this.btnUpdateDatabase.Location = new System.Drawing.Point(234, 70);
+            resources.ApplyResources(this.btnUpdateDatabase, "btnUpdateDatabase");
             this.btnUpdateDatabase.Name = "btnUpdateDatabase";
-            this.btnUpdateDatabase.Size = new System.Drawing.Size(101, 23);
-            this.btnUpdateDatabase.TabIndex = 2;
-            this.btnUpdateDatabase.Text = "Update database";
             this.btnUpdateDatabase.UseVisualStyleBackColor = true;
             this.btnUpdateDatabase.Click += new System.EventHandler(this.btnUpdateDatabase_Click);
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(195, 67);
+            resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(14, 24);
-            this.label7.TabIndex = 40;
-            this.label7.Text = "|";
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(346, 281);
+            resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(67, 23);
-            this.btnCancel.TabIndex = 9;
-            this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnTryConn
             // 
-            this.btnTryConn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTryConn.Location = new System.Drawing.Point(10, 336);
+            resources.ApplyResources(this.btnTryConn, "btnTryConn");
             this.btnTryConn.Name = "btnTryConn";
-            this.btnTryConn.Size = new System.Drawing.Size(91, 22);
-            this.btnTryConn.TabIndex = 10;
-            this.btnTryConn.Text = "Test connection";
             this.btnTryConn.UseVisualStyleBackColor = true;
             this.btnTryConn.Click += new System.EventHandler(this.btnTryConn_Click);
             // 
             // btnDisconnect
             // 
-            this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.Location = new System.Drawing.Point(111, 336);
+            resources.ApplyResources(this.btnDisconnect, "btnDisconnect");
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(91, 22);
-            this.btnDisconnect.TabIndex = 11;
-            this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.UseVisualStyleBackColor = true;
             this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(267, 342);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 12);
-            this.label1.TabIndex = 41;
-            this.label1.Text = "Check connection with Unicamp VPN:";
             // 
             // btnTryConnUnicamp
             // 
             this.btnTryConnUnicamp.BackgroundImage = global::DillenManagementStudio.Properties.Resources.reload;
-            this.btnTryConnUnicamp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTryConnUnicamp.Location = new System.Drawing.Point(428, 335);
+            resources.ApplyResources(this.btnTryConnUnicamp, "btnTryConnUnicamp");
             this.btnTryConnUnicamp.Name = "btnTryConnUnicamp";
-            this.btnTryConnUnicamp.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnTryConnUnicamp.Size = new System.Drawing.Size(25, 25);
-            this.btnTryConnUnicamp.TabIndex = 42;
             this.btnTryConnUnicamp.UseVisualStyleBackColor = true;
             this.btnTryConnUnicamp.Click += new System.EventHandler(this.btnTryConnUnicamp_Click);
             // 
             // FrmChangeDatabase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 366);
             this.Controls.Add(this.btnTryConnUnicamp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDisconnect);
@@ -302,12 +211,7 @@
             this.Controls.Add(this.btnAddNewDatabase);
             this.Controls.Add(this.btnSelectDatabase);
             this.Controls.Add(this.cbxChsDtBs);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(479, 405);
-            this.MinimumSize = new System.Drawing.Size(479, 405);
             this.Name = "FrmChangeDatabase";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Choose your database";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmChangeDatabase_FormClosing);
             this.Load += new System.EventHandler(this.FrmChangeDatabase_Load);
             this.Shown += new System.EventHandler(this.FrmChangeDatabase_Shown);

@@ -273,5 +273,17 @@
   <ItemGroup>
     <None Include="Resources\reload.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\more options background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\more options background1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on4.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,6 +28,8 @@ namespace DillenManagementStudio
         public FrmSplash()
         {
             InitializeComponent();
+
+            //Application.DoEvents();
         }
 
         protected void tmr_Tick(object sender, EventArgs e)

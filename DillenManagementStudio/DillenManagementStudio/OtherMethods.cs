@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Drawing;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace DillenManagementStudio
 {
@@ -102,4 +103,51 @@ namespace DillenManagementStudio
                 || e.KeyCode == Keys.Oem5 || e.KeyCode == Keys.Oem6 || e.KeyCode == Keys.Oem7 || e.KeyCode == Keys.Oem8);
         }
     }
+
+    public class OpaquePanel : Panel
+    {
+        protected const int WS_EX_TRANSPARENT = 0x20;
+        public OpaquePanel(int opacity)
+        {
+            this.opacity = opacity;
+            SetStyle(ControlStyles.Opaque, true);
+        }
+
+        protected int opacity;
+        [DefaultValue(50)]
+        public int Opacity
+        {
+            get
+            {
+                return this.opacity;
+            }
+            set
+            {
+                if (value < 0 || value > 100)
+                    throw new ArgumentException("value must be between 0 and 100");
+                this.opacity = value;
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle = cp.ExStyle | WS_EX_TRANSPARENT;
+                return cp;
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            using (var brush = new SolidBrush(Color.FromArgb(this.opacity * 255 / 100, this.BackColor)))
+            {
+                e.Graphics.FillRectangle(brush, this.ClientRectangle);
+            }
+            base.OnPaint(e);
+        }
+
+    }
+
 }

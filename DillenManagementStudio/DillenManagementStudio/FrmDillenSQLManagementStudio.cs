@@ -24,6 +24,9 @@ namespace DillenManagementStudio
         protected SqlRichTextBox sqlRchtxtbx;
         protected bool showedDialog = false;
 
+        //rest of form darken (except menu)
+        protected const int REST_OF_FORM_DARKEN = 65;
+
         //general
         protected const string TITLE = "Dillen's SQL Management Studio (Dillenburg's Product)";
 
@@ -41,7 +44,7 @@ namespace DillenManagementStudio
 
         //FrmChangeDatabase (using VPN Connection)
         protected FrmChangeDatabase frmChangeDatabase;
-        
+
 
         //form iniciate and finish
         public FrmDillenSQLManagementStudio()
@@ -63,41 +66,41 @@ namespace DillenManagementStudio
 
         protected void AjustForm()
         {
-            ///Put separators on menuStrip
-            this.menuStrip.Items.Insert(1, new ToolStripSeparator());
-            this.menuStrip.Items.Insert(5, new ToolStripSeparator());
-            this.menuStrip.Items.Insert(8, new ToolStripSeparator());
-            this.menuStrip.Items.Insert(11, new ToolStripSeparator());
-            this.menuStrip.Items.Insert(14, new ToolStripSeparator());
-
-
             ///Size
             //Form
             this.Width = Screen.PrimaryScreen.WorkingArea.Width;
             this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+            //menu
+            this.pnlMenu.Width = this.Width;
+            this.picMenuMainSeparator.Width = this.Width;
             //RichTextBox Code
             this.rchtxtCode.Width = (int)Math.Round(0.548 * this.Width); //54.8%
-            this.rchtxtCode.Height = (int)Math.Round(0.915 * (this.Height - this.menuStrip.Height)); //91.5%
+            this.rchtxtCode.Height = (int)Math.Round(0.915 * (this.Height - this.pnlMenu.Height)); //91.5%
             this.rchtxtAux.Width = this.rchtxtCode.Width;
             this.rchtxtAux.Height = this.rchtxtCode.Height;
             this.pnlLoading.Width = (int)Math.Round(0.24 * this.Width); //24%
-            this.pnlLoading.Height = (int)Math.Round(0.183 * (this.Height - this.menuStrip.Height)); //16.3%
+            this.pnlLoading.Height = (int)Math.Round(0.183 * (this.Height - this.pnlMenu.Height)); //16.3%
             //DataGridView Select
             this.grvSelect.Width = (int)Math.Round(0.423 * this.Width); //42.3%
-            this.grvSelect.Height = (int)Math.Round(0.92 * (this.Height - this.menuStrip.Height)); //92%
+            this.grvSelect.Height = (int)Math.Round(0.92 * (this.Height - this.pnlMenu.Height)); //92%
 
 
             ///LOCATION
+            /////last button from menu
+            this.vpnConfigurationToolStripMenuItem.Location = new Point(this.Width - this.vpnConfigurationToolStripMenuItem.Width - 4,
+                this.vpnConfigurationToolStripMenuItem.Location.Y);
+            this.pnlVPNConfiguration.Location = new Point(this.Width - this.pnlVPNConfiguration.Width - 4,
+                this.pnlVPNConfiguration.Location.Y);
             //RichTextBox Code
             int x = (int)Math.Round(0.0088 * (this.Width)); //0.88%
-            int y = (int)Math.Round(0.122 * (this.Height - this.menuStrip.Height)); //12.8%
+            int y = (int)Math.Round(0.122 * (this.Height - this.pnlMenu.Height)); //12.8%
             this.rchtxtCode.Location = new Point(x, y);
             this.rchtxtAux.Location = this.rchtxtCode.Location;
             //DataGridView Select
             x = (int)Math.Round(0.571 * (this.Width)); //57.1%
-            y = (int)Math.Round(0.158 * (this.Height - this.menuStrip.Height)); //15.8%
+            y = (int)Math.Round(0.158 * (this.Height - this.pnlMenu.Height)); //15.8%
             this.grvSelect.Location = new Point(x, y);
-            this.lbExecutionResult.Location = new Point(this.grvSelect.Location.X + 2, 
+            this.lbExecutionResult.Location = new Point(this.grvSelect.Location.X + 2,
                 this.grvSelect.Location.Y - this.lbExecutionResult.Height - 4);
             this.btnAllTables.Location = new Point(this.grvSelect.Location.X + this.grvSelect.Width - this.btnAllTables.Width - 2,
                 this.lbExecutionResult.Location.Y - 4);
@@ -108,10 +111,19 @@ namespace DillenManagementStudio
             this.btnMinimize.Location = new Point(this.btnClose.Location.X - this.btnMinimize.Width, this.btnClose.Location.Y);
             // Label Database
             x = (int)Math.Round(0.019 * (this.Width)); //1.9%
-            y = (int)Math.Round(1.054 * (this.Height - this.menuStrip.Height)); //105.4%
+            y = (int)Math.Round(1.054 * (this.Height - this.pnlMenu.Height)); //105.4%
             this.lbDatabase.Location = new Point(x, y);
             this.pnlSearch.Location = new Point(this.rchtxtCode.Location.X + this.rchtxtCode.Width + 2,
                 this.pnlSearch.Location.Y);
+
+            //darken rest of the form
+            this.opaquePanel = new OpaquePanel(REST_OF_FORM_DARKEN);
+            this.opaquePanel.Visible = false;
+            this.opaquePanel.BackColor = Color.Black;
+            this.opaquePanel.Location = new Point(0, this.pnlMenu.Height + this.pnlMenu.Location.Y);
+            this.opaquePanel.Size = new Size(this.pnlMenu.Width, this.Height - this.opaquePanel.Location.Y);
+            this.opaquePanel.Click += new System.EventHandler(this.opaquePanel_Click);
+            this.Controls.Add(this.opaquePanel);
 
             //MessageBox.Show("Width: " + (((float)this.lbDatabase.Location.X) / ((float)this.Width))*100 + "%" ); //1.9%
             //MessageBox.Show("Height: " + (((float)this.lbDatabase.Location.Y) / ((float)this.Height - this.menuStrip.Height))*100 + "%"); //105.4%
@@ -127,7 +139,7 @@ namespace DillenManagementStudio
             frmSplash.FormClosed += (s, args) => this.AuxSplashClosed(frmSplash);
 
             this.TryConnWithMyDtbs(true);
-            
+
             //mySQLConnection
             this.mySqlCon = new MySqlConnection(this.user);
 
@@ -136,6 +148,15 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.SetNewEvents(new System.EventHandler(this.newRchtxtCode_TextChanged),
                 new System.Windows.Forms.PreviewKeyDownEventHandler(this.newRchtxtCode_PreviewKeyDown));
             this.sqlRchtxtbx.SQLRichTextBox.KeyPress += new KeyPressEventHandler(this.newRchtxtCode_KeyPress);
+
+            //opacity to darken the rest of the Form except the Menu
+            this.opaquePanel.BringToFront();
+
+            //panel in first place
+            this.pnlFile.BringToFront();
+            this.pnlEdit.BringToFront();
+            this.pnlExecuteAs.BringToFront();
+            this.pnlVPNConfiguration.BringToFront();
 
             //splash can close
             frmSplash.CanClose(this.user != null);
@@ -163,7 +184,7 @@ namespace DillenManagementStudio
         //other form's methods
         protected void FrmDillenSQLManagementStudio_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            this.showedDialog = false; 
+            this.showedDialog = false;
 
             if (e.KeyCode == Keys.F5) //F5
                 this.executeToolStripMenuItem.PerformClick();
@@ -183,10 +204,10 @@ namespace DillenManagementStudio
                 this.replaceToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.N && e.Control) //ctrl+N
-                this.newToolStripMenuItem.PerformClick();
+                this.newFileToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.O && e.Control) //ctrl+O
-                this.openToolStripMenuItem.PerformClick();
+                this.openFileToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
                 this.closeToolStripMenuItem.PerformClick();
@@ -219,10 +240,10 @@ namespace DillenManagementStudio
                 this.replaceToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.N && e.Control) //ctrl+N
-                this.newToolStripMenuItem.PerformClick();
+                this.newFileToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.O && e.Control) //ctrl+O
-                this.openToolStripMenuItem.PerformClick();
+                this.openFileToolStripMenuItem.PerformClick();
             else
             if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
                 this.closeToolStripMenuItem.PerformClick();
@@ -235,7 +256,7 @@ namespace DillenManagementStudio
             else
                 e.Handled = false;
         }
-        
+
         protected void EnableWichDependsCon(bool enable)
         {
             this.btnAllTables.Enabled = enable;
@@ -285,7 +306,8 @@ namespace DillenManagementStudio
 
         protected void CheckVPNConn()
         {
-            this.Invoke((MethodInvoker)delegate {
+            this.Invoke((MethodInvoker)delegate
+            {
                 //if was connected
                 if (this.user != null)
                 {
@@ -304,7 +326,7 @@ namespace DillenManagementStudio
                     this.TryConnWithMyDtbs(false);
             });
         }
-        
+
         protected void TryConnWithMyDtbs(bool firstTime)
         {
             //Forward, user is null...
@@ -324,8 +346,9 @@ namespace DillenManagementStudio
                 }*/
             }
 
-            this.Invoke((MethodInvoker)delegate {
-                this.allCommandsSintaxToolStripMenuItem.Enabled = this.user != null;
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.allCommandsSyntaxToolStripMenuItem.Enabled = this.user != null;
                 if (this.user != null)
                 {
                     this.user.InicializeUser();
@@ -405,7 +428,7 @@ namespace DillenManagementStudio
             if (!this.isSaved)
             {
                 if (String.IsNullOrEmpty(this.fileName))
-                    this.saveAsToolStripMenuItem.PerformClick();
+                    this.saveAsToolStripMenuItem_Click(this.saveAsToolStripMenuItem, new EventArgs());
                 else
                 {
                     this.SaveFile();
@@ -515,7 +538,7 @@ namespace DillenManagementStudio
                 string tableName = "";
 
                 //DataGridView
-                DataTable dataTable = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors, 
+                DataTable dataTable = this.mySqlCon.ExecuteAutomaticSqlCommands(allCodes, ref errors,
                     ref qtdLinesChanged, ref tableName);
                 this.grvSelect.TopLeftHeaderCell.Value = tableName;
                 //this.lbTableName.Text = tableName;
@@ -606,16 +629,17 @@ namespace DillenManagementStudio
                             try
                             {
                                 new FrmCommandExplanation(currErr.CodCommand, this.user, this.mySqlCon).Show();
-                            }catch(Exception e)
+                            }
+                            catch (Exception e)
                             {
                                 this.User = null;
                                 MessageBox.Show(e.Message);
-                            }                            
+                            }
                     }
                 }
             }
         }
-        
+
 
         //sql execute procedures
         protected void btnAllTables_Click(object sender, EventArgs e)
@@ -648,8 +672,8 @@ namespace DillenManagementStudio
             set
             {
                 this.user = value;
-                
-                this.allCommandsSintaxToolStripMenuItem.Enabled = (value != null);
+
+                this.allCommandsSyntaxToolStripMenuItem.Enabled = (value != null);
             }
         }
 
@@ -686,7 +710,7 @@ namespace DillenManagementStudio
 
         public void ChangeDatabaseName(string databaseName)
         {
-            if(databaseName == null)
+            if (databaseName == null)
             {
                 this.lbDatabase.Text = "Not connected";
                 this.EnableWichDependsCon(false);
@@ -707,7 +731,7 @@ namespace DillenManagementStudio
 
             string newDatabase = this.mySqlCon.ConnStr;
             //if connected with a database different from the old one
-            if(!String.IsNullOrEmpty(newDatabase) && newDatabase != oldDatabase)
+            if (!String.IsNullOrEmpty(newDatabase) && newDatabase != oldDatabase)
                 new Thread(() => this.AuxBtnAllTablesClick()).Start();
 
             //set Focus in RichTextBox
@@ -724,12 +748,12 @@ namespace DillenManagementStudio
             {
                 //while(!this.btnAllTables.CanFocus)
                 //{}
-                while(true)
+                while (true)
                 {
                     try
                     {
                         bool canFocus = false;
-                        this.btnAllTables.Invoke(new Action(() => 
+                        this.btnAllTables.Invoke(new Action(() =>
                         {
                             canFocus = this.btnAllTables.CanFocus;
                         }));
@@ -737,10 +761,10 @@ namespace DillenManagementStudio
                         if (canFocus)
                             break;
                     }
-                    catch(Exception e)
-                    {}
+                    catch (Exception e)
+                    { }
                 }
-                    //OR
+                //OR
                 //for (; ; )
                 //    if (this.btnAllTables.CanFocus)
                 //        break;
@@ -759,23 +783,23 @@ namespace DillenManagementStudio
             {
                 new FrmAllCommands(this.user, this.mySqlCon, this).Show();
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 this.User = null;
                 MessageBox.Show(MSG_UNICAMP_VPN_DISCONNECTED);
             }
         }
 
-        
+
         //allow notification
         protected void allowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.allowNotification = !this.allowNotification;
 
             if (this.allowNotification)
-                this.allowToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_on3;
+                this.allowOrNotNotificationsToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_on4;
             else
-                this.allowToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_off1;
+                this.allowOrNotNotificationsToolStripMenuItem.Image = global::DillenManagementStudio.Properties.Resources.switch_off2;
         }
 
 
@@ -788,7 +812,8 @@ namespace DillenManagementStudio
             try
             {
                 this.sqlRchtxtbx.Find(this.txtFind.Text, stringComparison);
-            }catch(Exception err)
+            }
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message);
             }
@@ -809,17 +834,18 @@ namespace DillenManagementStudio
                 this.pnlSearch.Visible = qtdReplaced < 0;
                 if (qtdReplaced >= 0)
                     MessageBox.Show(qtdReplaced + " occurrence replaced.");
-            }catch(Exception err)
+            }
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message);
             }
         }
-        
+
         //visual or resource
         protected void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //if it's selected something different from txtFind
-            bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 && 
+            bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 &&
                 this.rchtxtCode.SelectedText != this.txtFind.Text;
             if (this.pnlSearch.Visible && this.isFind && !selectedSomethingDifferent)
                 this.btnCloseFindReplace.PerformClick();
@@ -872,7 +898,7 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.ChangeBackColorFromLastSearch();
             this.pnlSearch.Visible = false;
         }
-        
+
         protected void btnSeeReplace_Click(object sender, EventArgs e)
         {
             this.replaceToolStripMenuItem.PerformClick();
@@ -882,7 +908,7 @@ namespace DillenManagementStudio
         {
             this.findToolStripMenuItem.PerformClick();
         }
-        
+
         protected void txtFind_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -999,7 +1025,7 @@ namespace DillenManagementStudio
             this.sqlRchtxtbx.Redo();
         }
 
-        
+
         //DataGridView resources
         protected void grvSelect_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1024,7 +1050,8 @@ namespace DillenManagementStudio
                     //this.lbTableName.Text = tableName;
                     //this.lbTableName.Visible = true;
                     this.grvSelect.DataSource = dataTable;
-                }catch(Exception err)
+                }
+                catch (Exception err)
                 { }
             }
         }
@@ -1050,7 +1077,143 @@ namespace DillenManagementStudio
         {
             this.btnMinimize.Image = global::DillenManagementStudio.Properties.Resources.btnMinimize;
         }
-        
 
+
+        //menu
+        protected void showMoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int tag = Convert.ToInt32((btn).Tag);
+
+            switch (tag)
+            {
+                case 1:
+                    this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+                    this.CancelShowMore(this.executeAsToolStripMenuItem, this.pnlExecuteAs);
+                    this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+                    this.AuxShowMoreToolStrip(btn, this.pnlFile);
+                    break;
+                case 2:
+                    this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+                    this.CancelShowMore(this.executeAsToolStripMenuItem, this.pnlExecuteAs);
+                    this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+                    this.AuxShowMoreToolStrip(btn, this.pnlEdit);
+                    break;
+                case 3:
+                    this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+                    this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+                    this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+                    this.AuxShowMoreToolStrip(btn, this.pnlExecuteAs);
+                    break;
+                case 4:
+                    this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+                    this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+                    this.CancelShowMore(this.executeAsToolStripMenuItem, this.pnlExecuteAs);
+                    this.AuxShowMoreToolStrip(btn, this.pnlVPNConfiguration);
+                    break;
+            }
+        }
+
+        protected void AuxShowMoreToolStrip(Button btn, Panel pnl)
+        {
+            pnl.Visible = !pnl.Visible;
+            if (pnl.Visible)
+            {
+                pnl.BringToFront();
+                btn.BackColor = Color.White;
+                btn.ForeColor = Color.Black;
+                this.opaquePanel.Visible = true;
+            }
+            else
+            {
+                btn.BackColor = this.pnlMenu.BackColor;
+                btn.ForeColor = this.pnlMenu.ForeColor;
+                this.opaquePanel.Visible = false;
+            }
+        }
+
+        protected void CancelShowMore(Button btn, Panel pnl)
+        {
+            pnl.Visible = false;
+            btn.BackColor = this.pnlMenu.BackColor;
+            btn.ForeColor = this.pnlMenu.ForeColor;
+        }
+
+        protected void moreToShowToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int tag = Convert.ToInt32((btn).Tag);
+
+            Panel pnl = null;
+
+            switch (tag)
+            {
+                case 1:
+                    pnl = this.pnlFile;
+                    break;
+                case 2:
+                    pnl = this.pnlEdit;
+                    break;
+                case 3:
+                    pnl = this.pnlExecuteAs;
+                    break;
+                case 4:
+                    pnl = this.pnlVPNConfiguration;
+                    break;
+            }
+
+            if (!pnl.Visible)
+            {
+                btn.BackColor = Color.FromArgb(55, 64, 70);
+                this.notShowMoreToolStripMenuItem_MouseEnter(sender, e);
+            }
+        }
+
+        protected void moreToShowToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int tag = Convert.ToInt32((btn).Tag);
+
+            Panel pnl = null;
+
+            switch (tag)
+            {
+                case 1:
+                    pnl = this.pnlFile;
+                    break;
+                case 2:
+                    pnl = this.pnlEdit;
+                    break;
+                case 3:
+                    pnl = this.pnlExecuteAs;
+                    break;
+                case 4:
+                    pnl = this.pnlVPNConfiguration;
+                    break;
+            }
+
+            if (!pnl.Visible)
+                btn.BackColor = this.pnlMenu.BackColor;
+        }
+
+        protected void notShowMoreToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            this.NotShowMorePanelsMenu();
+        }
+
+        protected void opaquePanel_Click(object sender, EventArgs e)
+        {
+            this.NotShowMorePanelsMenu();
+        }
+
+        protected void NotShowMorePanelsMenu()
+        {
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+            this.CancelShowMore(this.executeAsToolStripMenuItem, this.pnlExecuteAs);
+            this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+            this.opaquePanel.Visible = false;
+        }
+        
     }
 }

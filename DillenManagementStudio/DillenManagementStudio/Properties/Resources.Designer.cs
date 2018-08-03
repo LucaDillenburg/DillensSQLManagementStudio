@@ -223,6 +223,26 @@ namespace DillenManagementStudio.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap more_options_background {
+            get {
+                object obj = ResourceManager.GetObject("more options background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap more_options_background1 {
+            get {
+                object obj = ResourceManager.GetObject("more options background1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap moreIcon {
             get {
                 object obj = ResourceManager.GetObject("moreIcon", resourceCulture);
@@ -343,6 +363,16 @@ namespace DillenManagementStudio.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap switch_off2 {
+            get {
+                object obj = ResourceManager.GetObject("switch off2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap switch_on {
             get {
                 object obj = ResourceManager.GetObject("switch on", resourceCulture);
@@ -386,6 +416,16 @@ namespace DillenManagementStudio.Properties {
         internal static System.Drawing.Bitmap switch_on3 {
             get {
                 object obj = ResourceManager.GetObject("switch on3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap switch_on4 {
+            get {
+                object obj = ResourceManager.GetObject("switch on4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

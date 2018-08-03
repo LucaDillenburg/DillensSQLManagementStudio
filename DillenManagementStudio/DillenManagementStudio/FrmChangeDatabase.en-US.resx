@@ -118,44 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbTitle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Imprint MT Shadow, 9.75pt, style=Bold</value>
-  </data>
-  <data name="lbTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>32, 9</value>
-  </data>
-  <data name="lbTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>447, 15</value>
-  </data>
-  <data name="lbTitle.Text" xml:space="preserve">
-    <value>Dillen's SQL Management Studio                  - Dillenburg's Product</value>
-  </data>
-  <data name="editToolStripMenuItem.ToolTip" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        /9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAEAAAAAAAD/2wBD
-        AAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0M
-        DgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM
-        DAwMDAwMDAwMDAwMDAz/wAARCAAXABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQF
-        BgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAk
-        M2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWG
-        h4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx
-        8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQA
-        AQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5
-        OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmq
-        srO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5
-        h+EnxEX47eHZtY0XR9J8P6HYb4RrYuDDJcAcHcANskIIwN8bYP3dhIx9Kfse/GvTfFXwQbwtfXVnDrvg
-        u8u3uL0PGt1aBmPlMgGQ/wDr2IkJf5g2QM7j+WHgL4U+FfDWneKtJufEkPhvxBePFe+FtR1TWbnTdKuY
-        HBVmEkQxvCMPvDh4grbQSpyvCvx41TwV8c9T0iHxBb62xkGn2euRSGFL1Fb92ZWhZTID0Jzlu/XIzo5l
-        TqYieFtJSj3TSei1TtZ729U+zKlhpRpqpdWfnr1/y/LufQf7R3iPTPhd+0D4o0O7vJtatbeZLiAQW1u6
-        27zAyyjY+VQb2KjaASsa7skA0V1n7M37NV18UNR8TXq+IJIZo5LYXV+mnTTHULh0aWTKrgKULgZ5JJIJ
-        JWiu7UxPPNE0nw3p9zeWK2tnfWuqXoW6tmsYtsTuFxkGMKQCSMjeSQWxg7a8z+L3wW8L2uuf2h4Za4vJ
-        CEnFv5CpbwR8BWZ3ZX8wuQMKhBDgllwVoopborqfbPwN1WP4I/AXwvH/AGpdTya0st7JvhDxqxYKcE5b
-        JIJOezJ1O6iiito7GJ//2Q==
-</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAFRcAAAEAIAAQCAAAFgAAACgAAAAVAAAALgAAAAEAIAAAAAAAjAcAAMMOAADDDgAAAAAAAAAA
@@ -194,8 +156,5 @@
         OP9ZVFP/bWhn/zUwL/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Dillen's SQL Management Studio - Dillenburg's Product</value>
   </data>
 </root>

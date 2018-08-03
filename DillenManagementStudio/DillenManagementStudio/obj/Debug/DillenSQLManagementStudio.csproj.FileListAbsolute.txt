@@ -49,3 +49,7 @@ D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\en-US\DillenManagementStudio.resources.dll
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.exe
 D:\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.pdb
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\bin\Debug\az-Latn\DillenManagementStudio.resources.dll
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmDillenSQLManagementStudio.az-Latn.resources
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\az-Latn\DillenManagementStudio.resources.dll
+C:\Users\Tutabaia\Documents\GitHub\DillensSQLManagementStudio\DillenManagementStudio\DillenManagementStudio\obj\Debug\DillenManagementStudio.FrmChangeDatabase.en-US.resources

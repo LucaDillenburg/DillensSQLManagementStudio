@@ -19,13 +19,13 @@ namespace DillenManagementStudio
 
         //execution
         protected int lastExecution = 0;
-
+        
         //RICH TEXT BOX
         protected SqlRichTextBox sqlRchtxtbx;
         protected bool showedDialog = false;
 
         //rest of form darken (except menu)
-        protected const int REST_OF_FORM_DARKEN = 65;
+        protected const int REST_OF_FORM_DARKEN = 25;
 
         //general
         protected const string TITLE = "Dillen's SQL Management Studio (Dillenburg's Product)";
@@ -192,25 +192,25 @@ namespace DillenManagementStudio
             if (e.KeyCode == Keys.S && e.Control) //ctrl+S
             {
                 if (e.Shift)
-                    this.saveAsToolStripMenuItem.PerformClick();
+                    this.saveAsToolStripMenuItem_Click(null, null);
                 else
-                    this.saveToolStripMenuItem.PerformClick();
+                    this.saveToolStripMenuItem_Click(null, null);
             }
             else
             if (e.KeyCode == Keys.F && e.Control) //ctrl+F
-                this.findToolStripMenuItem.PerformClick();
+                this.findToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.H && e.Control) //ctrl+H
-                this.replaceToolStripMenuItem.PerformClick();
+                this.replaceToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.N && e.Control) //ctrl+N
-                this.newFileToolStripMenuItem.PerformClick();
+                this.newToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.O && e.Control) //ctrl+O
-                this.openFileToolStripMenuItem.PerformClick();
+                this.openToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
-                this.closeToolStripMenuItem.PerformClick();
+                this.closeToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.Oemplus && e.Control) //ctrl+[+]
                 this.largerRchtxtFontToolStripMenuItem.PerformClick();
@@ -228,25 +228,25 @@ namespace DillenManagementStudio
             if (e.KeyCode == Keys.S && e.Control) //ctrl+S
             {
                 if (e.Shift)
-                    this.saveAsToolStripMenuItem.PerformClick();
+                    this.saveAsToolStripMenuItem_Click(null, null);
                 else
-                    this.saveToolStripMenuItem.PerformClick();
+                    this.saveToolStripMenuItem_Click(null, null);
             }
             else
             if (e.KeyCode == Keys.F && e.Control) //ctrl+F
-                this.findToolStripMenuItem.PerformClick();
+                this.findToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.H && e.Control) //ctrl+H
-                this.replaceToolStripMenuItem.PerformClick();
+                this.replaceToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.N && e.Control) //ctrl+N
-                this.newFileToolStripMenuItem.PerformClick();
+                this.newToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.O && e.Control) //ctrl+O
-                this.openFileToolStripMenuItem.PerformClick();
+                this.openToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.F4 && e.Alt) //alt+F4
-                this.closeToolStripMenuItem.PerformClick();
+                this.closeToolStripMenuItem_Click(null, null);
             else
             if (e.KeyCode == Keys.Oemplus && e.Control) //ctrl+[+]
                 this.largerRchtxtFontToolStripMenuItem.PerformClick();
@@ -268,6 +268,9 @@ namespace DillenManagementStudio
 
         protected void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.opaquePanel.Visible = false;
+
             if (this.AskUserWantsToSaveIfNeeded())
                 this.Close();
         }
@@ -378,6 +381,9 @@ namespace DillenManagementStudio
         {
             this.showedDialog = true;
 
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.opaquePanel.Visible = false;
+
             //choose file
             this.saveFileDialog.Title = "New file";
             DialogResult result = this.saveFileDialog.ShowDialog();
@@ -401,6 +407,9 @@ namespace DillenManagementStudio
         {
             this.showedDialog = true;
 
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.opaquePanel.Visible = false;
+            
             //show dialog
             DialogResult result = this.openFileDialog.ShowDialog();
 
@@ -425,6 +434,9 @@ namespace DillenManagementStudio
         {
             this.showedDialog = true;
 
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.opaquePanel.Visible = false;
+            
             if (!this.isSaved)
             {
                 if (String.IsNullOrEmpty(this.fileName))
@@ -441,6 +453,9 @@ namespace DillenManagementStudio
         protected void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.showedDialog = true;
+
+            this.CancelShowMore(this.fileToolStripMenuItem, this.pnlFile);
+            this.opaquePanel.Visible = false;
 
             this.saveFileDialog.Title = "Save as";
             DialogResult result = this.saveFileDialog.ShowDialog();
@@ -471,7 +486,7 @@ namespace DillenManagementStudio
               MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
-                this.saveToolStripMenuItem.PerformClick();
+                this.saveToolStripMenuItem_Click(null, null);
             else
             if (result == DialogResult.Cancel)
                 return false;
@@ -493,11 +508,17 @@ namespace DillenManagementStudio
         //EXECUTE
         protected void executeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.automaticToolStripMenuItem.PerformClick();
+            this.automaticToolStripMenuItem_Click(null, null);
         }
 
         protected void automaticToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlExecuteAs.Visible)
+            {
+                this.CancelShowMore(this.editToolStripMenuItem, this.pnlExecuteAs);
+                this.opaquePanel.Visible = false;
+            }
+
             if (this.connected && this.lastExecution != 0)
                 this.mySqlCon.RestartCommands();
 
@@ -508,12 +529,24 @@ namespace DillenManagementStudio
 
         protected void executeNonQueryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlExecuteAs.Visible)
+            {
+                this.CancelShowMore(this.editToolStripMenuItem, this.pnlExecuteAs);
+                this.opaquePanel.Visible = false;
+            }
+
             this.Execute(1);
             this.lastExecution = 1;
         }
 
         protected void queryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlExecuteAs.Visible)
+            {
+                this.CancelShowMore(this.editToolStripMenuItem, this.pnlExecuteAs);
+                this.opaquePanel.Visible = false;
+            }
+
             this.Execute(2);
             this.lastExecution = 2;
         }
@@ -844,6 +877,12 @@ namespace DillenManagementStudio
         //visual or resource
         protected void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlEdit.Visible)
+            {
+                this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+                this.opaquePanel.Visible = false;
+            }
+
             //if it's selected something different from txtFind
             bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 &&
                 this.rchtxtCode.SelectedText != this.txtFind.Text;
@@ -868,6 +907,12 @@ namespace DillenManagementStudio
 
         protected void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlEdit.Visible)
+            {
+                this.CancelShowMore(this.editToolStripMenuItem, this.pnlEdit);
+                this.opaquePanel.Visible = false;
+            }
+
             bool selectedSomethingDifferent = this.rchtxtCode.SelectionLength > 0 &&
                 this.rchtxtCode.SelectedText != this.txtFind.Text;
             if (this.pnlSearch.Visible && !this.isFind && !selectedSomethingDifferent)
@@ -895,18 +940,18 @@ namespace DillenManagementStudio
         protected void btnCloseFindReplace_Click(object sender, EventArgs e)
         {
             this.sqlRchtxtbx.ConsiderNoSelectionBeforeWithSelection();
-            this.sqlRchtxtbx.ChangeBackColorFromLastSearch();
+            this.sqlRchtxtbx.CancelSearch();
             this.pnlSearch.Visible = false;
         }
 
         protected void btnSeeReplace_Click(object sender, EventArgs e)
         {
-            this.replaceToolStripMenuItem.PerformClick();
+            this.replaceToolStripMenuItem_Click(null, null);
         }
 
         protected void btnNotSeeReplace_Click(object sender, EventArgs e)
         {
-            this.findToolStripMenuItem.PerformClick();
+            this.findToolStripMenuItem_Click(null, null);
         }
 
         protected void txtFind_KeyDown(object sender, KeyEventArgs e)
@@ -949,6 +994,12 @@ namespace DillenManagementStudio
         //Unicamp VPN configuration
         protected void tryToConnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlVPNConfiguration.Visible)
+            {
+                this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+                this.opaquePanel.Visible = false;
+            }
+
             if (this.user != null)
                 MessageBox.Show("You are already connected wih Unicamp's VPN...");
             else
@@ -961,6 +1012,12 @@ namespace DillenManagementStudio
 
         protected void stopOrBeginTryingToConnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.pnlVPNConfiguration.Visible)
+            {
+                this.CancelShowMore(this.vpnConfigurationToolStripMenuItem, this.pnlVPNConfiguration);
+                this.opaquePanel.Visible = false;
+            }
+
             this.tmrCheckVPNConn.Enabled = !this.tmrCheckVPNConn.Enabled;
 
             this.PutVPNConfigurationTexts();

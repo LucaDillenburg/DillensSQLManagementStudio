@@ -907,6 +907,9 @@ namespace DillenManagementStudio
         {
             if (!String.IsNullOrEmpty(oldText))
             {
+                this.ChangeBackColorFromLastSearch();
+                this.lastTextSelected = new Point(-1, -1);
+
                 int cursorPos = this.rchtxtCode.SelectionStart;
                 int cursorLength = this.rchtxtCode.SelectionLength;
 
@@ -945,7 +948,13 @@ namespace DillenManagementStudio
             return -1;
         }
         //auxiliary
-        public void ChangeBackColorFromLastSearch()
+        public void CancelSearch()
+        {
+            this.ChangeBackColorFromLastSearch();
+            this.lastTextSelected = new Point(-1, -1);
+        }
+
+        protected void ChangeBackColorFromLastSearch()
         {
             //if there was a selection before
             if (this.lastTextSelected.Y >= 0)

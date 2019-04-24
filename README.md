@@ -11,5 +11,5 @@ Help begginers in SQL language to learn and practice it. It also does what the o
  - "begin" - "end" completition
  - file management (save, save as and open files)
 
-## Autor
+## Author
 Luca Assumpção Dillenburg

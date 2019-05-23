@@ -12,8 +12,5 @@ Help beginners in SQL language to learn and practice it. It also works as a SQL 
  - "begin end" Auto-Completition
  - options to save and open files
 
-### Observations
- - the app doesn't execute all the SQL commands yet. It executes all the basic ones (select, update, insert into, delete from, create table, alter table, drop table, create procedure, create proc, alter proc, alter procedure, drop procedure, drop proc, create view, alter view, drop view, create trigger, drop trigger, alter trigger, create function, alter function, drop function, create rule, sp_bindrule, sp_unbindrule, drop rule, exec, sp_help).
-
 ## Author
 Luca Assumpção Dillenburg

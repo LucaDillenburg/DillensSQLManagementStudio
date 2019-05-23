@@ -6,10 +6,10 @@ The app also includes estructural features of any SQL Management: Text Editor wi
 Help beginners in SQL language to learn and practice it. It also works as a SQL executor.
 
 ## Key Features
- - teach SQL programming language (with examples and practicing tools)
- - syntax coloring
+ - teach SQL programming language: forms explaning what each command does, its syntax and exercises in a local database
+ - Syntax Highlighting
  - SQL executer
- - "begin" - "end" completition
+ - "begin end" Auto-Completition
  - options to save and open files
 
 ### Observations

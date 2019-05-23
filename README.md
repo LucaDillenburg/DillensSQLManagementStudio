@@ -1,8 +1,9 @@
 # Educative-SQL-Management-Studio
-Desktop App text editor and SQL executer with many tools for begginers in SQL language. It teaches SQL commands, it gives tips and it has a toll for practicing the commands.
+Desktop app for beginners in SQL language. It includes forms to teach SQL, to practice it (with cool exercises and databases) and when the SQL command gives an error the app reminds the user the basic syntax of that command.
+The app also includes estructural features of any SQL Management: Text Editor with Syntax Highlighting and Auto-Completition, and SQL executor.
 
 ## Purpose
-Help begginers in SQL language to learn and practice it. It also does what the others SQL Management Studios do.
+Help beginners in SQL language to learn and practice it. It also works as a SQL executor.
 
 ## Key Features
  - teach SQL programming language (with examples and practicing tools)

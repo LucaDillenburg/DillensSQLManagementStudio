@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CEDB0DBA-234C-49A9-BB2E-DE25102B66C4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>EducativeSQLManagementStudio</RootNamespace>
+    <AssemblyName>EducativeSQLManagementStudio</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>EducativeSQLManagementStudio.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BD17188DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BD17188DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="BDPRII17188DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CommandExplanation\FrmAllCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CommandExplanation\FrmAllCommands.Designer.cs">
+      <DependentUpon>FrmAllCommands.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Splash\FrmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Splash\FrmSplash.Designer.cs">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\CustomControls\MulticolorLabel.cs" />
+    <Compile Include="Classes\SQL\SqlExecuteProcedures.cs" />
+    <Compile Include="Classes\CustomControls\SqlRichTextBox.cs" />
+    <Compile Include="Classes\Others\Encryption.cs" />
+    <Compile Include="Classes\Others\AuxClasses.cs" />
+    <Compile Include="Forms\MainForm\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangeDataBase\FrmChangeDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeDataBase\FrmChangeDatabase.Designer.cs">
+      <DependentUpon>FrmChangeDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Others\OtherMethods.cs" />
+    <Compile Include="Forms\CommandExplanation\FrmCommandExplanation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CommandExplanation\FrmCommandExplanation.Designer.cs">
+      <DependentUpon>FrmCommandExplanation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Entities\User.cs" />
+    <Compile Include="Classes\SQL\MySqlConnection.cs" />
+    <Compile Include="Classes\Others\StringAndCharExtensions.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\CommandExplanation\FrmAllCommands.resx">
+      <DependentUpon>FrmAllCommands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeDataBase\FrmChangeDatabase.en-US.resx">
+      <DependentUpon>FrmChangeDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\FrmMain.az-Latn.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\FrmMain.en-US.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeDataBase\FrmChangeDatabase.resx">
+      <DependentUpon>FrmChangeDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CommandExplanation\FrmCommandExplanation.resx">
+      <DependentUpon>FrmCommandExplanation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Splash\FrmSplash.resx">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="BD17188DataSet.xsc">
+      <DependentUpon>BD17188DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="BD17188DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BD17188DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BD17188DataSet.xss">
+      <DependentUpon>BD17188DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="BDPRII17188DataSet.xsc">
+      <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="BDPRII17188DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BDPRII17188DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BDPRII17188DataSet.xss">
+      <DependentUpon>BDPRII17188DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wolf.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wolf1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dillenburg%27s Product Icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading_icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading_icon1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moreIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch %28on%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on OK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-angle-pointing-down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimize %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose Hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnMinimize Hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnMinimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnClose Hover1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel-music.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud-computing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud-computing %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\try again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\more options background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\more options background1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch off2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\switch on4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LocalDatabase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LocalDatabase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>LocalDatabase.mdf</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 e x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

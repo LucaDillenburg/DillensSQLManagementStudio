@@ -1,0 +1,26 @@
+Servidor / App
+ - conexao e requisicao: app manda as versoes para o servidor, ele retorna se ha novas versoes de ambos, se houver uma nova versao das explicacoes jah mandar junto
+
+Servidor fornece:
+ - arquivo em xml que mostra comandos e explicacoes (colocar alguma biblioteca para transformar em algum objeto e dai colocar em formato de SQL)
+ - versoes: retornar versao atual do front-end e conteudos (datas)
+ - conteudos (fazer apenas um metodo para isso => menos tempo gasto):
+   .comandos SQL de insercao dos comandos existentes e explicacoes (numa grande string : puxar de arquivo do servidor)
+   .base comandos
+
+Local Database:
+ - na primeira vez que o aplicativo for executado eh necessario acessar servidor
+ - sempre que app conseguir acessar o servidor fazer requisicao:
+     .se houver nova versao das explicacoes: apagar dados da tabela antes de fazer as insercoes
+     .se houver nova versao do front-end: falar que ha uma nova versao disponivel e disponibilizar o link para download
+ - tabela teste (temporario)
+ - pode-se executar tudo com executeQuery !!! Ver como fica o retorno !!
+
+
+a primeira vez que o programa eh executado ele precisa acessar o servidor para pegar as informacoes.
+Dah para guardar elas no PC ou no aplicativo?
+Dah para fazer isso antes da primeira vez que o aplicativo for executado?
+
+pensar se dah pra arrumar a separacao dos comandos
+ - select encadeado com sql
+ - go... e outros comandos

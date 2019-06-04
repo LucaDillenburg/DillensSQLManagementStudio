@@ -1,0 +1,24 @@
+REQUISICAO:
+PUT http://localhost:8080/Educative-SQL-API/sql-educative/verify_versions
+ps: acho
+
+{
+	"macAdress":"123.123.123",
+	"sqlExplanationVersion":"2002-04-12 13:12:00",
+	"sqlCommandsVersion":"2002-04-12 13:12:00",
+	"desktopAppVersion":1
+}
+
+
+
+public String getAsSqlInsert(SqlCommand sqlCommand)
+    {
+        return "insert into ExplanationSqlCommand values(" + sqlCommand.getCodCmd() + ", " + this.stage + ", '" + this.title + "', '" +
+                this.explanation + ".', '" + this.example + "')";
+    }
+
+
+public String getAsSqlInsert()
+    {
+        return "insert into SqlCommand values(" + this.codCmd + ", '" + this.name + "', " + (this.justUsedOnHelp ? 1 : 0) + ")";
+    }

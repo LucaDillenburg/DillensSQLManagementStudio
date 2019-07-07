@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.luca_dillenburg.educative_sql;
+package com.luca_dillenburg.educative_sql.config;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -29,7 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.luca_dillenburg.educative_sql.EducativeSQLService.class);
+        resources.add(com.luca_dillenburg.educative_sql.core.EducativeSQLService.class);
     }
     
 }

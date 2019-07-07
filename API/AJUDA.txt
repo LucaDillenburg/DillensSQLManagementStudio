@@ -1,13 +1,19 @@
-REQUISICAO:
-PUT http://localhost:8080/Educative-SQL-API/sql-educative/verify_versions
-ps: acho
+REQUEST:
+GET http://localhost:8080/Educative-SQL-API/sql-educative/verify_versions/{JSON_OBJETO}
+
 
 {
-	"macAdress":"123.123.123",
-	"sqlExplanationVersion":"2002-04-12 13:12:00",
-	"sqlCommandsVersion":"2002-04-12 13:12:00",
-	"desktopAppVersion":1
+  "sqlCommandsVersion":"01-13-2001 07:12:10",
+  "desktopAppVersion":1,
+  "macAdress":"a",
+  "timesUsed":2
 }
+
+
+Date sqlCommandsVersion;
+int desktopAppVersion;
+String macAdress;
+int timesUsed;
 
 
 

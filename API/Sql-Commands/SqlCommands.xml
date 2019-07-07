@@ -1,0 +1,131 @@
+<!--
+
+ the textExplanation column works as follows
+   - <<*TEXT>> : bold text
+   - <<_TEXT>> : underlined text
+   - <<bTEXT>> : blue text
+   - <<rTEXT>> : red text
+
+ the example column works as follows:
+   - [tableName] will be changed into the name of the table created to the user practice the current command
+
+ STRUCTURE:
+    <command name="insert into"
+        is_query="true"             DEFAULT:false
+        has_escope="true"           DEFAULT:false
+        just_used_on_help="true"    DEFAULT:false
+        >
+        <stage title="Title of explanation">
+            <explanation title="Title of explanation">
+                This is the explanation of the command.
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+    </command>
+
+-->
+
+<sql_comand>
+
+    <command name="Command 1"
+        is_query="true"
+        has_escope="false"
+        just_used_on_help="false"
+        >
+
+        <stage title="Title of explanation">
+            <explanation title="Title of explanation">
+                This is the explanation of the command.
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+
+        <stage title="Title 2">
+            <explanation title="Title of explanation">
+                Explanation twwooo
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+    </command>
+
+    <command name="Command 2"
+        is_query="false"
+        has_escope="false"
+        just_used_on_help="false"
+        >
+
+        <stage title="Title of explanation">
+            <explanation title="Title of explanation">
+                This is the explanation of the command.
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+
+        <stage title="Title 2">
+            <explanation title="Title of explanation">
+                Explanation twwooo
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+
+        <stage title="Title Three">
+            <explanation title="Title of explanation">
+                Threeeeeeeeee
+            </explanation>
+
+            <example>
+                {example of sql command} 
+            </example>
+        </stage>
+    </command>
+
+    <command name="Command 3"
+        is_query="false"
+        has_escope="true"
+        just_used_on_help="false"
+        >
+
+        <stage title="Title of explanation">
+            <explanation title="Title of explanation">
+                This is the explanation of the command.
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+    </command>
+
+    <command name="Command 4"
+        is_query="false"
+        has_escope="false"
+        just_used_on_help="true"
+        >
+
+        <stage title="Title of explanation">
+            <explanation title="Title of explanation">
+                This is the explanation of the command.
+            </explanation>
+
+            <example>
+                {example of sql command}
+            </example>
+        </stage>
+    </command>
+
+</sql_comand>

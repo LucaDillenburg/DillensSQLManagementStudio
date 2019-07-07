@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.luca_dillenburg.educative_sql.xml;
+package com.luca_dillenburg.educative_sql.xml_operations;
 
-import com.luca_dillenburg.educative_sql.versions.sql_command.SqlCommand;
+import com.luca_dillenburg.educative_sql.storage.sql_command.SqlCommand;
 import java.util.LinkedList;
 import java.util.List;
 import org.w3c.dom.Element;

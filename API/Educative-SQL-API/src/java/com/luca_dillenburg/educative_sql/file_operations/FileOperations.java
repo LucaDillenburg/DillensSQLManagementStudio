@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -17,11 +19,15 @@ import java.util.Date;
  */
 public class FileOperations {
     
-    public static String END_LINE = "\n\r";
-    
-    public static Date modifiedDate(String path) {
-        final long lastModified = new File(path).lastModified();
-        return new Date(lastModified);
+    public static Calendar modifiedDate(String path) throws IllegalStateException {
+        final File file = new File(path);
+        if (!file.exists())
+            throw new IllegalStateException(file.getAbsolutePath() + " file doesnt exist!");
+        
+        final long lastModifiedInMilliseconds = new File(path).lastModified();
+        final Calendar lastModifiedDate = new GregorianCalendar();
+        lastModifiedDate.setTimeInMillis(lastModifiedInMilliseconds);
+        return lastModifiedDate;
     }
     
     public static String strFromFile(String path) throws IOException {

@@ -1,16 +1,15 @@
 # Educative-SQL-Management-Studio
-Desktop app for beginners in SQL language. It includes forms to teach SQL, to practice it (with cool exercises and databases) and when the SQL command gives an error the app reminds the user the basic syntax of that command.
-The app also includes estructural features of any SQL Management: Text Editor with Syntax Highlighting and Auto-Completition, and SQL executor.
+Desktop app for beginners in SQL Server language. It is a SQL Server teacher and executor with features to help begginers learn and practice this programming language. It includes forms that teach each of the basics SQL commands, tolls for practicing (with cool exercises and databases) and Text Editor with Syntax Highlighting and Auto-Completition.
 
 ## Purpose
-Help beginners in SQL language to learn and practice it. It also works as a SQL executor.
+Help beginners learn SQL Server.
 
 ## Key Features
- - teach SQL programming language: forms explaning what each command does, its syntax and exercises in a local database
- - Syntax Highlighting
- - SQL executer
- - "begin end" Auto-Completition
- - options to save and open files
+ - teach SQL programming language: forms explaning what each command does, its syntax and exercises.
+ - Syntax Highlighting.
+ - SQL executor.
+ - "begin end" Auto-Completition.
+ - options to save and open files.
 
 ## Author
 Luca Assumpção Dillenburg
